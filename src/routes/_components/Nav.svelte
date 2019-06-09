@@ -1,4 +1,5 @@
 <script>
+	import AuthLinks from "./AuthLinks.svelte";
 	export let segment;
 </script>
 
@@ -59,4 +60,6 @@
 		     the blog data when we hover over the link or tap it on a touchscreen -->
 		<li><a rel=prefetch class='{segment === "blog" ? "selected" : ""}' href='blog'>blog</a></li>
 	</ul>
+	<AuthLinks/>
+
 </nav>
