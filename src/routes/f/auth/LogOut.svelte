@@ -1,0 +1,57 @@
+<script context="module">
+  import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
+  import { menuCategories, isAuthFn  } from "../../_modules/functions.js";
+	export async function preload(page, session){
+    let S; if (typeof S_ == "function") { S = new S_(this.req, this.res); } else { S = S_; }
+    const categories = await menuCategories(S);
+    return { categories }
+	}
+</script>
+<script>
+  import { onMount, onDestroy, createEventDispatcher } from "svelte";
+  import MyLayout from '../_myLayout.svelte'
+
+  const dp = createEventDispatcher();
+  export let categories = [];
+  
+  let logout = false;
+  let isAuth = false;
+  const fns = [];
+  let S; 
+  onMount(async ()=>{
+    const { Server: S_ } = await import("../../_modules/ws_events_dispatcher.js");
+    if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
+
+    fns.push("user_logout"); S.bind_(fns.i(-1), (d) => {if (d.ok) {  
+      document.cookie = `user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+      logout = true }})
+  })
+  onDestroy(() => { if(process.browser) S.unbind_(fns) });
+</script>
+<style>
+ /* Header/Logo Title */
+.header {
+  padding: 5px;
+  text-align: center;
+  background: salmon;
+  color: white;
+
+}
+.header a{text-decoration: none}
+
+/* Page Content */
+.content {padding:10px;}
+</style>
+<MyLayout {categories}  {isAuth} >
+{#if logout}
+  <div class="header">
+     <a href="./"><h1>Logged out successfully!</h1></a>
+    <p>Thank you for visiting. See you again soon.</p>
+  </div>
+  <div class="content">
+    
+
+  </div>
+{/if}
+
+</MyLayout>

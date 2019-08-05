@@ -1,0 +1,203 @@
+<script context="module">
+  import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
+  import { p_all, productImage,  product_purity_price, product_clarity_price, menuCategories, isAuthFn} from "../../_modules/functions.js";
+
+  // Here We will Show some Top Images for each category
+  export async function preload(page, session) {
+    let S; if (typeof(S_) == "function") { S = new S_(this.req, this.res); } else { S = S_; }
+    const { category } = page.params;
+
+    const categories = await menuCategories(S);
+    const categoryRow = await new Promise((resolve, reject) => {
+      S.bind_( p_all("category", 222), data => {
+          resolve(data);
+          // reject(new Error('Fail!'))
+          // throw(new Error())
+        },
+        [[null, null, null, null, null, null, `=${category}`]]
+      ); // 6=code // = means excact
+    });
+    if (!categoryRow.length) {
+      console.log("No category exist.");
+    }
+
+    let sub_categories = [];
+    let sub_category_products = [];
+    let products = [];
+
+    if (categoryRow[0]) {
+      sub_categories = await new Promise((resolve, reject) => {
+        S.bind_( p_all("category", 223), data => {
+            resolve(data);
+          },
+          [[null, categoryRow[0][0]]]
+        ); // 1=parent
+      });
+      //let i = 0;
+      if (sub_categories.length) {
+        for (const it of sub_categories) {
+          const p = await new Promise((resolve, reject) => {
+            const f_array = [];
+            f_array[14] = `product`;
+            f_array[41] = `=${it[0]}`; // pc_category_id
+            S.bind_( p_all("product", 224), data => {
+                resolve(data);
+              },
+              [f_array]
+            );
+          });
+          sub_category_products.push(p);
+        }
+      }
+      const p = await new Promise((resolve, reject) => {
+        const f_array = [];
+        f_array[14] = `product`;
+        f_array[41] = `=${categoryRow[0][0]}`; // pc_category_id
+        S.bind_( p_all("product", 225), data => {
+            resolve(data);
+          },
+          [f_array]
+        );
+      });
+      products = p;
+    }
+
+
+
+	for (let c of sub_category_products) {
+		await productImage(S, c)
+		product_purity_price(c)
+		product_clarity_price(c)
+	}
+	await productImage(S, products)
+	// console.log(products)
+	product_purity_price(products)
+	product_clarity_price(products)
+    /*
+		let product = "";
+		if (process.browser) { 
+				product = await new Promise((resolve, reject) => {
+				const event_name = `get_product_attachment_data`;
+				
+				S.bind_(event_name, (data) => {
+					const url = URL.createObjectURL(data)
+					resolve(url)
+					// const reader = new FileReader();
+					// reader.onload = function(e) { 
+					// 	const url = e.target.result
+					// 	resolve(url)
+					// };
+					// reader.readAsDataURL(data);
+				}, 16);
+			});
+		} else {
+			// http://localhost:8300/demo/v1/user/download?path=
+			// TODO fix this : This should return server path.
+			product = ""
+		}*/
+    const isAuth = await isAuthFn(S)
+
+    return { categories, sub_categories, sub_category_products, products, isAuth  };
+  }
+</script>
+
+<script>
+  import Cards from "../../_components/ui/Cards.svelte";
+  import CardItem from "../../_components/ui/CardItem.svelte";
+  import ScrollTop from "../../_components/ui/ScrollTop.svelte";
+  import TextButton from "../../_components/ui/TextButton.svelte";
+  import Filter from "../../_components/block/Filter.svelte";
+  import MyLayout from '../_myLayout.svelte'
+  import { getTotalArray } from "../../_modules/functions.js";
+
+  export let categories = [];
+  export let sub_categories = [];
+  export let sub_category_products = [];
+  export let products = [];
+  export let isAuth = false;
+
+  if (process.browser) {
+    window.onscroll = function(ev) {
+      if (
+        window.innerHeight + Math.ceil(window.pageYOffset) >=
+        document.body.offsetHeight - 400
+      ) {
+        // Load More Products...
+      }
+      if (window.pageYOffset > 300) {
+        // Show Move To TOp and make it working...
+      }
+    };
+  }
+
+</script>
+
+<style>
+	img{
+		width: 372px;
+		height: 372px;
+		display: block;
+	}
+	span{
+
+		text-align: center;
+	}
+	a{
+		display: contents;
+		text-decoration: none;
+	}
+  .categorytext{
+
+    color: green;
+    display: block;
+    text-align: center;
+  }
+</style>
+
+<svelte:head>
+  <title>Marvel Art Jewellery</title>
+</svelte:head>
+
+{#if false}
+	<Filter />
+{/if}
+
+<MyLayout {categories}  {isAuth} >
+  <div class="container">
+    {#if sub_categories.length}
+      {#each sub_categories as c, index}
+        <a class="categorytext" href={`./f/jewellery/${c[6]}`} alt="category">{c[5]} :</a>
+        <Cards>
+          {#each sub_category_products[index] as p}
+            <CardItem>
+              <a href={`./f/product/${p[0]}`}>
+                <img src={p[p.length - 3]} alt="product image"/>
+                <span>{p[7]}</span>
+                <TextButton><span>₹ {getTotalArray(p).toFixed(0)}</span></TextButton>
+              </a>
+            </CardItem>
+          {/each}
+        </Cards>
+      {/each}
+    {/if}
+  {#if sub_categories.length && products.length} 
+  <hr/>
+  {/if}
+    <Cards>
+      {#each products as p}
+        <CardItem>
+          <a href={`./f/product/${p[0]}`}>
+            <img src={p[p.length - 3]} alt="product image"/>
+            <span>{p[7]}</span>
+            <TextButton><span>₹ {getTotalArray(p).toFixed(0)}</span></TextButton>
+          </a>
+        </CardItem>
+      {/each}
+    </Cards>
+
+  </div>
+
+
+  <ScrollTop/>
+
+</MyLayout>

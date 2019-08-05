@@ -1,22 +1,9 @@
-<script>
-	import Nav from './_components/Nav.svelte';
-
-	export let segment;
-</script>
-
-<style>
-	main {
-		position: relative;
-		max-width: 56em;
-		background-color: white;
-		padding: 2em;
-		margin: 0 auto;
-		box-sizing: border-box;
+<script context="module">
+	export async function preload(page, session){
+		
 	}
-</style>
-
-<Nav {segment}/>
-
-<main>
-	<slot></slot>
-</main>
+</script>
+<script>
+  export let segment;
+</script>
+<slot></slot>

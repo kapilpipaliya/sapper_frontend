@@ -34,3 +34,10 @@ code {
 		font-size: 16px;
 	}
 }
+
+select {
+	vertical-align: top;
+  }
+/* input:focus {
+	background-color: lightblue;
+} */
