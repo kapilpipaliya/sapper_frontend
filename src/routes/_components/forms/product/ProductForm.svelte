@@ -17,17 +17,17 @@
   let er = "";  
   let date = null;
   let form = {
-    post_title: "",
-    post_name: "",
-    post_date: "",
+    title: "",
+    name: "",
+    date: "",
     tags_name: "",
     p_purchase_note: "",
     menu_order: 0,
     comment_status: true,
-    post_status: "published",
-    post_type: "product",
+    status: "published",
+    type: "product",
     visibility: "public",
-    post_password: "",
+    password: "",
     p_product_type: "simple",
     p_virtual: false,
     p_downloadable: false,
@@ -50,8 +50,8 @@
     p_low_stock_amount: 2,
     p_stock_status: "instock",
     p_sold_individually: false,
-    post_content: "",
-    post_excerpt: "",
+    content: "",
+    excerpt: "",
     pc_category_id: [],
     p_tones_tone_id: [],
     p_clarity_clarity_id: [],
@@ -103,7 +103,6 @@
 
   }
   
-  console.log(form)
   fns.push(p_save_("product", rowIdx)); S.bind$(fns.i(-1), (d) => {isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } });
   S.bind$(p_del_("product", rowIdx), (d) => { isSaving = false; if (d.ok) {  er = ""; dp("deleteRow", { rowIdx, d }); } else { er = d.error; } });
 
@@ -193,11 +192,10 @@
     }, e[0]);
   }
   onMount(async () => {
-    //console.log('mounting', rowIdx)
     // setup date:
     const elem = date
-    const defaultDate = form.post_date || (new Date()).toISOString();
-    form.post_date = defaultDate;
+    const defaultDate = form.date || (new Date()).toISOString();
+    form.date = defaultDate;
     flatpickr(elem, {
           altInput: true,
           altFormat: "F j, Y G:i K",
@@ -206,7 +204,7 @@
           enableTime: true,
           defaultDate,
           onChange: (selectedDates, dateStr, instance) => {
-            form.post_date = selectedDates[0].toISOString()
+            form.date = selectedDates[0].toISOString()
           }
     })
     
@@ -219,19 +217,19 @@
     // const theme_url =   ('/admin/themes/silver/theme.js').replace("\/\/", "\/")
     // const skin_url =   ('/admin/skins/content/default').replace("\/\/", "\/")
      if (window.hasOwnProperty("tinymce")) {
-      tinymce.init({ plugins: 'link image code', selector: '.tinymce_p_content', forced_root_block: false, setup: function (e) { e.on('change', () => { e.save(); form.post_content = e.getContent() }); } })
-      tinymce.init({ plugins: 'link image code', selector: '.tinymce_p_excerpt', forced_root_block: false, setup: function (e) { e.on('change', () => { e.save(); form.post_excerpt = e.getContent() }); } })
+      tinymce.init({ plugins: 'link image code', selector: '.tinymce_p_content', forced_root_block: false, setup: function (e) { e.on('change', () => { e.save(); form.content = e.getContent() }); } })
+      tinymce.init({ plugins: 'link image code', selector: '.tinymce_p_excerpt', forced_root_block: false, setup: function (e) { e.on('change', () => { e.save(); form.excerpt = e.getContent() }); } })
      }
   });
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
   
   
-  async function save() {if(!form.pc_category_id.length) {alert("Please Select Category"); return;} isSaving = true; console.log(form); S.trigger(p_save_("product", rowIdx), form); }
+  async function save() {if(!form.pc_category_id.length) {alert("Please Select Category"); return;} isSaving = true; S.trigger(p_save_("product", rowIdx), form); }
   function clearError() { er = ""; }
 
   async function deleteRow() { isSaving = true; S.trigger(p_del_("product", rowIdx), [form.id]); }
   // ------------
-  function setPasswordDisabled() { if (form.visibility != "password protected") { form.post_password = ""; } }
+  function setPasswordDisabled() { if (form.visibility != "password protected") { form.password = ""; } }
   function setManageStock() { if (!form.p_manage_stock) { form.p_stock_quantity = 0; /*form.p_backorders = "do not allow"*/ } }
 
   const handleFileChange = (row) => (event) => {
@@ -301,8 +299,6 @@
     updateVolume()
   }
   const updateVolume = ()  => {
-    // console.log(form.p_purities_purity_id)
-    // console.log(purity_new_id)
     const purityRow = p_purities_purity_id[purity_idx];
 
     if(purityRow) {
@@ -621,8 +617,8 @@
 </style>
 
 <form on:submit|preventDefault={save} >
-	<label><span>Title</span><input type="text" bind:value={form.post_title} required on:change={_=> {if(!form.post_name.length){form.post_name = form.post_title.replace(" ", "_")}}} /></label>
-	<label><span>Slug</span><input type="text" bind:value={form.post_name} required/></label>
+	<label><span>Title</span><input type="text" bind:value={form.title} required on:change={_=> {if(!form.name.length){form.name = form.title.toLowerCase().replace(/\s/g, "_")}}} /></label>
+	<label><span>Slug</span><input type="text" bind:value={form.name} required/></label>
 	<label><span>Date</span><input bind:this={date} /></label>
 
 	<label><span>Product tags</span><textarea cols="20" rows="2" bind:value={form.tags_name}></textarea></label>
@@ -631,7 +627,7 @@
 	<label><span>Enable reviews</span><input type="checkbox" bind:checked={form.comment_status} /></label>
   {#if false}
       <label><span>Status</span>
-        <select bind:value={form.post_status} size=3 >
+        <select bind:value={form.status} size=3 >
           <option value="published">Published</option>
           <option value="pending review">Pending Review</option>
           <option value="draft">Draft</option>
@@ -646,7 +642,7 @@
           </select>
         </label>
         {#if form.visibility == "password protected"}
-          <label><span>Password</span><input type="text" bind:value={form.post_password} disabled={form.visibility != "password protected"}/></label>
+          <label><span>Password</span><input type="text" bind:value={form.password} disabled={form.visibility != "password protected"}/></label>
         {/if}
 
         <label><span>Product Type</span>
@@ -733,8 +729,8 @@
       <label><span>Sold individually</span><div><input type="checkbox" bind:checked={form.p_sold_individually} />Enable this to only allow one of this item to be bought in a single order</div></label>
     {/if}
     <div class="row">
-      <div class="column"><b>Details:</b><textarea class="tinymce_p_content" cols="20" rows="2" bind:value={form.post_content} ></textarea></div>
-      <div class="column"><b>Short description:</b><textarea class="tinymce_p_excerpt" cols="20" rows="2" bind:value={form.post_excerpt}></textarea></div>
+      <div class="column"><b>Details:</b><textarea class="tinymce_p_content" cols="20" rows="2" bind:value={form.content} ></textarea></div>
+      <div class="column"><b>Short description:</b><textarea class="tinymce_p_excerpt" cols="20" rows="2" bind:value={form.excerpt}></textarea></div>
     </div>
 
 
@@ -768,7 +764,7 @@
       <tbody>
         {#each pc_category_id as c}
           <tr>
-            <td><label for="category{rowIdx}{c[0]}">{@html c[1].replace(" ", "&nbsp")}</label></td>
+            <td><label for="category{rowIdx}{c[0]}">{@html c[1].replace(/\s/g, "&nbsp")}</label></td>
             <td><input id="category{rowIdx}{c[0]}" type=checkbox bind:group={form.pc_category_id} value={c[0]}></td>
           </tr>
         {/each}

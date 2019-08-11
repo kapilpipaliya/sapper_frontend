@@ -1,6 +1,6 @@
 <script>
   import TablePage from "../../_components/ui/table/TablePage.svelte";
-  import RoleForm from "../../_components/forms/menu/RoleForm.svelte";
+  import TaskForm from "../../_components/forms/menu/TaskForm.svelte";
 
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import { authCeck } from "../../_modules/functions.js";
@@ -15,14 +15,14 @@
 <svelte:options immutable />
 
 <svelte:head>
-  <title>Menu Role</title>
+  <title>Task</title>
 </svelte:head>
 
 {#if isAuth}
-  <h1>Menu Role</h1>
+  <h1>Task</h1>
   <TablePage
-    url="menu_menu_role"
-    formcomponent={RoleForm}
-    quickcomponent={RoleForm}
+    url="menu_task"
+    formcomponent={TaskForm}
+    quickcomponent={TaskForm}
      />
 {/if}

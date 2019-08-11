@@ -1,11 +1,13 @@
 <script context="module">
   import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
-  import { menuCategories, isAuthFn  } from "../../_modules/functions.js";
+  import { menuCategories, isAuthFn, getFooterData, getHeaderData  } from "../../_modules/functions.js";
   export async function preload(page, session){
     let S; if (typeof S_ == "function") { S = new S_(this.req, this.res); } else { S = S_; }
     // let user = session.user; if(!!user){ this.redirect(302, '/confirmation') }
     const categories = await menuCategories(S);
-    return { categories }
+    const footerData = await getFooterData(S)
+    const headerData = await getHeaderData(S)
+    return { categories, footerData, headerData }
   }
 </script>
 
@@ -16,6 +18,8 @@
   import MyLayout from '../_myLayout.svelte'
   const dp = createEventDispatcher();
   export let categories = [];
+  export let footerData = {};
+  export let headerData = {};
   let isSaving = false;
   let er = "";  
   let form = { legal_name: '', email: '', pass: '', mobile: '' };
@@ -142,10 +146,10 @@ hr {
 </style>
 
 <svelte:head>
-	<title>Marvel Art Jewellery - Register</title>
+	<title>{headerData.company[0][4]} - Register</title>
 </svelte:head>
 
-<MyLayout {categories}  {isAuth} >
+<MyLayout {categories}  {isAuth} {footerData}  {headerData}>
 {#if !isAuth}
   <div class="container">
     <div class="row">
@@ -185,7 +189,7 @@ hr {
 
   <div class="signin">
     <p>Already have an account? <a href="./f/auth/Login">Sign in</a>.</p>
-    <p>An account is needed to purchase a jewellery</p>
+    <p>An account is needed to purchase a product</p>
   </div>
 
 {:else}

@@ -1,6 +1,7 @@
 <script>
   import TablePage from "../../_components/ui/table/TablePage.svelte";
-  import GlobalSettingForm from "../../_components/forms/setting/GlobalSettingForm.svelte";
+  import RoleForm from "../../_components/forms/menu/RoleForm.svelte";
+
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import { authCeck } from "../../_modules/functions.js";
   let isAuth = false;
@@ -12,14 +13,16 @@
 </script>
 
 <svelte:options immutable />
+
 <svelte:head>
-  <title>Currency</title>
+  <title>Role</title>
 </svelte:head>
 
 {#if isAuth}
-  <h1>Currency</h1>
+  <h1>Role</h1>
   <TablePage
-    url="setting_global_setting"
-    formcomponent={GlobalSettingForm}
-    quickcomponent={GlobalSettingForm} />
+    url="menu_role"
+    formcomponent={RoleForm}
+    quickcomponent={RoleForm}
+     />
 {/if}

@@ -1,5 +1,7 @@
 
-  
+  <script>
+  export let headerData = {};
+  </script>
   <style>
     .container {
     display: flex;
@@ -69,7 +71,7 @@
               <div class="hover-inner">
                 <div class="hover-title">LIFETIME EXCHANGE & BUY BACK</div>
                 <div class="hover-para">
-                  <p>If ever you feel like exchanging your old Marvel Art Jewellery Jewellery for newer designs, we are game! Exchange the product for its current value or get Cash with just minor deductions.</p>
+                  <p>If ever you feel like exchanging your old {headerData.company[0][4]} Jewellery for newer designs, we are game! Exchange the product for its current value or get Cash with just minor deductions.</p>
                   <div class="prcs-d" data-p="lifetime-exchange,hpw">Read More</div>
                 </div>
               </div>
@@ -113,8 +115,8 @@
               <div class="hover-inner">
                 <div class="hover-title">PHYSICAL STORE NEAR YOU</div>
                 <div class="hover-para">
-                  <p>The Marvel Art Jewellery Stores are cool and contemporary spaces for you to browse through our collections at your leisure.</p>
-                  <a href="https://www.Marvel Art Jewellery.com/store.html" class="link">Read More</a> 
+                  <p>The {headerData.company[0][4]} Stores are cool and contemporary spaces for you to browse through our collections at your leisure.</p>
+                  <a href="https://www.{headerData.company[0][4]}.com/store.html" class="link">Read More</a> 
                 </div>
               </div>
             </div>

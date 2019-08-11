@@ -63,10 +63,9 @@
   const fns = [];
 
   if (item.length) { form = makeObject(hs, item) };
-  console.log(form)
   S.bind$(e_save_('entity', rowIdx), (d) => { isSaving = false; if (d.ok) { isSubmited = true;  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }); 
 
-  async function save() { console.log(form); isSaving = true; S.trigger(e_save_('entity', rowIdx), form); }
+  async function save() { isSaving = true; S.trigger(e_save_('entity', rowIdx), form); }
   function clearError() { er = ""; }
 
   fns.push(e_all("entity_type", rowIdx)); S.bind_(fns.i(-1), (d) => { entity_type_id = d; form.entity_type_id = item.length ? form["entity_type_id"] : (entity_type_id[0] ? entity_type_id[0][0] : 0) }, [[]]);
@@ -158,8 +157,8 @@
         {/each}
       </select>
     </label>
-    <label><span>Code</span><input type="text" bind:value={form.slug} on:focus={clearError}/></label>
-    <label><span>Legal Name</span><input type="text" bind:value={form.legal_name} required on:focus={clearError}/></label>
+    <label><span>Legal Name</span><input type="text" bind:value={form.legal_name} required on:focus={clearError}  on:change={_=> {if(!form.slug.length){form.slug = form.legal_name.toLowerCase().replace(/\s/g, "_")}}}/></label>
+    <label><span>Code</span><input type="text" bind:value={form.slug} required on:focus={clearError}/></label>
     <label><span>First Name</span><input type="text" bind:value={form.first_name} on:focus={clearError}/></label>
     <label><span>Last Name</span><input type="text" bind:value={form.last_name} on:focus={clearError}/></label>
     <label><span>Date</span><input bind:this={birth_date} /></label>
@@ -212,23 +211,25 @@
 
     <Cards>
       {#each form.ea_entity_address as a, index}
-        <CardItem selected={form.ea_entity_address[index][10]}>
-              <label><span>Address Type</span><select bind:value={form.ea_entity_address[index][1]}  required>
-              {#each address_type_id as c}
-                <option value={c[0]}> {c[1]} </option>
-              {/each}
-            </select></label>
-          <label><span>Line1</span><input bind:value={form.ea_entity_address[index][2]} required/></label>
-          <label><span>line2</span><input bind:value={form.ea_entity_address[index][3]} required/></label>
-          <label><span>Line3</span><input bind:value={form.ea_entity_address[index][4]} /></label>
-          <label><span>City</span><input bind:value={form.ea_entity_address[index][5]} required/></label>
-          <label><span>State</span><input bind:value={form.ea_entity_address[index][6]} required/></label>
-          <label><span>Country</span><input bind:value={form.ea_entity_address[index][7]} required/></label>
-          <label><span>Zip Code</span><input bind:value={form.ea_entity_address[index][8]} required/></label>
-          <label><span>Phone</span><input bind:value={form.ea_entity_address[index][9]} required/></label>
-          <label><span>Selected</span><input type="checkbox" bind:checked={form.ea_entity_address[index][10]} on:click={(e)=>addressIsMainChange(e, index)}/></label>
-          <button type="button" on:click={handleAddressDelete(index)}  >delete</button>
-        </CardItem>
+        {#if a[1]}
+          <CardItem selected={form.ea_entity_address[index][10]}>
+                <label><span>Address Type</span><select bind:value={form.ea_entity_address[index][1]}  required>
+                {#each address_type_id as c}
+                  <option value={c[0]}> {c[1]} </option>
+                {/each}
+              </select></label>
+            <label><span>Line1</span><input bind:value={form.ea_entity_address[index][2]} required/></label>
+            <label><span>line2</span><input bind:value={form.ea_entity_address[index][3]} required/></label>
+            <label><span>Line3</span><input bind:value={form.ea_entity_address[index][4]} /></label>
+            <label><span>City</span><input bind:value={form.ea_entity_address[index][5]} required/></label>
+            <label><span>State</span><input bind:value={form.ea_entity_address[index][6]} required/></label>
+            <label><span>Country</span><input bind:value={form.ea_entity_address[index][7]} required/></label>
+            <label><span>Zip Code</span><input bind:value={form.ea_entity_address[index][8]} required/></label>
+            <label><span>Phone</span><input bind:value={form.ea_entity_address[index][9]} required/></label>
+            <label><span>Selected</span><input type="checkbox" bind:checked={form.ea_entity_address[index][10]} on:click={(e)=>addressIsMainChange(e, index)}/></label>
+            <button type="button" on:click={handleAddressDelete(index)}  >delete</button>
+          </CardItem>
+        {/if}
       {/each}
     </Cards>
   </div>

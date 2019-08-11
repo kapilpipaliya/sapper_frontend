@@ -1,6 +1,6 @@
 <script context="module">
   import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
-  import { p_all, productImage,  product_purity_price, product_clarity_price, menuCategories, isAuthFn} from "../../_modules/functions.js";
+  import { p_all, productImage,  product_purity_price, product_clarity_price, menuCategories, isAuthFn, getFooterData, getHeaderData} from "../../_modules/functions.js";
 
   // Here We will Show some Top Images for each category
   export async function preload(page, session) {
@@ -8,6 +8,8 @@
     const { category } = page.params;
 
     const categories = await menuCategories(S);
+    const footerData = await getFooterData(S)
+    const headerData = await getHeaderData(S)
     const categoryRow = await new Promise((resolve, reject) => {
       S.bind_( p_all("category", 222), data => {
           resolve(data);
@@ -18,7 +20,7 @@
       ); // 6=code // = means excact
     });
     if (!categoryRow.length) {
-      console.log("No category exist.");
+      // console.log("No category exist.");
     }
 
     let sub_categories = [];
@@ -97,7 +99,7 @@
 		}*/
     const isAuth = await isAuthFn(S)
 
-    return { categories, sub_categories, sub_category_products, products, isAuth  };
+    return { categories, sub_categories, sub_category_products, products, isAuth, footerData, headerData  };
   }
 </script>
 
@@ -111,6 +113,8 @@
   import { getTotalArray } from "../../_modules/functions.js";
 
   export let categories = [];
+  export let footerData = {};
+  export let headerData = {};
   export let sub_categories = [];
   export let sub_category_products = [];
   export let products = [];
@@ -155,14 +159,14 @@
 </style>
 
 <svelte:head>
-  <title>Marvel Art Jewellery</title>
+  <title>{headerData.company[0][4]}</title>
 </svelte:head>
 
 {#if false}
 	<Filter />
 {/if}
 
-<MyLayout {categories}  {isAuth} >
+<MyLayout {categories}  {isAuth}  {footerData}  {headerData}>
   <div class="container">
     {#if sub_categories.length}
       {#each sub_categories as c, index}
@@ -170,7 +174,7 @@
         <Cards>
           {#each sub_category_products[index] as p}
             <CardItem>
-              <a href={`./f/product/${p[0]}`}>
+              <a href={`./f/jewellery/product/${p[0]}`}>
                 <img src={p[p.length - 3]} alt="product image"/>
                 <span>{p[7]}</span>
                 <TextButton><span>₹ {getTotalArray(p).toFixed(0)}</span></TextButton>
@@ -186,7 +190,7 @@
     <Cards>
       {#each products as p}
         <CardItem>
-          <a href={`./f/product/${p[0]}`}>
+          <a href={`./f/jewellery/product/${p[0]}`}>
             <img src={p[p.length - 3]} alt="product image"/>
             <span>{p[7]}</span>
             <TextButton><span>₹ {getTotalArray(p).toFixed(0)}</span></TextButton>

@@ -1,10 +1,11 @@
 
 <script>
   import { onMount } from "svelte";
-  import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { all_h, getUser } from "../../../_modules/functions.js";
+  import * as sapper from '@sapper/app';
+  import { Server as S } from "../../../../_modules/ws_events_dispatcher.js";
+  import { all_h, getUser } from "../../../../_modules/functions.js";
   import { fade, fly } from 'svelte/transition';
-  import EntityForm from "../../../_components/forms/entity/EntityForm.svelte";
+  import EntityForm from "../../../../_components/forms/entity/EntityForm.svelte";
   let isSubmited = false
 
   let user = []
@@ -13,7 +14,8 @@
   onMount(async () => {
 		S.bind_(all_h("entity_entity"), (data) => { headersSelectors = data[1] || []; S.unbind(all_h("entity_entity"))}, []);
 		id = await new Promise((resolve, reject) => { S.bind_( "user_id", d => { if (d) { S.unbind("user_id"); resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
-		user = (await getUser(S, id))[0]
+    user = (await getUser(S, id))[0]
+    if (!user){sapper.goto('./f/auth/Login')}
   });
   
 </script>
@@ -30,7 +32,7 @@
 
 <div class="card">
   {#if !isSubmited}
-    {#if user.length && headersSelectors.length}
+    {#if user && user.length && headersSelectors.length}
     <EntityForm bind:isSubmited item={user} hs={headersSelectors} rowIdx={id} nameHidden={true}/>
     {/if}
   {:else}

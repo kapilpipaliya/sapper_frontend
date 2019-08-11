@@ -57,7 +57,6 @@
   const fns = [];
 
   if (item.length) { form = makeObject(hs, item) };
-  console.log(form)
   S.bind$(e_save_('entity', rowIdx), (d) => { isSaving = false; if (d.ok) { isSubmited = true;  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }); 
 
   async function save() { isSaving = true; S.trigger(e_save_('entity', rowIdx), form); }

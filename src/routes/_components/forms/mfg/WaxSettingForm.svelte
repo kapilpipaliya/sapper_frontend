@@ -29,7 +29,6 @@
 	import 'flatpickr/dist/themes/light.css'
 
   onMount(async () => {
-    //console.log('mounting', rowIdx)
     // setup date:
     const elem = date
     const defaultDate = form.date || (new Date()).toISOString();
@@ -42,7 +41,7 @@
           enableTime: true,
           defaultDate,
           onChange: (selectedDates, dateStr, instance) => {
-            form.post_date = selectedDates[0].toISOString()
+            form.date = selectedDates[0].toISOString()
           }
     })
   })

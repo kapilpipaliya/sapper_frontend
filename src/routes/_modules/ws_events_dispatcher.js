@@ -7,7 +7,6 @@ import {ws_server} from './functions.js'
 
 class ServerEventsDispatcher {
   constructor(req, res) {
-      // console.log("ws constructor")
     this.bind = this.bind.bind(this);
     this.bind$ = this.bind$.bind(this);
     this.bind_ = this.bind_.bind(this);
@@ -155,7 +154,6 @@ class ServerEventsDispatcher {
     }
     // if(evt.data instanceof ArrayBuffer ){
       else {
-        // console.log(Object.keys(evt.data))
       const buffer = evt.data;
       console.log("Received arraybuffer");
       this.dispatch(this.event_name, buffer)

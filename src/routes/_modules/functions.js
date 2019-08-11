@@ -1,6 +1,8 @@
 import { makeObject, sfx, nullFirstarrayFix } from './utils.js';
 export { makeObject, sfx, nullFirstarrayFix } from './utils.js';
 
+import StorageDB from "./indexdb/storage.js";
+
 const port = process.env.NODE_ENV === 'development' ? '8300' : '8300'
 const domain = process.env.NODE_ENV === 'development' ? 'localhost' : 'marvelartjewellery.com'
 const server = process.env.NODE_ENV === 'development' ? `http://${domain}:${port}` : `http://${domain}:${port}`;
@@ -203,15 +205,37 @@ export const getTotalArray = (p) => {
 }
 // check it already logged in
 export const isAuthFn = async (S, type="user") => {
-    const auth = await new Promise((resolve, reject) => { S.bind_( `is_${type}_auth`, data => { 
-        resolve(data); }, [[]] );
-      });
+    const auth = await new Promise((resolve, reject) => { S.bind_( `is_${type}_auth`, data => { S.unbind(`is_${type}_auth`); resolve(data); }, [[]] ); });
     return auth;
 }
 export const getPost = async (S, slug="home") => {
     const page = await new Promise((resolve, reject) => {
-        S.bind_( p_all("post", 112), data => { resolve(data); S.unbind(p_all("post", 112));}, [[null, 'post', null, null, `=${slug}`]]
-        ); // 6=code // = means excact
+        S.bind_( p_all("post", 112), data => { S.unbind(p_all("post", 112)); resolve(data); }, [[null, 'post', null, null, `=${slug}`]] ); // 6=code // = means excact
     });
     return page;
+}
+export const getSetting = async (S) => {
+    const setting = await new Promise((resolve, reject) => {
+        S.bind_( s_all("setting", 112), data => { S.unbind(s_all("setting", 112)); resolve(data);}, [[]] );
+    });
+    return setting;
+}
+export const getSettingKey = async (S, key="mobile") => {
+    const setting = await new Promise((resolve, reject) => {
+        S.bind_( s_all("setting", 112), data => { S.unbind(s_all("setting", 112)); resolve(data);}, [[`=${key}`]] );
+    });
+    return setting;
+}
+export const getSettingCache = async (key) => {
+    const db = new StorageDB("setting", 1);
+    const setting = await db.getItem(key)
+    return setting;
+}
+export const getFooterData = async(S)=>{
+    const mobile = await getSettingKey(S, "mobile");
+    return {mobile}
+}
+export const getHeaderData = async(S)=>{
+    const company = await getSettingKey(S, "company_name");
+    return {company}
 }

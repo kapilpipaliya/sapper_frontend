@@ -1,27 +1,31 @@
 <script context="module">
-  import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
-  import { menuCategories, getPurityName, getToneName, getClarityName, isAuthFn } from "../../_modules/functions.js";
+  import { Server as S_ } from "../../../_modules/ws_events_dispatcher.js";
+  import { menuCategories, getPurityName, getToneName, getClarityName, isAuthFn, getFooterData, getHeaderData } from "../../../_modules/functions.js";
 	export async function preload(page, session){
 		// let user = session.user
 		// if(!user) return {};
 		// if(!!user && user.isActive){ this.redirect(302, '/rdv') }
     let S; if (typeof S_ == "function") { S = new S_(this.req, this.res); } else { S = S_; }
     const categories = await menuCategories(S);
+    const footerData = await getFooterData(S)
+    const headerData = await getHeaderData(S)
 
-		return { categories }
+		return { categories, footerData, headerData }
 	}
 </script>
 <script>
   import { onMount } from "svelte";
-  import { Server as S } from "../../_modules/ws_events_dispatcher.js";
-  import { a_save_, a_all, e_all, p_all, m_all, makeObject, first, productImage, product_purity_price, product_clarity_price, getTotalArray } from "../../_modules/functions.js";
-  import FadeOutButton from "../../_components/ui/FadeOutButton.svelte";
-	import user from '../../_modules/stores/user.js'
-  import MyLayout from '../_myLayout.svelte'
-  import StorageDB from "../../_modules/indexdb/storage.js";
+  import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
+  import { a_save_, a_all, e_all, p_all, m_all, makeObject, first, productImage, product_purity_price, product_clarity_price, getTotalArray } from "../../../_modules/functions.js";
+  import FadeOutButton from "../../../_components/ui/FadeOutButton.svelte";
+	import user from '../../../_modules/stores/user.js' 
+  import MyLayout from '../../_myLayout.svelte'
+  import StorageDB from "../../../_modules/indexdb/storage.js";
 	
 	let form={};
 	export let categories = [];
+  export let footerData = {};
+  export let headerData = {};
 
   let products = []
 	
@@ -46,27 +50,28 @@
 	});
 
   const get_all_product_ids = async () => {
-		const cart = []
+		const p = []
     await db.processCursor(cursor=>{
       if(cursor) {
 				const v = cursor.value;
 				p.push([v.id, v.purity_id, v.tone_id, v.clarity_id, v.quantity])
 				cursor.continue();
       } else {
-				products = cart
+				products = p
 				fetch_products()
       }
-		// console.log(products)		
+		console.log(products)		
 		})
 	}
 	const fetch_products = () => {
 		if(products.length) {
 			const f_array = [`{${products.map(x=>x[0]).join(",")}}`]; f_array[14] = `product`;
-			fns.push(p_all("product", 124)); S.bind_(fns.i(-1), async (d) => { 
+			fns.push(p_all("product", 125)); S.bind_(fns.i(-1), async (d) => { 
+				S.unbind(p_all("product", 125));
 				for(const it of d) {
 					const v = await db.getItem(it[0])
 					it.push(v.value)
-					console.log(v)
+					// console.log(v)
 				}
 				await productImage(S, d)
 				product_purity_price(d, undefined, x=>x.i(-2).purity_id)
@@ -86,7 +91,7 @@
         if(cursor.value.id === prod[0]) {
 					const request = cursor.delete();
           request.onsuccess = function() {
-            console.log('Deleted From cart');
+            // console.log('Deleted From cart');
           };
         }
         cursor.continue();
@@ -109,7 +114,7 @@
 					products = products
 					getSum()
           request.onsuccess = function() {
-            console.log('Updated cart');
+            // console.log('Updated cart');
           };
         };
         cursor.continue();
@@ -147,9 +152,6 @@ const getSum = () => {
 	}
 	img{width: 150px; height: 150px;}
 	
-	.title{
-
-	}
 	.top{
 		vertical-align: top;
 	}
@@ -162,7 +164,7 @@ const getSum = () => {
 	<title>Payment</title>
 </svelte:head>
 
-<MyLayout {categories} {isAuth}>
+<MyLayout {categories} {isAuth} {footerData} {headerData}>
 	<h1>Payment</h1>
 	{#if !products.length}
 		<h2>No Items in cart.</h2>
@@ -185,7 +187,7 @@ const getSum = () => {
 										</tr>
 										<tr>
 											<td>Purity :</td>
-											<td>{getPurityName(purities, p.i(-4).purity_id)}</td>
+											<td>{@debug p}{getPurityName(purities, p.i(-4).purity_id)}</td>
 										</tr>
 										<tr>
 											<td>Tone :</td>
@@ -223,7 +225,7 @@ const getSum = () => {
 						</div>
 						<div class="">
 							<a href="./f/page/30_day_money_back_policy#lifetime-exchange">Eligible for Lifetime exchange &amp; Buy back </a>
-							<div class="">If ever you feel like exchanging your old Marvel Art Jewellery Jewellery for newer designs, we are game! Exchange the product for its current value or get Cash with just minor deductions.</div>
+							<div class="">If ever you feel like exchanging your old {headerData.company[0][4]} Jewellery for newer designs, we are game! Exchange the product for its current value or get Cash with just minor deductions.</div>
 						</div>
 						<div class="">
 							<span class="top">Free &amp; Insured Delivery </span>

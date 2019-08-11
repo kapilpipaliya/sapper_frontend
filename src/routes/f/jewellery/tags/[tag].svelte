@@ -1,6 +1,6 @@
 <script context="module">
   import { Server as S_ } from "../../../_modules/ws_events_dispatcher.js";
-  import { p_all, productImage,  product_purity_price, product_clarity_price, menuCategories, isAuthFn} from "../../../_modules/functions.js";
+  import { p_all, productImage,  product_purity_price, product_clarity_price, menuCategories, isAuthFn, getFooterData, getHeaderData} from "../../../_modules/functions.js";
 
   // Here We will Show some Top Images for each tag
   export async function preload(page, session) {
@@ -8,6 +8,8 @@
     const { tag } = page.params;
 
     const categories = await menuCategories(S);
+    const footerData = await getFooterData(S)
+    const headerData = await getHeaderData(S)
 
     let products = [];
 
@@ -47,7 +49,7 @@
 		}*/
     const isAuth = await isAuthFn(S)
 
-    return { categories, products, isAuth  };
+    return { categories, products, isAuth, footerData, headerData  };
   }
 </script>
 
@@ -61,6 +63,8 @@
   import { getTotalArray } from "../../../_modules/functions.js";
 
   export let categories = [];
+  export let footerData = {};
+  export let headerData = {};
   export let products = [];
   export let isAuth = false;
 
@@ -98,19 +102,19 @@
 </style>
 
 <svelte:head>
-  <title>Marvel Art Jewellery</title>
+  <title>{headerData.company[0][4]}</title>
 </svelte:head>
 
 {#if false}
 	<Filter />
 {/if}
 
-<MyLayout {categories}  {isAuth} >
+<MyLayout {categories}  {isAuth}  {footerData}  {headerData}>
   <div class="container">
     <Cards>
       {#each products as p}
         <CardItem>
-          <a href={`./f/product/${p[0]}`}>
+          <a href={`./f/jewellery/product/${p[0]}`}>
             <img src={p[p.length - 3]} alt="product image"/>
             <span>{p[7]}</span>
             <TextButton><span>₹ {getTotalArray(p).toFixed(0)}</span></TextButton>

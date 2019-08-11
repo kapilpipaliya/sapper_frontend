@@ -108,6 +108,7 @@
 		<a href='/admin/setting/image'>Image</a>
 		<a href='/admin/setting/image_collection'>Image Collection</a>
 		<a href='/admin/setting/payment_method'>Payment Method</a>
+		<a href='/admin/setting/setting'>Setting</a>
 	</div>
 	<div>
 		<b>Contacts:</b>

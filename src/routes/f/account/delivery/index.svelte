@@ -1,25 +1,28 @@
 <script context="module">
-  import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
-  import { menuCategories, getPurityName, getToneName, getClarityName, isAuthFn } from "../../_modules/functions.js";
+  import { Server as S_ } from "../../../_modules/ws_events_dispatcher.js";
+  import { menuCategories, getPurityName, getToneName, getClarityName, isAuthFn, getFooterData, getHeaderData } from "../../../_modules/functions.js";
 	export async function preload(page, session){
 		let S; if (typeof S_ == "function") { S = new S_(this.req, this.res); } else { S = S_; }
     const categories = await menuCategories(S);
     const isAuth = await isAuthFn(S)
 		if(!isAuth){ this.redirect(302, './f/auth/Login') }
+    const footerData = await getFooterData(S)
+    const headerData = await getHeaderData(S)
 
-		return { categories, isAuth }
+		return { categories, isAuth, footerData, headerData }
 	}
 </script>
 <script>
   import { onMount } from "svelte";
-  import { Server as S } from "../../_modules/ws_events_dispatcher.js";
-  import { all_h, a_save_, a_all, e_all, p_all, m_all, makeObject, first, productImage, product_purity_price, product_clarity_price, getTotalArray, getUser } from "../../_modules/functions.js";
-  import MyLayout from '../_myLayout.svelte'
-	import StorageDB from "../../_modules/indexdb/storage.js";
+  import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
+  import { all_h, a_save_, a_all, e_all, p_all, m_all, makeObject, first, productImage, product_purity_price, product_clarity_price, getTotalArray } from "../../../_modules/functions.js";
+  import MyLayout from '../../_myLayout.svelte'
+	import StorageDB from "../../../_modules/indexdb/storage.js";
 	import Form from './_form/Form.svelte'
 	
 	export let categories = [];
-	let user = []
+  export let footerData = {};
+  export let headerData = {};
 	let headersSelectors = [];
 
 	let products = []
@@ -58,7 +61,7 @@
 	<title>Address</title>
 </svelte:head>
 
-<MyLayout {categories} {isAuth}>
+<MyLayout {categories} {isAuth} {footerData} {headerData}>
 	<h1>Shipping Address</h1>
 
 	{#if !products.length}
@@ -71,7 +74,7 @@
 			</div>
 
 			<div>
-				<a href="./f/checkout" >Checkout</a><br/>
+				<a href="./f/account/checkout" >Checkout</a><br/>
 				<div class="contact-details"> Any Questions?<br>Please call us at <strong>1800-419-0066</strong> or <span class="live-chat">Chat with us</span> </div>
 			</div>
 

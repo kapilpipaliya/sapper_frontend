@@ -44,7 +44,6 @@
   fns.push(m_all("tone", rowIdx)); S.bind_(fns.i(-1), (d) => { tone = d; items_()}, [[]]);
   fns.push(m_all("clarity", rowIdx)); S.bind_(fns.i(-1), (d) => { clarity = d; items_()}, [[]]);
 
-  console.log(form)
   onMount(async () => {
     // setup date:
     const elem = date

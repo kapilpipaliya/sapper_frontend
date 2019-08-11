@@ -1,7 +1,7 @@
 <script context="module">
-  import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
-  import { m_all, p_all, all, all_h, p_save_, makeObject, product_purity_price, product_clarity_price, productImage, get_p_purity_idx, get_p_clarity_idx, menuCategories, get_p_purity_tone_idx, getToneIdx,getPrice,getTotal, isAuthFn  } from "../../_modules/functions.js";
-  import MyLayout from '../_myLayout.svelte'
+  import { Server as S_ } from "../../../_modules/ws_events_dispatcher.js";
+  import { m_all, p_all, all, all_h, p_save_, makeObject, product_purity_price, product_clarity_price, productImage, get_p_purity_idx, get_p_clarity_idx, menuCategories, get_p_purity_tone_idx, getToneIdx,getPrice,getTotal, isAuthFn, getFooterData, getHeaderData  } from "../../../_modules/functions.js";
+  import MyLayout from '../../_myLayout.svelte'
   export async function preload(page, session) {
     let S; if (typeof S_ == "function") { S = new S_(this.req, this.res); } else { S = S_; }
     const { p } = page.params;
@@ -44,22 +44,23 @@
     policies = await new Promise((resolve, reject) => { S.bind_( p_all("policy"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
     certificates = await new Promise((resolve, reject) => { S.bind_( p_all("certified_by"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
     const isAuth = await isAuthFn(S)
-
-    return { categories, product, clarities, tones, purities, purity_idx, d_clarity_idx, tone_id, policies, certificates, isAuth  };
+    const footerData = await getFooterData(S)
+    const headerData = await getHeaderData(S)
+    return { categories, product, clarities, tones, purities, purity_idx, d_clarity_idx, tone_id, policies, certificates, isAuth, footerData, headerData };
   }
 </script>
 
 <script>
   import { onMount } from "svelte";
   import { fade, fly } from 'svelte/transition';
-  import Cards from "../../_components/ui/Cards.svelte";
-  import FadeOutButton from "../../_components/ui/FadeOutButton.svelte";
-  import Slider from "../../_components/ui/Slider.svelte";
-  import ScrollTop from "../../_components/ui/ScrollTop.svelte";
-  import ProductDetail from "../../_components/block/ProductDetail.svelte";
-  import HaveAQue from "../../_components/block/HaveAQue.svelte";
-  import StorageDB from "../../_modules/indexdb/storage.js";
-  import { getClarityName, getToneName, getPurityName, img_url} from "../../_modules/functions.js";
+  import Cards from "../../../_components/ui/Cards.svelte";
+  import FadeOutButton from "../../../_components/ui/FadeOutButton.svelte";
+  import Slider from "../../../_components/ui/Slider.svelte";
+  import ScrollTop from "../../../_components/ui/ScrollTop.svelte";
+  import ProductDetail from "../../../_components/block/ProductDetail.svelte";
+  import HaveAQue from "../../../_components/block/HaveAQue.svelte";
+  import StorageDB from "../../../_modules/indexdb/storage.js";
+  import { getClarityName, getToneName, getPurityName, img_url} from "../../../_modules/functions.js";
   export let isAuth = false;
   export let categories = [];
   export let product = {};
@@ -71,6 +72,8 @@
   export let purity_idx = 0;
   export let tone_id = 0;
   export let d_clarity_idx = 0;
+  export let footerData = {};
+  export let headerData = {};
   let instruction = ""
   let isCartAdded = false
   //export let similer_products = [];
@@ -118,7 +121,7 @@
   });
 
   const buy_now =() => {
-    db.setItem(product.id, {purity_id: product.p_purities_purity_id[purity_idx][0], tone_id: tone_id, clarity_id: product.p_clarity_clarity_id[d_clarity_idx][0], pcs: 1});
+    db.setItem(product.id, {purity_id: product.p_purities_purity_id[purity_idx][0], tone_id: tone_id, clarity_id: product.p_clarity_clarity_id[d_clarity_idx][0], pcs: 1, instruction});
     isCartAdded = true
   }
   const getPolicyUrl = (id) => {
@@ -195,7 +198,6 @@
   }
   .price1 {
     font-family: Domine,serif;
-
   }
   /* .productDetail { width: 520px; } */
   .break {
@@ -217,14 +219,10 @@
 </style>
 
 <svelte:head>
-  <title>Marvel Art Jewellery</title>
+  <title>{headerData.company[0][4]}</title>
 </svelte:head>
 
-<MyLayout {categories}  {isAuth} >
-  {#if false}
-    <button on:click={e => console.log(product.p_purities_purity_id)}>R</button>
-    TODO: Buy Now -> Add to cart. HOME / JEWELLERY / RINGS / THE CITRA RING
-  {/if}
+<MyLayout {categories}  {isAuth} {footerData} {headerData} >
   <div class="cards">
     <div class="card">
       {#if false}
@@ -244,13 +242,15 @@
 
     </div>
     <div class="card">
-      <h1>{product.post_title}</h1>
-      <span class="price1">₹ {getTotal(product, purity_idx, tone_id, clarityPrice)}</span>
+      <h1>{product.title}</h1>
+      <h2 class="price1">₹ {getTotal(product, purity_idx, tone_id, clarityPrice)}</h2>
       {#if false}
         TODO: add auto description here. ([Diamond Ring] in [18 kt] [yellow gold]
         [8.46 gram] with diamonds (0.2550 ct))
       {/if}
-      <p>{product.post_excerpt}</p>
+      {#if product.excerpt}
+        <p>{product.excerpt}</p>
+      {/if}
       {#if false}
         Stock Quantity: {product.stock_quantity} Stock Status: {product.stock_status}
       {/if}
@@ -313,7 +313,7 @@
     </div>
 
     <div class="card">
-      <HaveAQue/>
+      <HaveAQue {headerData}/>
     </div>
 
   </div>

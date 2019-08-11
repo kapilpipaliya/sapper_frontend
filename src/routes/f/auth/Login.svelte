@@ -1,6 +1,6 @@
 <script context="module">
   import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
-  import { menuCategories, isAuthFn  } from "../../_modules/functions.js";
+  import { menuCategories, isAuthFn, getFooterData, getHeaderData  } from "../../_modules/functions.js";
 	export async function preload(page, session){
     let S; if (typeof S_ == "function") { S = new S_(this.req, this.res); } else { S = S_; }
     // TOdo redirect if alrady authorised.
@@ -8,7 +8,9 @@
       // this.redirect(302, '/')
     // }
     const categories = await menuCategories(S);
-    return { categories }
+    const footerData = await getFooterData(S)
+    const headerData = await getHeaderData(S)
+    return { categories, footerData, headerData }
 	}
 </script>
 
@@ -22,6 +24,8 @@
   let er = "";  
   let form = { email: '', pass: ''};
   export let categories = [];
+  export let footerData = {};
+  export let headerData = {};
   let countries;
   let formSave = false;
   let getCookie = false;
@@ -111,10 +115,10 @@ input {
 input:hover {
   opacity: 1;
 }
-hr {
+/* hr {
   border: 1px solid #f1f1f1;
   margin-bottom: 25px;
-}
+} */
   /* Set a style for the submit button */
 .registerbtn {
   background-color: #4CAF50;
@@ -140,10 +144,10 @@ hr {
 </style>
 
 <svelte:head>
-	<title>Marvel Art Jewellery - Log In</title>
+	<title>{headerData.company[0][4]} - Log In</title>
 </svelte:head>
 
-<MyLayout {categories}  {isAuth} >
+<MyLayout {categories}  {isAuth} {footerData} {headerData} >
 {#if !isAuth}
 <div class="container">
       <div class="row">
@@ -177,7 +181,7 @@ hr {
 
   <div class="signin">
     <p>I want to create an account. <a href="./f/auth/Register">Sign up</a>.</p>
-    <p>An account is needed to purchase a jewellery</p>
+    <p>An account is needed to purchase a product</p>
   </div>
 {:else}
   {#if false}

@@ -1,10 +1,12 @@
 <script context="module">
   import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
-  import { menuCategories, isAuthFn  } from "../../_modules/functions.js";
+  import { menuCategories, isAuthFn, getFooterData, getHeaderData  } from "../../_modules/functions.js";
 	export async function preload(page, session){
     let S; if (typeof S_ == "function") { S = new S_(this.req, this.res); } else { S = S_; }
     const categories = await menuCategories(S);
-    return { categories }
+    const footerData = await getFooterData(S)
+    const headerData = await getHeaderData(S)
+    return { categories, footerData, headerData }
 	}
 </script>
 <script>
@@ -13,6 +15,8 @@
 
   const dp = createEventDispatcher();
   export let categories = [];
+  export let footerData = {};
+  export let headerData = {};
   
   let logout = false;
   let isAuth = false;
@@ -42,7 +46,7 @@
 /* Page Content */
 .content {padding:10px;}
 </style>
-<MyLayout {categories}  {isAuth} >
+<MyLayout {categories}  {isAuth} {footerData} {headerData} >
 {#if logout}
   <div class="header">
      <a href="./"><h1>Logged out successfully!</h1></a>

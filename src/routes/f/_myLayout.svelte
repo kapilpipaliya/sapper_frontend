@@ -12,6 +12,8 @@
   import LiveChat from "../_components/block/LiveChat.svelte";
   export let categories = [];
   export let isAuth = false;
+  export let footerData = {};
+  export let headerData = {};
 </script>
 
 <style>
@@ -70,7 +72,7 @@
 {/if}
 
 <div class="container">
-  <TopMenu {categories} {isAuth}/>
+  <TopMenu {categories} {isAuth} {headerData}/>
   <div class="content-body">
     <main class="content">
       <slot />
@@ -79,7 +81,7 @@
     <aside class="ads" />
   </div>
   <footer class="footer">
-    <Footer />
+    <Footer {footerData} {headerData}/>
   </footer>
 </div>
 

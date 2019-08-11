@@ -1,6 +1,8 @@
+<script>
+  export let footerData = {};
+  export let headerData = {};
+</script>
 <style>
-	
-
 
 footer{
 		padding-top: 5px;
@@ -53,7 +55,7 @@ section{margin: 0 10px;}
                 <ul>
                   <li><a href="./f/page/contact_us">Contact Us</a></li>
                   <li><a href="./f/page/faq">FAQ</a></li>
-									<li class="phone-number">1800-419-0066</li>
+									<li class="phone-number">{footerData.mobile[0][4]}</li>
                   <li class="">(9 am-10 pm, 7 days a week)</li>
                 </ul>
               </div>
@@ -152,7 +154,7 @@ section{margin: 0 10px;}
           </div>
         </div>
             
-        <div class="">© 2019 Marvel Art Jewellery. All Rights Reserved.&nbsp;</div>
+        <div class="">© 2019 {headerData.company[0][4]}. All Rights Reserved.&nbsp;</div>
         <div><a href="https://scesoftwares.com/">Made By SCE Softwares</a></div>
 
       </div>

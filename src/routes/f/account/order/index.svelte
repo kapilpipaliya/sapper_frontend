@@ -1,6 +1,7 @@
 <script context="module">
-  import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
-  import { menuCategories, getPurityName, getToneName, getClarityName, isAuthFn, getFooterData, getHeaderData } from "../../_modules/functions.js";
+  //This page is same like checkout page.
+  import { Server as S_ } from "../../../_modules/ws_events_dispatcher.js";
+  import { menuCategories, getPurityName, getToneName, getClarityName, isAuthFn, getFooterData, getHeaderData } from "../../../_modules/functions.js";
 	export async function preload(page, session){
 		// let user = session.user
 		// if(!user) return {};
@@ -11,17 +12,16 @@
     const headerData = await getHeaderData(S)
 
 		return { categories, footerData, headerData }
-
 	}
 </script>
 <script>
   import { onMount } from "svelte";
-  import { Server as S } from "../../_modules/ws_events_dispatcher.js";
-  import { a_save_, a_all, e_all, p_all, m_all, makeObject, first, productImage, product_purity_price, product_clarity_price, getTotalArray } from "../../_modules/functions.js";
-  import FadeOutButton from "../../_components/ui/FadeOutButton.svelte";
-	import user from '../../_modules/stores/user.js'
-  import MyLayout from '../_myLayout.svelte'
-  import StorageDB from "../../_modules/indexdb/storage.js";
+  import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
+  import { a_save_, a_all, e_all, p_all, m_all, makeObject, first, productImage, product_purity_price, product_clarity_price, getTotalArray } from "../../../_modules/functions.js";
+  import FadeOutButton from "../../../_components/ui/FadeOutButton.svelte";
+	import user from '../../../_modules/stores/user.js' 
+  import MyLayout from '../../_myLayout.svelte'
+  import StorageDB from "../../../_modules/indexdb/storage.js";
 	
 	let form={};
 	export let categories = [];
@@ -51,14 +51,14 @@
 	});
 
   const get_all_product_ids = async () => {
-		const p = []
+		const cart = []
     await db.processCursor(cursor=>{
       if(cursor) {
 				const v = cursor.value;
-				p.push(v.id)
+				p.push([v.id, v.purity_id, v.tone_id, v.clarity_id, v.quantity])
 				cursor.continue();
       } else {
-				products = p
+				products = cart
 				fetch_products()
       }
 		// console.log(products)		
@@ -66,9 +66,8 @@
 	}
 	const fetch_products = () => {
 		if(products.length) {
-			const f_array = [`{${products.join(",")}}`]; f_array[14] = `product`;
+			const f_array = [`{${products.map(x=>x[0]).join(",")}}`]; f_array[14] = `product`;
 			fns.push(p_all("product", 124)); S.bind_(fns.i(-1), async (d) => { 
-				S.unbind(p_all("product", 124));
 				for(const it of d) {
 					const v = await db.getItem(it[0])
 					it.push(v.value)
@@ -151,11 +150,8 @@ const getSum = () => {
 	.row-center{
 		flex: 1 1 auto;
 	}
-	img{width: 252px; height: 252px;}
+	img{width: 150px; height: 150px;}
 	
-	.title{
-
-	}
 	.top{
 		vertical-align: top;
 	}
@@ -165,15 +161,11 @@ const getSum = () => {
 </style>
 
 <svelte:head>
-	<title>Cart</title>
+	<title>Payment</title>
 </svelte:head>
 
-<MyLayout {categories} {isAuth} {footerData}  {headerData}>
-	<h1>Cart</h1>
-	{#if false}
-		IF gift message added give option to edit / remove it. show checkmark that its added.
-	{/if}
-
+<MyLayout {categories} {isAuth} {footerData} {headerData}>
+	<h1>Payment</h1>
 	{#if !products.length}
 		<h2>No Items in cart.</h2>
 	{:else}
@@ -212,8 +204,8 @@ const getSum = () => {
 									</tbody>
 								</table>
 								{#if false}
-									Description<br/>
-									Ring Size<br/>
+									Description
+									Ring Size
 								{/if}
 							</div>
 							<div>
@@ -264,18 +256,18 @@ const getSum = () => {
 				{#if false}
 					<button>Gift Message (Optional):</button>
 
-					<form>ADD YOUR GIFT MESSAGE<br/>
-					Recipient's Name: <input id="giftTo"><br/>
-					Your Name: <input id="giftFrom"><br/>
-					Message: <input id="message"><br/>
+					<form>ADD YOUR GIFT MESSAGE
+					Recipient's Name: <input id="giftTo">
+					Your Name: <input id="giftFrom">
+					Message: <input id="message">
 					</form>
 				{/if}
 
-				<a class="checkout" href="./f/account/delivery" >Place Order</a><br/>
+				<button type="button" >Place Order</button>
 				{#if false}
-					<button type="button">I have a voucher code</button><br/>
+					<button type="button">I have a voucher code</button>
 					<form>
-						<input><br/>
+						<input>
 						<button>Apply</button>
 						{form.code_error}
 					</form>

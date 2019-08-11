@@ -21,7 +21,6 @@
   S.bind_(m_all(`tone`, rowIdx), (d) => { tones = d; form.pt_purity_tone = (form.pt_purity_tone) }, []);
   
   async function save() { 
-  console.log(form)
     let isDupTones = false;
     const arr = []
     form.pt_purity_tone.forEach(  x => { if(!isDupTones) {isDupTones = arr.includes(x[0]); arr.push(x[0]) }  } )

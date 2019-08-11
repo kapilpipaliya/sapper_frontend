@@ -6,6 +6,7 @@
   
   let segment = ""; // process segment properly
   export let categories = [];
+  export let headerData = {};
   export let isAuth = false;
 
 </script>
@@ -64,7 +65,7 @@
   }
 @media screen and (max-width: 755px) {
 		h1{
-
+			font-size: 2rem;
 		}
 }
 </style>
@@ -72,8 +73,8 @@
 <div class="grid">
 
   <div class="item1">
-    <a class={segment === undefined || segment === 'home' ? 'active' : ''} href="." title="Marvel Art Jewellery"> <img class="logo" src="../../images/logo.svg" alt="logo" /> </a>
-    <h1>Marvel Art Jewellery</h1>
+    <a class={segment === undefined || segment === 'home' ? 'active' : ''} href="." title="{headerData.company[0][4]}"> <img class="logo" src="../../images/logo.svg" alt="logo" /> </a>
+    <h1>{headerData.company[0][4]}</h1>
   </div>
 
     <div class="line1">

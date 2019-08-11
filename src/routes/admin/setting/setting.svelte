@@ -1,7 +1,6 @@
 <script>
   import TablePage from "../../_components/ui/table/TablePage.svelte";
-  import TaskForm from "../../_components/forms/menu/TaskForm.svelte";
-
+  import SettingForm from "../../_components/forms/setting/SettingForm.svelte";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import { authCeck } from "../../_modules/functions.js";
   let isAuth = false;
@@ -13,16 +12,14 @@
 </script>
 
 <svelte:options immutable />
-
 <svelte:head>
-  <title>Menu Task</title>
+  <title>Setting</title>
 </svelte:head>
 
 {#if isAuth}
-  <h1>Menu Task</h1>
+  <h1>Setting</h1>
   <TablePage
-    url="menu_menu_task"
-    formcomponent={TaskForm}
-    quickcomponent={TaskForm}
-     />
+    url="setting_setting"
+    formcomponent={SettingForm}
+    quickcomponent={SettingForm} />
 {/if}

@@ -1,6 +1,6 @@
 <script context="module">
   import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
-  import { p_all, menuCategories, isAuthFn } from "../../_modules/functions.js";
+  import { p_all, menuCategories, isAuthFn, getFooterData, getHeaderData } from "../../_modules/functions.js";
 
 	export async function preload({ params, query }, session) {
     let S; if (typeof(S_) == "function") { S = new S_(this.req, this.res); } else { S = S_; }
@@ -16,8 +16,10 @@
       ); // 6=code // = means excact
 		});
     const isAuth = await isAuthFn(S)
+    const footerData = await getFooterData(S)
+    const headerData = await getHeaderData(S)
 
-		return {categories, posts, isAuth }
+		return {categories, posts, isAuth, footerData, headerData }
 
 	}
 </script>
@@ -26,6 +28,8 @@
   import MyLayout from '../_myLayout.svelte'
 	export let posts;
   export let categories = [];
+  export let footerData = {};
+  export let headerData = {};
   export let isAuth = false;
 </script>
 
@@ -41,7 +45,7 @@
 </svelte:head>
 
 
-<MyLayout {categories}  {isAuth} >
+<MyLayout {categories}  {isAuth} {footerData} {headerData} >
 
 	<h1>Pages</h1>
 

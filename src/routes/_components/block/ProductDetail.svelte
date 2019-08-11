@@ -8,7 +8,6 @@
   export let d_clarity_idx = 0;
   export let clarityPrice = 0;
 
-  console.log(product)
 </script>
 
 <style>
@@ -170,7 +169,7 @@
     </tr>
   </tbody>
 </table>
-{product.post_content}
+{product.content}
 <h3>Tags</h3>
 {#if false}  
   {#if product.comment_status}
