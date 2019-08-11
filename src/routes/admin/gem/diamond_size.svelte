@@ -19,7 +19,7 @@
 {#if isAuth}
   <h1>Diamond Size</h1>
   <TablePage
-    url="material_diamond_size"
+    url="d_size"
     formcomponent={DiamondSizeForm}
     quickcomponent={DiamondSizeForm} />
 {/if}

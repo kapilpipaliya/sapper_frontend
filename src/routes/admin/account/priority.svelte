@@ -19,7 +19,7 @@
 
 {#if isAuth}
   <h1>Priority</h1>
-  <TablePage url="account_priority"
+  <TablePage url="priority"
   formcomponent={PriorityForm}
   quickcomponent={PriorityForm}
    />

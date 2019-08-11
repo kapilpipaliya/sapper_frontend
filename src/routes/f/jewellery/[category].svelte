@@ -1,6 +1,6 @@
 <script context="module">
   import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
-  import { p_all, productImage,  product_purity_price, product_clarity_price, menuCategories, isAuthFn, getFooterData, getHeaderData} from "../../_modules/functions.js";
+  import { all, productImage,  product_purity_price, product_clarity_price, menuCategories, isAuthFn, getFooterData, getHeaderData} from "../../_modules/functions.js";
 
   // Here We will Show some Top Images for each category
   export async function preload(page, session) {
@@ -11,7 +11,7 @@
     const footerData = await getFooterData(S)
     const headerData = await getHeaderData(S)
     const categoryRow = await new Promise((resolve, reject) => {
-      S.bind_( p_all("category", 222), data => {
+      S.bind_( all("category", 222), data => {
           resolve(data);
           // reject(new Error('Fail!'))
           // throw(new Error())
@@ -29,7 +29,7 @@
 
     if (categoryRow[0]) {
       sub_categories = await new Promise((resolve, reject) => {
-        S.bind_( p_all("category", 223), data => {
+        S.bind_( all("category", 223), data => {
             resolve(data);
           },
           [[null, categoryRow[0][0]]]
@@ -42,7 +42,7 @@
             const f_array = [];
             f_array[14] = `product`;
             f_array[41] = `=${it[0]}`; // pc_category_id
-            S.bind_( p_all("product", 224), data => {
+            S.bind_( all("product", 224), data => {
                 resolve(data);
               },
               [f_array]
@@ -55,7 +55,7 @@
         const f_array = [];
         f_array[14] = `product`;
         f_array[41] = `=${categoryRow[0][0]}`; // pc_category_id
-        S.bind_( p_all("product", 225), data => {
+        S.bind_( all("product", 225), data => {
             resolve(data);
           },
           [f_array]

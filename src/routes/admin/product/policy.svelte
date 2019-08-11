@@ -19,7 +19,7 @@
 {#if isAuth}
   <h1>Policy</h1>
   <TablePage
-    url="product_policy"
+    url="policy"
     formcomponent={PolicyForm}
     quickcomponent={PolicyForm} />
 {/if}

@@ -1,6 +1,6 @@
 <script context="module">
   import { Server as S_ } from "../../../_modules/ws_events_dispatcher.js";
-  import { p_all, productImage,  product_purity_price, product_clarity_price, menuCategories, isAuthFn, getFooterData, getHeaderData} from "../../../_modules/functions.js";
+  import { all, productImage,  product_purity_price, product_clarity_price, menuCategories, isAuthFn, getFooterData, getHeaderData} from "../../../_modules/functions.js";
 
   // Here We will Show some Top Images for each tag
   export async function preload(page, session) {
@@ -13,12 +13,12 @@
 
     let products = [];
 
-    //const tagRow = await new Promise((resolve, reject) => { S.bind_( p_all("tag", 223), data => { resolve(data); }, [[null, tagRow[0][0]]] ); });// 1=code // = means excact
+    //const tagRow = await new Promise((resolve, reject) => { S.bind_( all("tag", 223), data => { resolve(data); }, [[null, tagRow[0][0]]] ); });// 1=code // = means excact
     const tags = await new Promise((resolve, reject) => {
       const f_array = [];
       f_array[14] = `product`;
       f_array[40] = `=${tag}`; // tags_tags_id // server crash if not escape
-      S.bind_( p_all("product", 225), data => { resolve(data); }, [f_array] );
+      S.bind_( all("product", 225), data => { resolve(data); }, [f_array] );
     });
     products = tags;
 

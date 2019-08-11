@@ -35,7 +35,6 @@
 
   onMount(() => {
     fns.push(all_h(url)); S.bind_(...fns.i(-1), (data) => {
-      console.log(data)
       headers = data[0] || [];
       headersSelectors = data[1] || [];
       headerColTypes = data[2] || [];
@@ -51,23 +50,9 @@
       tooltip_offset_columns = data[5]
       resetFilter_();
     }, {});
-    /*
-    fns.push(all_hi(url)); S.bind_(fns.i(-1), (data) => {
-      visible_columns = data || [];
-      let i;
-      for (i = 0; i < headers.length; i++) { // care
-        if (!data.includes(i)) {
-          first_visibile_column = i;
-          break;
-        }
-      }
-    }, {});
-    
-    fns.push(all_o(url)); S.bind_(fns.i(-1), (data) => { offset_columns = data || []; }, []);
-    fns.push(all_t(url)); S.bind_(fns.i(-1), (data) => { tooltip_offset_columns = data || []; }, []);
-    */
-      // [...Array(20)].map(_=>0)
-    fns.push(all(url)); S.bind$(...fns.i(-1), (data) => { quickview = Array.from({length: data.length}, ()=>0); items = data || []; });
+    // [...Array(20)].map(_=>0)
+    fns.push(all(url)); S.bind$(...fns.i(-1), (data) => { 
+      quickview = Array.from({length: data.length}, ()=>0); items = data || []; });
     resetFilter_();
     refresh();
     return true;

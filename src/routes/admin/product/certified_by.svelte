@@ -19,7 +19,7 @@
 {#if isAuth}
   <h1>Certified By</h1>
   <TablePage
-    url="product_certified_by"
+    url="certified_by"
     formcomponent={CertifiedByForm}
     quickcomponent={CertifiedByForm} />
 {/if}

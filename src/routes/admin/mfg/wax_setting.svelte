@@ -21,7 +21,7 @@
 {#if isAuth}
   <h1>Wax Setting</h1>
   <TablePage
-    url="mfg_wax_setting"
+    url="wax_setting"
     formcomponent={WaxSettingForm}
     quickcomponent={WaxSettingForm}
      />

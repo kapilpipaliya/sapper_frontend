@@ -19,7 +19,7 @@
 {#if isAuth}
   <h1>Payment Method</h1>
   <TablePage
-    url="setting_payment_method"
+    url="payment_method"
     formcomponent={PaymentMethodForm}
     quickcomponent={PaymentMethodForm} />
 {/if}

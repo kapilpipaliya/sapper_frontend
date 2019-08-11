@@ -1,6 +1,6 @@
 <script context="module">
   import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
-  import { p_all, menuCategories, isAuthFn, getFooterData, getHeaderData } from "../../_modules/functions.js";
+  import { all, menuCategories, isAuthFn, getFooterData, getHeaderData } from "../../_modules/functions.js";
 
 	export async function preload({ params, query }, session) {
     let S; if (typeof(S_) == "function") { S = new S_(this.req, this.res); } else { S = S_; }
@@ -9,7 +9,7 @@
 
     const categories = await menuCategories(S);
     const page = await new Promise((resolve, reject) => {
-      S.bind_( p_all("post", 112), data => {
+      S.bind_( all("post", 112), data => {
           resolve(data);
           // reject(new Error('Fail!'))
           // throw(new Error())

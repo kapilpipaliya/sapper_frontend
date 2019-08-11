@@ -1,7 +1,7 @@
 
 <script>
   import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { sfx, m_all, p_all, s_save_, p_save_,p_del_, makeObject, nullFirstarrayFix, getToneName } from "../../../_modules/functions.js";
+  import { sfx, all, s_save_, p_save_,p_del_, makeObject, nullFirstarrayFix, getToneName } from "../../../_modules/functions.js";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import flatpickr from 'flatpickr';
   import SubmitButton from '../../ui/SubmitButton.svelte'
@@ -106,13 +106,13 @@
   fns.push(p_save_("product", rowIdx)); S.bind$(...fns.i(-1), (d) => {isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } });
   S.bind$(p_del_("product", rowIdx), (d) => { isSaving = false; if (d.ok) {  er = ""; dp("deleteRow", { rowIdx, d }); } else { er = d.error; } });
 
-  fns.push(p_all("shipping_class", rowIdx)); S.bind_(fns.i(-1), (d) => { shipping_class = [[0, "No Shipping Class"], ...d]; form.p_shipping_class_id = item.length ? form["p_shipping_class_id"] : (shipping_class[0] ? shipping_class[0][0] : 0) }, [[]]);
-  fns.push(p_all("category_tree", rowIdx)); S.bind_(fns.i(-1), (d) => { pc_category_id = d; form.pc_category_id = item.length ? nullFirstarrayFix(form["pc_category_id"]) : [] }, [[]]);
+  fns.push(all("shipping_class", rowIdx)); S.bind_(...fns.i(-1), (d) => { shipping_class = [[0, "No Shipping Class"], ...d]; form.p_shipping_class_id = item.length ? form["p_shipping_class_id"] : (shipping_class[0] ? shipping_class[0][0] : 0) }, [[]]);
+  fns.push(all("category_tree", rowIdx)); S.bind_(...fns.i(-1), (d) => { pc_category_id = d; form.pc_category_id = item.length ? nullFirstarrayFix(form["pc_category_id"]) : [] }, [[]]);
   
-  fns.push(m_all("tone", rowIdx)); S.bind_(fns.i(-1), (d) => { p_tones_tone_id = d; form.p_tones_tone_id = item.length ? form["p_tones_tone_id"] : [] }, [[]]);
-  fns.push(p_all("certified_by", rowIdx)); S.bind_(fns.i(-1), (d) => { p_certified_by_certified_by = d; form.p_certified_by_certified_by = item.length ? form["p_certified_by_certified_by"] : [] }, [[]]);
-  fns.push(p_all("policy", rowIdx)); S.bind_(fns.i(-1), (d) => { p_policy_post_policy = d; form.p_policy_post_policy = item.length ? form["p_policy_post_policy"] : [] }, [[]]);
-  fns.push(m_all("clarity", rowIdx)); S.bind_(fns.i(-1), (d) => { 
+  fns.push(all("tone", rowIdx)); S.bind_(...fns.i(-1), (d) => { p_tones_tone_id = d; form.p_tones_tone_id = item.length ? form["p_tones_tone_id"] : [] }, [[]]);
+  fns.push(all("certified_by", rowIdx)); S.bind_(...fns.i(-1), (d) => { p_certified_by_certified_by = d; form.p_certified_by_certified_by = item.length ? form["p_certified_by_certified_by"] : [] }, [[]]);
+  fns.push(all("policy", rowIdx)); S.bind_(...fns.i(-1), (d) => { p_policy_post_policy = d; form.p_policy_post_policy = item.length ? form["p_policy_post_policy"] : [] }, [[]]);
+  fns.push(all("clarity", rowIdx)); S.bind_(...fns.i(-1), (d) => { 
       p_clarity_clarity_id = d; 
       form.p_clarity_clarity_id = item.length ? form["p_clarity_clarity_id"] : [] 
       clarity_new_id = Array.from(d, (_, i)=>{
@@ -124,7 +124,7 @@
       return [d[i][0], 0, 0, 0, false] // clarity, pcs, weight, price, isMain
       });
     }, [[]]);
-  fns.push(m_all("purity", rowIdx)); S.bind_(fns.i(-1), (d) => { 
+  fns.push(all("purity", rowIdx)); S.bind_(...fns.i(-1), (d) => { 
     p_purities_purity_id = d; // This contain all the rows.
     form.p_purities_purity_id = item.length ? form["p_purities_purity_id"] : [];
     form.p_purity_id = item.length && form["p_purity_id"] ? form["p_purity_id"] : (d[0] ? d[0][0] : 0)
@@ -168,22 +168,22 @@
     updateVolume()
     }, [[], [0]]);
 
-  fns.push(p_all("setting_type", rowIdx)); S.bind_(fns.i(-1), (d) => { setting_type_id = [[0, "No Setting Type"], ...d];; }, [[]]);
+  fns.push(all("setting_type", rowIdx)); S.bind_(...fns.i(-1), (d) => { setting_type_id = [[0, "No Setting Type"], ...d];; }, [[]]);
   
   const size_ = () => {form.p_d_size_diamond_size_id = form.p_d_size_diamond_size_id}
 
-  fns.push(m_all("shape", rowIdx)); S.bind_(fns.i(-1), (d) => { shapes = d; size_()}, [[]]);
-  fns.push(m_all("d_color", rowIdx)); S.bind_(fns.i(-1), (d) => { d_colors = d; size_()}, [[]]);
-  fns.push(m_all("cs_color", rowIdx)); S.bind_(fns.i(-1), (d) => { cs_colors = d; size_()}, [[]]);
-  fns.push(m_all("cs_type", rowIdx)); S.bind_(fns.i(-1), (d) => { cs_types = d; size_()}, [[]]);
-  fns.push(m_all("size", rowIdx)); S.bind_(fns.i(-1), (d) => { sizes = d; size_()}, [[], [0]]);
+  fns.push(all("shape", rowIdx)); S.bind_(...fns.i(-1), (d) => { shapes = d; size_()}, [[]]);
+  fns.push(all("d_color", rowIdx)); S.bind_(...fns.i(-1), (d) => { d_colors = d; size_()}, [[]]);
+  fns.push(all("cs_color", rowIdx)); S.bind_(...fns.i(-1), (d) => { cs_colors = d; size_()}, [[]]);
+  fns.push(all("cs_type", rowIdx)); S.bind_(...fns.i(-1), (d) => { cs_types = d; size_()}, [[]]);
+  fns.push(all("size", rowIdx)); S.bind_(...fns.i(-1), (d) => { sizes = d; size_()}, [[], [0]]);
   
   // setup thumnails:
   for (let i = 0; i < form.p_attachments_attachement_id.length; i++) {
     const e = form.p_attachments_attachement_id[i];
     if(!e[1]) continue;
     
-    fns.push(p_all("attachment", `${sfx(rowIdx)}${i}${e[0]}`)); S.bind_(fns.i(-1), (data) => {
+    fns.push(all("attachment", `${sfx(rowIdx)}${i}${e[0]}`)); S.bind_(...fns.i(-1), (data) => {
       // thumbnails[i] = new Blob([data])
     if(data instanceof Blob){
       const url = URL.createObjectURL(data)
@@ -207,6 +207,7 @@
             form.date = selectedDates[0].toISOString()
           }
     })
+  onDestroy(() => { if(process.browser) S.unbind_(fns) });
     
    ///// const {default: tinymce} = await import('tinymce');
     // setup Product Detail:
@@ -503,7 +504,7 @@
 
   const diamondChange = (d) => async() => {
     if(d[4] > 0) {
-      const prices = await new Promise((resolve, reject) => { S.bind_(p_all("diamond_price", 111), (data) => { resolve(data) }, d); });
+      const prices = await new Promise((resolve, reject) => { S.bind_(all("diamond_price", 111), (data) => { resolve(data) }, d); });
       
       prices.forEach(ele => {
         const v = d[6].find(v => v[0] == ele[0])
@@ -520,7 +521,7 @@
   }
   const csChange = (d) => async() => {
     if(d[5] > 0) {
-      const prices = await new Promise((resolve, reject) => { S.bind_(p_all("cs_price", 111), (data) => { resolve(data) }, d); });
+      const prices = await new Promise((resolve, reject) => { S.bind_(all("cs_price", 111), (data) => { resolve(data) }, d); });
       
       prices.forEach(ele => {
         // const v = d[5].find(v => v[0] == ele[0])

@@ -1,6 +1,6 @@
 <script context="module">
   import { Server as S_ } from "../_modules/ws_events_dispatcher.js";
-  import { s_all, p_all, getPost, menuCategories, getFooterData, getHeaderData } from "../_modules/functions.js";
+  import { all, getPost, menuCategories, getFooterData, getHeaderData } from "../_modules/functions.js";
   // Here We will Show some Top Images for each category
   export async function preload(_page, session) {
     let S; if (typeof(S_) == "function") { S = new S_(this.req, this.res); } else { S = S_; }
@@ -8,13 +8,13 @@
     const categories = await menuCategories(S);
     const footerData = await getFooterData(S)
     const headerData = await getHeaderData(S)
-    let image_collection = await new Promise((resolve, reject) => { S.bind_( s_all('image_collection'), data => { if (data) { resolve(data); } else { reject(new Error("No Product Exist")); } }, [null, "=Home"] ); });
+    let image_collection = await new Promise((resolve, reject) => { S.bind_( all('image_collection'), data => { if (data) { resolve(data); } else { reject(new Error("No Product Exist")); } }, [null, "=Home"] ); });
     let page = await getPost(S, "home")
     
     let images = []
     if(image_collection[0]){
       const filter = [null, `=${image_collection[0][0]}`]
-      images = await new Promise((resolve, reject) => { S.bind_( s_all('image'), data => { if (data) { resolve(data); } else { reject(new Error("No Product Exist")); } }, [filter, [null, null, null, 0]] ); });
+      images = await new Promise((resolve, reject) => { S.bind_( all('image'), data => { if (data) { resolve(data); } else { reject(new Error("No Product Exist")); } }, [filter, [null, null, null, 0]] ); });
     }
     return { categories, images, post: page[0] || [], footerData, headerData };
   }

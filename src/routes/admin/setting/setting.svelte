@@ -19,7 +19,7 @@
 {#if isAuth}
   <h1>Setting</h1>
   <TablePage
-    url="setting_setting"
+    url="setting"
     formcomponent={SettingForm}
     quickcomponent={SettingForm} />
 {/if}

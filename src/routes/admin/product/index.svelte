@@ -21,7 +21,7 @@
 {#if isAuth}
   <h1>Product</h1>
   <TablePage
-    url="product_product"
+    url="product"
     formcomponent={ProductForm}
     quickcomponent={ProductForm}
     requiredFilter={{ 14: 'product' }} />

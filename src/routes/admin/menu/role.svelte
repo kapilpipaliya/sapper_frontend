@@ -21,7 +21,7 @@
 {#if isAuth}
   <h1>Role</h1>
   <TablePage
-    url="menu_role"
+    url="role"
     formcomponent={RoleForm}
     quickcomponent={RoleForm}
      />

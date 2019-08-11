@@ -19,7 +19,7 @@
 {#if isAuth}
   <h1>Shipping Class</h1>
   <TablePage
-    url="product_shipping_class"
+    url="shipping_class"
     formcomponent={ShippingClassForm}
     quickcomponent={ShippingClassForm} />
 {/if}

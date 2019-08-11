@@ -13,13 +13,6 @@ export const ws_server = process.env.NODE_ENV === 'development' ? `ws://${domain
 export function all_h(t, p) {  return [ t, "header", sfx(p)]; }
 
 export function all(t, p) {  return [ t, "data", sfx(p)]; }
-export function m_all(t, p) {  return all(`material_${t}`, p); }
-export function p_all(t, p) {  return all(`product_${t}`, p); }
-export function s_all(t, p) {  return all(`setting_${t}`, p); }
-export function e_all(t, p) {  return all(`entity_${t}`, p); }
-export function a_all(t, p) {  return all(`account_${t}`, p); }
-export function f_all(t, p) {  return all(`mfg_${t}`, p); }
-export function node_all(t, p) {  return all(`node_${t}`, p); }
 
 function save(t, p) {return `save_${t}_data${sfx(p)}`}
 export function m_save_(t, p) { return save(`material_${t}`, p) }
@@ -39,9 +32,9 @@ export function a_del_(t, p) { return del(`account_${t}`, p) }
 export function f_del_(t, p) { return del(`mfg_${t}`, p) }
 export function node_del_(t, p) { return del(`node_${t}`, p) }
 
-const e_category = p_all("category", 111);
+const e_category = all("category", 111);
 export const menuCategories = (S) => new Promise((resolve, reject) => { S.bind_(e_category, (data) => { resolve(data); S.unbind(e_category)  }, [[null, "=NULL"],[null, null, null, null, 0]]); });
-const e_entity = e_all("entity", 110)
+const e_entity = all("entity", 110)
 export const getUser = (S, id) => new Promise((resolve, reject) => { S.bind_(e_entity, (data) => { resolve(data); S.unbind(e_entity) }, [[`=${id}`]]); });
 
 export const productImageBase = async (S, id) => {
@@ -203,19 +196,19 @@ export const isAuthFn = async (S, type="user") => {
 }
 export const getPost = async (S, slug="home") => {
     const page = await new Promise((resolve, reject) => {
-        S.bind_( p_all("post", 112), data => { S.unbind(p_all("post", 112)); resolve(data); }, [[null, 'post', null, null, `=${slug}`]] ); // 6=code // = means excact
+        S.bind_( all("post", 112), data => { S.unbind(all("post", 112)); resolve(data); }, [[null, 'post', null, null, `=${slug}`]] ); // 6=code // = means excact
     });
     return page;
 }
 export const getSetting = async (S) => {
     const setting = await new Promise((resolve, reject) => {
-        S.bind_( s_all("setting", 112), data => { S.unbind(s_all("setting", 112)); resolve(data);}, [[]] );
+        S.bind_( all("setting", 112), data => { S.unbind(all("setting", 112)); resolve(data);}, [[]] );
     });
     return setting;
 }
 export const getSettingKey = async (S, key="mobile") => {
     const setting = await new Promise((resolve, reject) => {
-        S.bind_( s_all("setting", 112), data => { S.unbind(s_all("setting", 112)); resolve(data);}, [[`=${key}`]] );
+        S.bind_( all("setting", 112), data => { S.unbind(all("setting", 112)); resolve(data);}, [[`=${key}`]] );
     });
     return setting;
 }

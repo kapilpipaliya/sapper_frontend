@@ -19,7 +19,7 @@
 {#if isAuth}
   <h1>Color Stone Type</h1>
   <TablePage
-    url="material_cs_type"
+    url="cs_type"
     formcomponent={CSTypeForm}
     quickcomponent={CSTypeForm} />
 {/if}

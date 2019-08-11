@@ -21,7 +21,7 @@
 {#if isAuth}
   <h1>Task</h1>
   <TablePage
-    url="menu_task"
+    url="task"
     formcomponent={TaskForm}
     quickcomponent={TaskForm}
      />

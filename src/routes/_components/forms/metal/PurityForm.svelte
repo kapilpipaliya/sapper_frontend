@@ -1,6 +1,6 @@
 <script>
   import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { m_all, m_save_, makeObject } from "../../../_modules/functions.js";
+  import { all, m_save_, makeObject } from "../../../_modules/functions.js";
   import { onMount, createEventDispatcher } from "svelte";
   import SubmitButton from '../../ui/SubmitButton.svelte'
   import CancelButton from '../../ui/CancelButton.svelte';
@@ -16,9 +16,11 @@
   let metals = [];
   let tones = [];
 
+  const fns = [];
   if (item.length) { form = makeObject(hs, item) }; S.bind$(m_save_("purity", rowIdx), (d) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d });  } else { er = d.error; } });
-  S.bind_(m_all(`metal`, rowIdx), (d) => { metals = d; form.metal_id = item.length ? form['metal_id'] : (metals[0] ? metals[0][0] : 0) }, []);
-  S.bind_(m_all(`tone`, rowIdx), (d) => { tones = d; form.pt_purity_tone = (form.pt_purity_tone) }, []);
+  fns.push(all("metal", rowIdx)); S.bind_(...fns.i(-1), (d) => { metals = d; form.metal_id = item.length ? form['metal_id'] : (metals[0] ? metals[0][0] : 0) }, []);
+  fns.push(all("tone", rowIdx)); S.bind_(...fns.i(-1), (d) => { tones = d; form.pt_purity_tone = (form.pt_purity_tone) }, []);
+  onDestroy(() => { if(process.browser) S.unbind_(fns) });
   
   async function save() { 
     let isDupTones = false;

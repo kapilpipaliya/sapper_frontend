@@ -19,7 +19,7 @@
 
 {#if isAuth}
   <h1>Account Type</h1>
-  <TablePage url="account_account_type"
+  <TablePage url="account_type"
   formcomponent={AccountTypeForm}
   quickcomponent={AccountTypeForm}
    />

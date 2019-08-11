@@ -19,7 +19,7 @@
 {#if isAuth}
   <h1>Currency</h1>
   <TablePage
-    url="setting_log"
+    url="log"
     formcomponent={LogForm}
     quickcomponent={LogForm} />
 {/if}

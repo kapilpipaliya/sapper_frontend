@@ -19,7 +19,7 @@
 {#if isAuth}
   <h1>Metal Purity</h1>
   <TablePage
-    url="material_purity"
+    url="purity"
     formcomponent={MetalPurityForm}
     quickcomponent={MetalPurityForm} />
 {/if}

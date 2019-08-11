@@ -1,6 +1,6 @@
 <script>
   import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { s_all, sfx, p_save_, s_save_, makeObject } from "../../../_modules/functions.js";
+  import { all, sfx, p_save_, s_save_, makeObject } from "../../../_modules/functions.js";
   import { onMount, createEventDispatcher } from "svelte";
   import SubmitButton from '../../ui/SubmitButton.svelte'
   import CancelButton from '../../ui/CancelButton.svelte';
@@ -25,12 +25,13 @@
   if (item.length) { form = makeObject(hs, item) }; 
   S.bind$(s_save_("image", rowIdx), (d) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d });  } else { er = d.error; } });
     
-  fns.push(s_all("image_collection", rowIdx)); S.bind_(fns.i(-1), (d) => { image_collection_id = d; form.image_collection_id = item.length ? form["image_collection_id"] : (image_collection_id[0] ? image_collection_id[0][0] : 0) }, [[]]);
+  fns.push(all("image_collection", rowIdx)); S.bind_(...fns.i(-1), (d) => { image_collection_id = d; form.image_collection_id = item.length ? form["image_collection_id"] : (image_collection_id[0] ? image_collection_id[0][0] : 0) }, [[]]);
+  onDestroy(() => { if(process.browser) S.unbind_(fns) });
 
   let thumbnail = "./images/great-success.png"
   // setup thumnails:
   if(item.length){
-    fns.push(s_all("thumb", `${sfx(rowIdx)}`)); S.bind_(fns.i(-1), (data) => {
+    fns.push(all("thumb", `${sfx(rowIdx)}`)); S.bind_(...fns.i(-1), (data) => {
       if(data instanceof Blob){
         const url = URL.createObjectURL(data)
         thumbnail = url

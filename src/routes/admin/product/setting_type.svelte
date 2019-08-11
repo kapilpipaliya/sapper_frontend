@@ -19,7 +19,7 @@
 {#if isAuth}
   <h1>Setting Type</h1>
   <TablePage
-    url="product_setting_type"
+    url="setting_type"
     formcomponent={CategoryForm}
     quickcomponent={CategoryForm} />
 {/if}

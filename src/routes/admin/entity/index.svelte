@@ -18,7 +18,7 @@
 
 {#if isAuth}
 <h1>Entity</h1>
-  <TablePage url="entity_entity"
+  <TablePage url="entity"
     formcomponent={EntityForm}
     quickcomponent={EntityForm} />
 {/if}

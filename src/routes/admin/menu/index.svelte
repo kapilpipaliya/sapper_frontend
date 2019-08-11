@@ -21,7 +21,7 @@
 {#if isAuth}
   <h1>Menu</h1>
   <TablePage
-    url="menu_node"
+    url="node"
     formcomponent={NodeForm}
     quickcomponent={NodeForm}
      />

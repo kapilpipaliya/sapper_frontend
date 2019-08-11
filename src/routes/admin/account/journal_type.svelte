@@ -19,7 +19,7 @@
 
 {#if isAuth}
   <h1>Journal Type</h1>
-  <TablePage url="account_journal_type"
+  <TablePage url="journal_type"
   formcomponent={JournalTypeForm}
   quickcomponent={JournalTypeForm}
    />

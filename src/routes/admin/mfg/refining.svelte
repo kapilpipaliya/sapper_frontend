@@ -21,7 +21,7 @@
 {#if isAuth}
   <h1>Refining</h1>
   <TablePage
-    url="mfg_refining"
+    url="refining"
     formcomponent={RefiningForm}
     quickcomponent={RefiningForm}
      />

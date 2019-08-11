@@ -1,6 +1,6 @@
 <script context="module">
   import { Server as S_ } from "../../../_modules/ws_events_dispatcher.js";
-  import { m_all, p_all, all, all_h, p_save_, makeObject, product_purity_price, product_clarity_price, productImage, get_p_purity_idx, get_p_clarity_idx, menuCategories, get_p_purity_tone_idx, getToneIdx,getPrice,getTotal, isAuthFn, getFooterData, getHeaderData  } from "../../../_modules/functions.js";
+  import { all, all_h, p_save_, makeObject, product_purity_price, product_clarity_price, productImage, get_p_purity_idx, get_p_clarity_idx, menuCategories, get_p_purity_tone_idx, getToneIdx,getPrice,getTotal, isAuthFn, getFooterData, getHeaderData  } from "../../../_modules/functions.js";
   import MyLayout from '../../_myLayout.svelte'
   export async function preload(page, session) {
     let S; if (typeof S_ == "function") { S = new S_(this.req, this.res); } else { S = S_; }
@@ -38,11 +38,11 @@
     product = makeObject([...product_h, "main_image" ], product[0], [])
     product.p_purities_purity_id.forEach(x=> {if(x[3] == null) {x[3] = []; }  } ) // if its null tones cant loop
 
-    clarities = await new Promise((resolve, reject) => { S.bind_( m_all("clarity"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
-    tones = await new Promise((resolve, reject) => { S.bind_( m_all("tone"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
-    purities = await new Promise((resolve, reject) => { S.bind_( m_all("purity"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
-    policies = await new Promise((resolve, reject) => { S.bind_( p_all("policy"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
-    certificates = await new Promise((resolve, reject) => { S.bind_( p_all("certified_by"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
+    clarities = await new Promise((resolve, reject) => { S.bind_( all("clarity"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
+    tones = await new Promise((resolve, reject) => { S.bind_( all("tone"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
+    purities = await new Promise((resolve, reject) => { S.bind_( all("purity"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
+    policies = await new Promise((resolve, reject) => { S.bind_( all("policy"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
+    certificates = await new Promise((resolve, reject) => { S.bind_( all("certified_by"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
     const isAuth = await isAuthFn(S)
     const footerData = await getFooterData(S)
     const headerData = await getHeaderData(S)

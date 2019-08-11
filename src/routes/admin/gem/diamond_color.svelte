@@ -19,7 +19,7 @@
 {#if isAuth}
   <h1>Diamond Color</h1>
   <TablePage
-    url="material_d_color"
+    url="d_color"
     formcomponent={DiamondColorForm}
     quickcomponent={DiamondColorForm} />
 {/if}

@@ -19,7 +19,7 @@
 {#if isAuth}
   <h1>Color Stone Size</h1>
   <TablePage
-      url="material_color_stone_size"
+      url="cs_size"
       formcomponent={ColorStoneSizeForm}
       quickcomponent={ColorStoneSizeForm} />
 {/if}

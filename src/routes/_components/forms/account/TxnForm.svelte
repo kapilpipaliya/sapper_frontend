@@ -1,6 +1,6 @@
 <script>
   import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { a_save_, a_all, e_all, p_all, m_all, makeObject, first } from "../../../_modules/functions.js";
+  import { a_save_, all, makeObject, first } from "../../../_modules/functions.js";
   import { onMount, createEventDispatcher } from "svelte";
   import flatpickr from 'flatpickr';
   import SubmitButton from '../../ui/SubmitButton.svelte'
@@ -34,15 +34,15 @@
   if (item.length) { form = makeObject(hs, item) };
   S.bind$(a_save_('txn', rowIdx), (d) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }); 
 
-  fns.push(a_all("journal_type", rowIdx)); S.bind_(fns.i(-1), (d) => { journal_type_id = d; form.journal_type_id = item.length && form["journal_type_id"] ? form["journal_type_id"] : 15 }, [[], [0]]);
-  S.bind_(e_all("entity", rowIdx), (d) => { party_id = d; form.party_id = item.length ? form["party_id"] : (party_id[0] ? party_id[0][0] : 0) }, [[null, '=6']]);
+  fns.push(all("journal_type", rowIdx)); S.bind_(...fns.i(-1), (d) => { journal_type_id = d; form.journal_type_id = item.length && form["journal_type_id"] ? form["journal_type_id"] : 15 }, [[], [0]]);
+  fns.push(all("entity", rowIdx)); S.bind_(...fns.i(-1), (d) => { party_id = d; form.party_id = item.length ? form["party_id"] : (party_id[0] ? party_id[0][0] : 0) }, [[null, '=6']]);
 
   const items_ = () => form.o_i_order_item = form.o_i_order_item
   const f_array = []; f_array[14] = `product`;
-  fns.push(p_all("product", rowIdx)); S.bind_(fns.i(-1), (d) => { product = d; items_()}, [f_array]);
-  fns.push(m_all("purity", rowIdx)); S.bind_(fns.i(-1), (d) => { purity = d; items_()}, [[]]);
-  fns.push(m_all("tone", rowIdx)); S.bind_(fns.i(-1), (d) => { tone = d; items_()}, [[]]);
-  fns.push(m_all("clarity", rowIdx)); S.bind_(fns.i(-1), (d) => { clarity = d; items_()}, [[]]);
+  fns.push(all("product", rowIdx)); S.bind_(...fns.i(-1), (d) => { product = d; items_()}, [f_array]);
+  fns.push(all("purity", rowIdx)); S.bind_(...fns.i(-1), (d) => { purity = d; items_()}, [[]]);
+  fns.push(all("tone", rowIdx)); S.bind_(...fns.i(-1), (d) => { tone = d; items_()}, [[]]);
+  fns.push(all("clarity", rowIdx)); S.bind_(...fns.i(-1), (d) => { clarity = d; items_()}, [[]]);
 
   onMount(async () => {
     // setup date:
@@ -61,6 +61,7 @@
           }
     })
   })
+  onDestroy(() => { if(process.browser) S.unbind_(fns) });
 
   function handleItemAdd() { // Id , post_id, pcs, purity_id, tone_id, clarity_id, price, instruction
     form.o_i_order_item = form.o_i_order_item.concat([[0, first(product), 0, first(purity), first(tone), first(clarity), 0, ""]])

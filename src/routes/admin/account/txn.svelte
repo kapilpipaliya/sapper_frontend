@@ -19,7 +19,7 @@
 
 {#if isAuth}
   <h1>Orders</h1>
-  <TablePage url="account_txn"
+  <TablePage url="txn"
   formcomponent={TxnForm}
   quickcomponent={TxnForm}
    />

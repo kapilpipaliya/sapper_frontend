@@ -44,13 +44,13 @@ class ServerEventsDispatcher {
   }
 
   bind (event1, event2, no, callback) {
-    this.callbacks[JSON.stringify(event1, event2, no)] = this.callbacks[JSON.stringify(event1, event2, no)] || [];
-    this.callbacks[JSON.stringify(event1, event2, no)].push(callback);
+    this.callbacks[JSON.stringify([event1, event2, no])] = this.callbacks[JSON.stringify([event1, event2, no])] || [];
+    this.callbacks[JSON.stringify([event1, event2, no])].push(callback);
     return this;// chainable
   };
   unbind_ (event_names) {
     event_names.forEach(([event1, event2, no]) => {
-      this.unbind(JSON.stringify(event1, event2, no));
+      this.unbind(JSON.stringify([event1, event2, no]));
     });
     return this;// chainable
   };
@@ -179,7 +179,7 @@ class ServerEventsDispatcher {
   }
 
   dispatch (event1, event2, no, message) {
-    const chain = this.callbacks[JSON.stringify(event1, event2, no)];
+    const chain = this.callbacks[JSON.stringify([event1, event2, no])];
     if (typeof chain == 'undefined') return; // no callbacks for this event
     for (let i = 0; i < chain.length; i++) {
       chain[i](message)

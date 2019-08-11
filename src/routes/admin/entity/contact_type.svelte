@@ -23,7 +23,7 @@ span{
 {#if isAuth}
   <h1>Contact Type</h1>
   <span>Do not change in this table.</span>
-  <TablePage url="entity_contact_type"
+  <TablePage url="contact_type"
     formcomponent={ContactTypeForm}
     quickcomponent={ContactTypeForm} />
 {/if}

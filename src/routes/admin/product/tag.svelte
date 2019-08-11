@@ -19,7 +19,7 @@
 {#if isAuth}
   <h1>Tag</h1>
   <TablePage
-    url="product_tag"
+    url="tag"
     formcomponent={TagForm}
     quickcomponent={TagForm} />
 {/if}

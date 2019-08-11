@@ -21,7 +21,7 @@
 {#if isAuth}
   <h1>Department Type</h1>
   <TablePage
-    url="mfg_department_type"
+    url="department_type"
     formcomponent={DepartmentTypeForm}
     quickcomponent={DepartmentTypeForm}
      />

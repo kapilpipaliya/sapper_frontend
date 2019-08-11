@@ -21,7 +21,7 @@
 {#if isAuth}
   <h1>Metal Transfer</h1>
   <TablePage
-    url="mfg_m_transfer"
+    url="m_transfer"
     formcomponent={MTransferForm}
     quickcomponent={MTransferForm}
      />

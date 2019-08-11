@@ -19,7 +19,7 @@
 {#if isAuth}
   <h1>Support</h1>
   <TablePage
-    url="setting_support"
+    url="support"
     formcomponent={SupportForm}
     quickcomponent={SupportForm} />
 {/if}

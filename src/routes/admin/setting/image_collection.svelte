@@ -19,7 +19,7 @@
 {#if isAuth}
   <h1>Image Collection</h1>
   <TablePage
-    url="setting_image_collection"
+    url="image_collection"
     formcomponent={ImageCollectionForm}
     quickcomponent={ImageCollectionForm} />
 {/if}

@@ -16,9 +16,9 @@
   let parent = []
 
   if (item.length) { form = makeObject(hs, item) }; 
-  S.bind$(node_save_("menu_task", rowIdx), (d) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } });
+  S.bind$(node_save_("task", rowIdx), (d) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } });
   
-  async function save() { isSaving = true; S.trigger(node_save_("menu_task", rowIdx), form); }
+  async function save() { isSaving = true; S.trigger(node_save_("task", rowIdx), form); }
   function clearError() { er = ""; }
 </script>
 
