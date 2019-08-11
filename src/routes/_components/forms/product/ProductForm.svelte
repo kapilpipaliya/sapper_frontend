@@ -103,7 +103,7 @@
 
   }
   
-  fns.push(p_save_("product", rowIdx)); S.bind$(fns.i(-1), (d) => {isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } });
+  fns.push(p_save_("product", rowIdx)); S.bind$(...fns.i(-1), (d) => {isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } });
   S.bind$(p_del_("product", rowIdx), (d) => { isSaving = false; if (d.ok) {  er = ""; dp("deleteRow", { rowIdx, d }); } else { er = d.error; } });
 
   fns.push(p_all("shipping_class", rowIdx)); S.bind_(fns.i(-1), (d) => { shipping_class = [[0, "No Shipping Class"], ...d]; form.p_shipping_class_id = item.length ? form["p_shipping_class_id"] : (shipping_class[0] ? shipping_class[0][0] : 0) }, [[]]);

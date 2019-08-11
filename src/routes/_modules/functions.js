@@ -10,14 +10,9 @@ export const img_url = `${server}/demo/v1/user/download_id?path=`
 export const thumb_url = `${server}/demo/v1/user/thumb_id?path=`
 export const ws_server = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/echo` : `ws://${domain}:${port}/echo`;
 
-export function all_h(t, p) {  return `get_${t}_h_data${sfx(p)}`; }
-export function all_hi(t, p) {  return `get_${t}_hi_columns_data${sfx(p)}`; }
-export function all_o(t, p) {  return `get_${t}_o_columns_data${sfx(p)}`; }
-export function all_t(t, p) {  return `get_${t}_t_offset_columns_data${sfx(p)}`; }
-// let event_columns_type_name = `get_${url}_column_types`;
-// let event_columns_filters_name = `set_${url}_column_filters`;
+export function all_h(t, p) {  return [ t, "header", sfx(p)]; }
 
-export function all(t, p) {  return `get_${t}_data${sfx(p)}`; }
+export function all(t, p) {  return [ t, "data", sfx(p)]; }
 export function m_all(t, p) {  return all(`material_${t}`, p); }
 export function p_all(t, p) {  return all(`product_${t}`, p); }
 export function s_all(t, p) {  return all(`setting_${t}`, p); }
@@ -52,7 +47,7 @@ export const getUser = (S, id) => new Promise((resolve, reject) => { S.bind_(e_e
 export const productImageBase = async (S, id) => {
     if (false && process.browser) { 
         const url = await new Promise((resolve, reject) => {
-        S.bind_(`get_product_attachment_data`, (data) => {
+        S.bind_("product_attachment_data", "", "", (data) => {
             if(data instanceof Blob){
                 const url = URL.createObjectURL(data)
                 resolve(url)
@@ -87,9 +82,7 @@ export const authCeck = async(S) => {
     //const { Server: S_ } = await import("../_modules/ws_events_dispatcher.js");
     //let S; if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
 
-    //fns.push("admin_login"); S.bind$(fns.i(-1), (d) => {isSaving = false; if (d.ok) {  er = ""; dp("successSave", { d }); } else { er = d.error; } })
-
-    const isAuth = await new Promise((resolve, reject) => { S.bind_( "is_admin_auth", data => { 
+    const isAuth = await new Promise((resolve, reject) => { S.bind_( "is_admin_auth", "", "", data => { 
       resolve(data); }, [[]] );
 		});
 		if(!isAuth){

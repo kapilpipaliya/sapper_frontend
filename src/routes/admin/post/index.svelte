@@ -19,7 +19,7 @@
 {#if isAuth}
   <h1>Post</h1>
   <TablePage
-    url="product_post"
+    url="post"
     formcomponent={PostForm}
     quickcomponent={PostForm}
     requiredFilter={{ 1: 'post' }} />

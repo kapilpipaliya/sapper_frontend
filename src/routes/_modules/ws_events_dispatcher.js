@@ -43,49 +43,49 @@ class ServerEventsDispatcher {
     this.conn.addEventListener("open", this.onopen);
   }
 
-  bind (event_name, callback) {
-    this.callbacks[event_name] = this.callbacks[event_name] || [];
-    this.callbacks[event_name].push(callback);
+  bind (event1, event2, no, callback) {
+    this.callbacks[JSON.stringify(event1, event2, no)] = this.callbacks[JSON.stringify(event1, event2, no)] || [];
+    this.callbacks[JSON.stringify(event1, event2, no)].push(callback);
     return this;// chainable
   };
   unbind_ (event_names) {
-    event_names.forEach(ele => {
-      this.unbind(ele);
+    event_names.forEach(([event1, event2, no]) => {
+      this.unbind(JSON.stringify(event1, event2, no));
     });
     return this;// chainable
   };
-  bind$ (event_name, callback) {
-    this.unbind(event_name);
-    this.bind(event_name, callback);
+  bind$ (event1, event2, no, callback) {
+    this.unbind(event1, event2, no);
+    this.bind(event1, event2, no, callback);
     return this;// chainable
   };
-  bind_ (event_name, callback, data) {
-    this.unbind(event_name);
-    this.bind(event_name, callback);
-    this.trigger(event_name, data);
+  bind_ (event1, event2, no, callback, data) {
+    this.unbind(event1, event2, no);
+    this.bind(event1, event2, no, callback);
+    this.trigger(event1, event2, no, data);
     return this;// chainable
   };
-  bind_F (event_name, callback, data) {
-    this.unbind(event_name);
-    this.bind(event_name, callback);
-    this.triggerFile(event_name, data);
+  bind_F (event1, event2, no, callback, data) {
+    this.unbind(event1, event2, no);
+    this.bind(event1, event2, no, callback);
+    this.triggerFile(event1, event2, no, data);
     return this;// chainable
   };
-  unbind (event_name) {
-    this.callbacks[event_name] = [];
+  unbind (event1, event2, no) {
+    this.callbacks[event1, event2, no] = [];
   }
-  trigger (event_name, data) {
+  trigger (event1, event2, no, data) {
     const f = this.trigger
     switch (this.conn.readyState) {
       case 0: // CONNECTING
         // code block
         //This will added to onopen list, take care
         this.conn.addEventListener("open", function() {
-          f(event_name, data)
+          f(event1, event2, no, data)
         })
         return this;
       case 1: // OPEN
-        const payload = JSON.stringify([event_name, data]);
+        const payload = JSON.stringify([event1, event2, no, data]);
         this.conn.send(payload); // <= send JSON data to socket server
         return this;
       case 2: // CLOSING
@@ -93,7 +93,7 @@ class ServerEventsDispatcher {
         // try to reconnect/logout
         this.setupConnection()
         this.conn.addEventListener("open", function() {
-          f(event_name, data)
+          f(event1, event2, no, data)
         })
         return this;
       default:
@@ -101,7 +101,7 @@ class ServerEventsDispatcher {
       // code block
     }
   };
-  triggerFile (event_name, data) {
+  triggerFile (event1, event2, no, data) {
     const f = this.triggerFile
     const f2 = this.trigger
     switch (this.conn.readyState) {
@@ -109,7 +109,7 @@ class ServerEventsDispatcher {
         // code block
         //This will added to onopen list, take care
         this.conn.addEventListener("open", function() {
-          f(event_name, data)
+          f(event1, event2, no, data)
         })
         return this;
       case 1: // OPEN
@@ -123,7 +123,7 @@ class ServerEventsDispatcher {
         reader.onload = function(e) {
             rawData = e.target.result;
             // conn.binaryType = "arraybuffer"
-            f2("save_image_meta_data", [event_name, file.name, file.size, file.type])
+            f2("save_image_meta_data", "", "", [event1, event2, no, file.name, file.size, file.type])
             conn.send(rawData);
             // conn.binaryType = "blob"
             //alert("the File has been transferred.")
@@ -136,7 +136,7 @@ class ServerEventsDispatcher {
         // try to reconnect/logout
         this.conn = new IsomorphicWs('ws://localhost:8300/echo');
         this.conn.addEventListener("open", function() {
-          f(event_name, data)
+          f(event1, event2, no, data)
         })
         return this;
       default:
@@ -148,15 +148,17 @@ class ServerEventsDispatcher {
   onmessage (evt) {
     if(typeof evt.data === "string" ) {
       const data = JSON.parse(evt.data),
-        event_name = data[0],
-        message = data[1];
-      this.dispatch(event_name, message)
+        event1 = data[0],
+        event2 = data[1],
+        no = data[2],
+        message = data[3];
+      this.dispatch(event1, event2, no, message)
     }
     // if(evt.data instanceof ArrayBuffer ){
       else {
       const buffer = evt.data;
       console.log("Received arraybuffer");
-      this.dispatch(this.event_name, buffer)
+      this.dispatch(this.event1, event2, no, buffer)
     }
     // if(evt.data instanceof Blob ){
     //   const buffer = event.data;
@@ -165,19 +167,19 @@ class ServerEventsDispatcher {
     // }
   };
 
-  onclose () { this.dispatch('close', null) }
+  onclose () { this.dispatch('close',"","", null) }
   onopen () { 
     //console.log(this.conn.extensions);
     // console.log("Server Opened")
-    this.dispatch('open', null) }
+    this.dispatch('open', "", "", null) }
   onerror (error) { 
     console.log(`[error] ${error.message}`);
     //todo depend on error try to reconnect
-    this.dispatch('error', null) 
+    this.dispatch('error', "", "", null) 
   }
 
-  dispatch (event_name, message) {
-    const chain = this.callbacks[event_name];
+  dispatch (event1, event2, no, message) {
+    const chain = this.callbacks[JSON.stringify(event1, event2, no)];
     if (typeof chain == 'undefined') return; // no callbacks for this event
     for (let i = 0; i < chain.length; i++) {
       chain[i](message)
@@ -188,7 +190,7 @@ class ServerEventsDispatcher {
 let e;
 if (process.browser) { 
   e = new ServerEventsDispatcher()
-  e.bind("take_image_meta", function(data) {
+  e.bind("take_image_meta","", "", function(data) {
     e.event_name = data[0]
     e.event_meta = data[1]
   });

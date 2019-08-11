@@ -37,7 +37,7 @@
     setPasswordDisabled(); /* take care*/
   }
   
-  fns.push(p_save_("post", rowIdx)); S.bind$(fns.i(-1), (d) => {isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } });
+  fns.push(p_save_("post", rowIdx)); S.bind$(...fns.i(-1), (d) => {isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } });
   S.bind$(p_del_("post", rowIdx), (d) => { isSaving = false; if (d.ok) {  er = ""; dp("deleteRow", { rowIdx, d }); } else { er = d.error; } });
 
   onMount(async () => {

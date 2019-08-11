@@ -3,7 +3,7 @@
   // import * as _ from "lamb";
   import { onMount, onDestroy, beforeUpdate } from "svelte";
   import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { all, all_h, all_hi, all_o, all_t } from "../../../_modules/functions.js";
+  import { all, all_h } from "../../../_modules/functions.js";
   import { createEventDispatcher } from "svelte";
   const dp = createEventDispatcher();
 
@@ -34,7 +34,8 @@
   const fns = [];
 
   onMount(() => {
-    fns.push(all_h(url)); S.bind_(fns.i(-1), (data) => {
+    fns.push(all_h(url)); S.bind_(...fns.i(-1), (data) => {
+      console.log(data)
       headers = data[0] || [];
       headersSelectors = data[1] || [];
       headerColTypes = data[2] || [];
@@ -66,7 +67,7 @@
     fns.push(all_t(url)); S.bind_(fns.i(-1), (data) => { tooltip_offset_columns = data || []; }, []);
     */
       // [...Array(20)].map(_=>0)
-    fns.push(all(url)); S.bind$(fns.i(-1), (data) => { quickview = Array.from({length: data.length}, ()=>0); items = data || []; });
+    fns.push(all(url)); S.bind$(...fns.i(-1), (data) => { quickview = Array.from({length: data.length}, ()=>0); items = data || []; });
     resetFilter_();
     refresh();
     return true;
@@ -100,7 +101,7 @@
   export const refresh = () => {
     // items = await getItems(baseUrl + url); // This not working..
     //items = getItems(baseUrl + url);
-    S.trigger(all(url), [filterSettings, sortSettings, [limit]]);
+    S.trigger(...all(url), [filterSettings, sortSettings, [limit]]);
     return true;
   }
   const successSave = (e) => {

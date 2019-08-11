@@ -19,21 +19,22 @@
     const { Server: S_ } = await import("../../_modules/ws_events_dispatcher.js");
     if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
 
-    fns.push("admin_login"); S.bind$(fns.i(-1), (d) => {isSaving = false; if (d.ok) {  er = ""; formSave = true; dp("successSave", { d }); } else { er = d.error; } })
-    fns.push("set_cookie"); S.bind$(fns.i(-1), (d) => { document.cookie = `admin=${d.admin}; path=/`; getCookie = true; })
+    fns.push(["admin_login", "", ""]); S.bind$(...fns.i(-1), (d) => {
+      isSaving = false; if (d.ok) {  er = ""; formSave = true; dp("successSave", { d }); } else { er = d.error; } })
+    fns.push(["set_cookie", "", ""]); S.bind$(...fns.i(-1), (d) => { document.cookie = `admin=${d.admin}; path=/`; getCookie = true; })
 
     // check it already logged in
-    isAuth = await new Promise((resolve, reject) => { S.bind_( "is_admin_auth", data => { 
+    isAuth = await new Promise((resolve, reject) => { S.bind_( "is_admin_auth", "", "", data => { 
       resolve(data); }, [[]] );
     });
     username.focus()
   })
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
 
-  const save = async() => {isSaving = true; S.trigger("admin_login", form); }
+  const save = async() => {isSaving = true; S.trigger("admin_login", "", "", form); }
   const clearError = () => { er = ""; }
 
-  const logout = async() => {isSaving = true; S.trigger("admin_logout"); }
+  const logout = async() => {isSaving = true; S.trigger("admin_logout", "", ""); }
 </script>
 
 <style>

@@ -38,8 +38,8 @@
     const { Server: S_ } = await import("../../_modules/ws_events_dispatcher.js");
     if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
 
-    fns.push("user_login"); S.bind$(fns.i(-1), (d) => {isSaving = false; if (d.ok) {  er = ""; formSave = true; dp("successSave", { d }); } else { er = d.error; } })
-    fns.push("set_cookie"); S.bind$(fns.i(-1), (d) => { document.cookie = `user=${d.user}; path=/`; getCookie = true; })
+    fns.push("user_login"); S.bind$(...fns.i(-1), (d) => {isSaving = false; if (d.ok) {  er = ""; formSave = true; dp("successSave", { d }); } else { er = d.error; } })
+    fns.push("set_cookie"); S.bind$(...fns.i(-1), (d) => { document.cookie = `user=${d.user}; path=/`; getCookie = true; })
 
     // check it already logged in
     isAuth = await isAuthFn(S)
