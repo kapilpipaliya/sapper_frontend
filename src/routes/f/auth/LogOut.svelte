@@ -26,7 +26,7 @@
     const { Server: S_ } = await import("../../_modules/ws_events_dispatcher.js");
     if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
 
-    fns.push(["user_logout", "", ""]); S.bind_(...fns.i(-1), (d) => {if (d.ok) {  
+    fns.push(["auth", "user_logout", 0]); S.bind_(fns.i(-1), ([d]) => {if (d.ok) {  
       document.cookie = `user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
       logout = true }})
   })

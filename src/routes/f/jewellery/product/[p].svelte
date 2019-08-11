@@ -1,12 +1,12 @@
 <script context="module">
   import { Server as S_ } from "../../../_modules/ws_events_dispatcher.js";
-  import { all, all_h, p_save_, makeObject, product_purity_price, product_clarity_price, productImage, get_p_purity_idx, get_p_clarity_idx, menuCategories, get_p_purity_tone_idx, getToneIdx,getPrice,getTotal, isAuthFn, getFooterData, getHeaderData  } from "../../../_modules/functions.js";
+  import { all, all_h, save_, makeObject, product_purity_price, product_clarity_price, productImage, get_p_purity_idx, get_p_clarity_idx, menuCategories, get_p_purity_tone_idx, getToneIdx,getPrice,getTotal, isAuthFn, getFooterData, getHeaderData  } from "../../../_modules/functions.js";
   import MyLayout from '../../_myLayout.svelte'
   export async function preload(page, session) {
     let S; if (typeof S_ == "function") { S = new S_(this.req, this.res); } else { S = S_; }
     const { p } = page.params;
 
-    let table = "product_product";
+    let table = "product";
 
     let clarities = [];
     let tones = [];
@@ -18,11 +18,11 @@
     let d_clarity_idx = 0;
 
     const categories = await menuCategories(S);
-    const product_h = await new Promise((resolve, reject) => { S.bind_( all_h(table), data => { if (data[1]) { resolve(data[1]); } else { reject(new Error("No Product Header Exist")); } }, [[]] ); });
+    const product_h = await new Promise((resolve, reject) => { S.bind_( all_h(table), ([d]) => { if (d[1]) { resolve(d[1]); } else { reject(new Error("No Product Header Exist")); } }, [[]] ); });
     const filter = [[p]]
     filter[14] = 'product'
 
-    let product = await new Promise((resolve, reject) => { S.bind_( all(table), data => { if (data) { resolve(data); } else { reject(new Error("No Product Exist")); } }, filter ); });
+    let product = await new Promise((resolve, reject) => { S.bind_( all(table), ([d]) => { if (d) { resolve(d); } else { reject(new Error("No Product Exist")); } }, filter ); });
     await productImage(S, product)
     // product_purity_price(product)
     // product_clarity_price(product)
@@ -38,11 +38,11 @@
     product = makeObject([...product_h, "main_image" ], product[0], [])
     product.p_purities_purity_id.forEach(x=> {if(x[3] == null) {x[3] = []; }  } ) // if its null tones cant loop
 
-    clarities = await new Promise((resolve, reject) => { S.bind_( all("clarity"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
-    tones = await new Promise((resolve, reject) => { S.bind_( all("tone"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
-    purities = await new Promise((resolve, reject) => { S.bind_( all("purity"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
-    policies = await new Promise((resolve, reject) => { S.bind_( all("policy"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
-    certificates = await new Promise((resolve, reject) => { S.bind_( all("certified_by"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
+    clarities = await new Promise((resolve, reject) => { S.bind_( all("clarity"), ([d]) => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
+    tones = await new Promise((resolve, reject) => { S.bind_( all("tone"), ([d]) => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
+    purities = await new Promise((resolve, reject) => { S.bind_( all("purity"), ([d]) => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
+    policies = await new Promise((resolve, reject) => { S.bind_( all("policy"), ([d]) => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
+    certificates = await new Promise((resolve, reject) => { S.bind_( all("certified_by"), ([d]) => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
     const isAuth = await isAuthFn(S)
     const footerData = await getFooterData(S)
     const headerData = await getHeaderData(S)

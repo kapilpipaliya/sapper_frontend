@@ -1,6 +1,6 @@
 <script>
   import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { all, f_save_, makeObject } from "../../../_modules/functions.js";
+  import { all, save_, makeObject } from "../../../_modules/functions.js";
   import { onMount, createEventDispatcher } from "svelte";
   import SubmitButton from '../../ui/SubmitButton.svelte'
   import CancelButton from '../../ui/CancelButton.svelte';
@@ -20,10 +20,10 @@
 
   const fns = [];
   if (item.length) { form = makeObject(hs, item) };
-  S.bind$(f_save_('wax_setting', rowIdx), (d) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }); 
+  S.bind$(save_('wax_setting', rowIdx), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }, 1); 
 
-  fns.push(all("department", rowIdx)); S.bind_(...fns.i(-1), (d) => { department_id = d; form.department_id = item.length ? form["department_id"] : (department_id[0] ? department_id[0][0] : 0) }, [[]]);
-  fns.push(all("entity", rowIdx)); S.bind_(...fns.i(-1), (d) => { employee_id = d; form.employee_id = item.length ? form["employee_id"] : (employee_id[0] ? employee_id[0][0] : 0) }, [[null, "=8"]]);
+  fns.push(all("department", rowIdx)); S.bind_(fns.i(-1), ([d]) => { department_id = d; form.department_id = item.length ? form["department_id"] : (department_id[0] ? department_id[0][0] : 0) }, [[]]);
+  fns.push(all("entity", rowIdx)); S.bind_(fns.i(-1), ([d]) => { employee_id = d; form.employee_id = item.length ? form["employee_id"] : (employee_id[0] ? employee_id[0][0] : 0) }, [[null, "=8"]]);
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
 
   import 'flatpickr/dist/flatpickr.css'
@@ -47,7 +47,7 @@
     })
   })
 
-  async function save() { isSaving = true; S.trigger(f_save_('wax_setting', rowIdx), form); }
+  async function save() { isSaving = true; S.trigger([[ save_('wax_setting', rowIdx), form ]]); }
   function clearError() { er = ""; }
 </script>
 

@@ -8,13 +8,13 @@
     const categories = await menuCategories(S);
     const footerData = await getFooterData(S)
     const headerData = await getHeaderData(S)
-    let image_collection = await new Promise((resolve, reject) => { S.bind_( all('image_collection'), data => { if (data) { resolve(data); } else { reject(new Error("No Product Exist")); } }, [null, "=Home"] ); });
+    let image_collection = await new Promise((resolve, reject) => { S.bind_( all('image_collection'), ([d]) => { if (d) { resolve(d); } else { reject(new Error("No Product Exist")); } }, [null, "=Home"] ); });
     let page = await getPost(S, "home")
     
     let images = []
     if(image_collection[0]){
       const filter = [null, `=${image_collection[0][0]}`]
-      images = await new Promise((resolve, reject) => { S.bind_( all('image'), data => { if (data) { resolve(data); } else { reject(new Error("No Product Exist")); } }, [filter, [null, null, null, 0]] ); });
+      images = await new Promise((resolve, reject) => { S.bind_( all('image'), ([d]) => { if (d) { resolve(d); } else { reject(new Error("No Product Exist")); } }, [filter, [null, null, null, 0]] ); });
     }
     return { categories, images, post: page[0] || [], footerData, headerData };
   }

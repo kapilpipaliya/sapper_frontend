@@ -1,6 +1,6 @@
 <script>
   import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { f_save_, all, makeObject } from "../../../_modules/functions.js";
+  import { save_, all, makeObject } from "../../../_modules/functions.js";
   import { onMount, createEventDispatcher } from "svelte";
   import SubmitButton from '../../ui/SubmitButton.svelte'
   import CancelButton from '../../ui/CancelButton.svelte';
@@ -18,13 +18,13 @@
 
   const fns = [];
   if (item.length) { form = makeObject(hs, item) };
-  S.bind$(f_save_('department', rowIdx), (d) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }); 
+  S.bind$(save_('department', rowIdx), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }, 1); 
 
-  fns.push(all("department_type", rowIdx)); S.bind_(...fns.i(-1), (d) => { department_type_id = d; form.department_type_id = item.length ? form["department_type_id"] : (department_type_id[0] ? department_type_id[0][0] : 0) }, [[]]);
-  fns.push(all("department", rowIdx)); S.bind_(...fns.i(-1), (d) => { if(item.length) { parent_id = d.filter(x=> x[0] !=form.id)} else {parent_id = d}; form.parent_id = item.length ? form["parent_id"] : (parent_id[0] ? parent_id[0][0] : 0) }, [[]]);
+  fns.push(all("department_type", rowIdx)); S.bind_(fns.i(-1), ([d]) => { department_type_id = d; form.department_type_id = item.length ? form["department_type_id"] : (department_type_id[0] ? department_type_id[0][0] : 0) }, [[]]);
+  fns.push(all("department", rowIdx)); S.bind_(fns.i(-1), ([d]) => { if(item.length) { parent_id = d.filter(x=> x[0] !=form.id)} else {parent_id = d}; form.parent_id = item.length ? form["parent_id"] : (parent_id[0] ? parent_id[0][0] : 0) }, [[]]);
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
 
-  async function save() { isSaving = true; S.trigger(f_save_('department', rowIdx), form); }
+  async function save() { isSaving = true; S.trigger([[ save_('department', rowIdx), form ]]); }
   function clearError() { er = ""; }
 </script>
 

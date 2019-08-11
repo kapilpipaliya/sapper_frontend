@@ -12,8 +12,8 @@
 	let headersSelectors = [];
 	let id = 0
   onMount(async () => {
-		S.bind_(all_h("entity_entity"), (data) => { headersSelectors = data[1] || []; S.unbind(all_h("entity_entity"))}, []);
-		id = await new Promise((resolve, reject) => { S.bind_( "user_id", d => { if (d) { S.unbind("user_id"); resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
+		S.bind_(all_h("entity_entity"), ([d]) => { headersSelectors = d[1] || []; S.unbind(all_h("entity_entity"))}, []);
+		id = await new Promise((resolve, reject) => { S.bind_( "auth", "user_id",0, ([d]) => { if (d) { S.unbind("auth", "user_id", 0); resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
     user = (await getUser(S, id))[0]
     if (!user){sapper.goto('./f/auth/Login')}
   });

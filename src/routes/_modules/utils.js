@@ -7,8 +7,8 @@ export const makeObject =(h, d, f) => { // is this right???
 }
 
 export const sfx = (x) => { 
-  if(x === undefined ){ return "000" }
-  else if(x === null) { return "00"; } 
+  if(x === undefined ){ return 1000 }
+  else if(x === null) { return 100; } 
   else if(x === 0) { return 0; } 
   else { return x; } }
 

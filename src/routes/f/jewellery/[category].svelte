@@ -11,8 +11,8 @@
     const footerData = await getFooterData(S)
     const headerData = await getHeaderData(S)
     const categoryRow = await new Promise((resolve, reject) => {
-      S.bind_( all("category", 222), data => {
-          resolve(data);
+      S.bind_( all("category", 222), ([d]) => {
+          resolve(d);
           // reject(new Error('Fail!'))
           // throw(new Error())
         },
@@ -29,8 +29,8 @@
 
     if (categoryRow[0]) {
       sub_categories = await new Promise((resolve, reject) => {
-        S.bind_( all("category", 223), data => {
-            resolve(data);
+        S.bind_( all("category", 223), ([d]) => {
+            resolve(d);
           },
           [[null, categoryRow[0][0]]]
         ); // 1=parent
@@ -42,8 +42,8 @@
             const f_array = [];
             f_array[14] = `product`;
             f_array[41] = `=${it[0]}`; // pc_category_id
-            S.bind_( all("product", 224), data => {
-                resolve(data);
+            S.bind_( all("product", 224), ([d]) => {
+                resolve(d);
               },
               [f_array]
             );
@@ -55,11 +55,7 @@
         const f_array = [];
         f_array[14] = `product`;
         f_array[41] = `=${categoryRow[0][0]}`; // pc_category_id
-        S.bind_( all("product", 225), data => {
-            resolve(data);
-          },
-          [f_array]
-        );
+        S.bind_( all("product", 225), ([d]) => { resolve(d); }, [f_array] );
       });
       products = p;
     }
@@ -79,9 +75,9 @@
 		let product = "";
 		if (process.browser) { 
 				product = await new Promise((resolve, reject) => {
-				const event_name = `get_product_attachment_data`;
+				const event_name = `attachment_data`;
 				
-				S.bind_(event_name, (data) => {
+				S.bind_("product", event_name, 0, (data) => {
 					const url = URL.createObjectURL(data)
 					resolve(url)
 					// const reader = new FileReader();

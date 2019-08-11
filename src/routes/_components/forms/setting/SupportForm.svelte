@@ -1,6 +1,6 @@
 <svelte:options immutable/>
 <script>
-  import { all, s_save_, makeObject } from "../../../_modules/functions.js";
+  import { all, save_, makeObject } from "../../../_modules/functions.js";
   import { onMount, createEventDispatcher } from "svelte";
   import SubmitButton from '../../ui/SubmitButton.svelte'
   import CancelButton from '../../ui/CancelButton.svelte';
@@ -22,10 +22,10 @@
   onMount(async()=>{
     const { Server: S_ } = await import( "../../../_modules/ws_events_dispatcher.js" );
     if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
-    S.bind$(s_save_("support", rowIdx), (d) => { isSaving = false; if (d.ok) {  isSubmited = true; er = ""; dp("successSave", { rowIdx, d });  } else { er = d.error; } });
+    S.bind$(save_("support", rowIdx), ([d]) => { isSaving = false; if (d.ok) {  isSubmited = true; er = ""; dp("successSave", { rowIdx, d });  } else { er = d.error; } }, 1);
   })
   
-  async function save() { isSaving = true; S.trigger(s_save_("support", rowIdx), form); }
+  async function save() { isSaving = true; S.trigger([[ save_("support", rowIdx), form ]]); }
   function clearError() { er = ""; }
 </script>
 

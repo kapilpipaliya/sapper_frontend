@@ -38,8 +38,8 @@
     const { Server: S_ } = await import("../../_modules/ws_events_dispatcher.js");
     if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
 
-    fns.push(["user_login", "", ""]); S.bind$(...fns.i(-1), (d) => {isSaving = false; if (d.ok) {  er = ""; formSave = true; dp("successSave", { d }); } else { er = d.error; } })
-    fns.push(["set_cookie", "", ""]); S.bind$(...fns.i(-1), (d) => { document.cookie = `user=${d.user}; path=/`; getCookie = true; })
+    fns.push(["auth", "user_login", 0]); S.bind$(fns.i(-1), ([d]) => {isSaving = false; if (d.ok) {  er = ""; formSave = true; dp("successSave", { d }); } else { er = d.error; } })
+    fns.push(["auth", "set_cookie", 0]); S.bind$(fns.i(-1), ([d]) => { document.cookie = `user=${d.user}; path=/`; getCookie = true; })
 
     // check it already logged in
     isAuth = await isAuthFn(S)
@@ -47,7 +47,7 @@
   })
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
 
-  const save = async() => {isSaving = true; S.trigger("user_login", form); }
+  const save = async() => {isSaving = true; S.trigger([[ ["auth","user_login",0], form ]]); }
   const clearError = () => { er = ""; }
 
 </script>

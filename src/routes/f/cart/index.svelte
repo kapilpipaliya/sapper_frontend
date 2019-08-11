@@ -17,7 +17,7 @@
 <script>
   import { onMount } from "svelte";
   import { Server as S } from "../../_modules/ws_events_dispatcher.js";
-  import { a_save_, all, makeObject, first, productImage, product_purity_price, product_clarity_price, getTotalArray } from "../../_modules/functions.js";
+  import { save_, all, makeObject, first, productImage, product_purity_price, product_clarity_price, getTotalArray } from "../../_modules/functions.js";
   import FadeOutButton from "../../_components/ui/FadeOutButton.svelte";
 	import user from '../../_modules/stores/user.js'
   import MyLayout from '../_myLayout.svelte'
@@ -42,9 +42,9 @@
 		db = new StorageDB("cart", 1);
 		await get_all_product_ids()
 
-		clarities = await new Promise((resolve, reject) => { S.bind_( all("clarity"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
-    tones = await new Promise((resolve, reject) => { S.bind_( all("tone"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
-    purities = await new Promise((resolve, reject) => { S.bind_( all("purity"), d => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
+		clarities = await new Promise((resolve, reject) => { S.bind_( all("clarity"), ([d]) => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
+    tones = await new Promise((resolve, reject) => { S.bind_( all("tone"), ([d]) => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
+    purities = await new Promise((resolve, reject) => { S.bind_( all("purity"), ([d]) => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
 
     // check it already logged in
     isAuth = await isAuthFn(S)
@@ -67,7 +67,7 @@
 	const fetch_products = () => {
 		if(products.length) {
 			const f_array = [`{${products.join(",")}}`]; f_array[14] = `product`;
-			fns.push(all("product", 124)); S.bind_(...fns.i(-1), async (d) => { 
+			fns.push(all("product", 124)); S.bind_(fns.i(-1), async ([d]) => { 
 				S.unbind(all("product", 124));
 				for(const it of d) {
 					const v = await db.getItem(it[0])

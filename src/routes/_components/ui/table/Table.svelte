@@ -3,7 +3,7 @@
   // import * as _ from "lamb";
   import { onMount, onDestroy, beforeUpdate } from "svelte";
   import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { all, all_h } from "../../../_modules/functions.js";
+  import { all, all_h, del } from "../../../_modules/functions.js";
   import { createEventDispatcher } from "svelte";
   const dp = createEventDispatcher();
 
@@ -34,7 +34,7 @@
   const fns = [];
 
   onMount(() => {
-    fns.push(all_h(url)); S.bind_(...fns.i(-1), (data) => {
+    fns.push(all_h(url)); S.bind_(fns.i(-1), ([data]) => {
       headers = data[0] || [];
       headersSelectors = data[1] || [];
       headerColTypes = data[2] || [];
@@ -49,19 +49,15 @@
       offset_columns = data[4]
       tooltip_offset_columns = data[5]
       resetFilter_();
-    }, {});
+    }, {}, 1);
     // [...Array(20)].map(_=>0)
-    fns.push(all(url)); S.bind$(...fns.i(-1), (data) => { 
-      quickview = Array.from({length: data.length}, ()=>0); items = data || []; });
+    fns.push(all(url)); S.bind$(fns.i(-1), ([data]) => { 
+      quickview = Array.from({length: data.length}, ()=>0); items = data || []; }, 1);
     resetFilter_();
     refresh();
     return true;
   });
-  onDestroy(() => { 
-    if(process.browser) {
-      S.unbind_(fns)
-    }
-  });
+  onDestroy(() => { if(process.browser) { S.unbind_(fns) } });
 
   function onItemClick(litem) {
     dp("onItemClick", {
@@ -86,7 +82,7 @@
   export const refresh = () => {
     // items = await getItems(baseUrl + url); // This not working..
     //items = getItems(baseUrl + url);
-    S.trigger(...all(url), [filterSettings, sortSettings, [limit]]);
+    S.trigger([[ all(url), [filterSettings, sortSettings, [limit]] ]]);
     return true;
   }
   const successSave = (e) => {
@@ -100,8 +96,8 @@
     }
   }
   const reFetchRow = async(rowIdx) => {
-      const e = `get_${url}_data11${rowIdx}`
-      const d = await new Promise((resolve, reject) => { S.bind_(e, (data) => { resolve(data) }, [[`=${items[rowIdx][0]}`]]); });
+      const e = all(url,rowIdx)
+      const d = await new Promise((resolve, reject) => { S.bind_(e, ([data]) => { resolve(data) }, [[`=${items[rowIdx][0]}`]]); });
       if(d) {
         for (let i = 0; i < d[0].length; i++) {
           items[rowIdx][i] = d[0][i]
@@ -214,7 +210,7 @@
   const deleteRow2 = (i) => async() => {
     const r = confirm("Press a button!");
     if (r == true) {
-    	const d = await new Promise((resolve, reject) => { S.bind_(`del_${url}_data${i}`, (data) => { resolve(data) }, [items[i][0]]); });
+    	const [d] = await new Promise((resolve, reject) => { S.bind_(del(url, i), (d) => { console.log(d); resolve(d) }, [items[i][0]]); }, 1); // result is not array
       if (d.ok) { deleteRow({detail: {rowIdx: i}}) } else { alert(d.error) }
       }
     }

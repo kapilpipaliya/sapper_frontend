@@ -1,6 +1,6 @@
 <script>
   import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { all, m_save_, makeObject } from "../../../_modules/functions.js";
+  import { all, save_, makeObject } from "../../../_modules/functions.js";
   import { onMount, createEventDispatcher } from "svelte";
   import SubmitButton from '../../ui/SubmitButton.svelte'
   import CancelButton from '../../ui/CancelButton.svelte';
@@ -15,9 +15,9 @@
   let form = { name: "", };
   const fns = [];
 
-  if (item.length) { form = makeObject(hs, item) }; S.bind$(m_save_('cs_type', rowIdx), (d) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }); 
+  if (item.length) { form = makeObject(hs, item) }; S.bind$(save_('cs_type', rowIdx), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }, 1); 
 
-  async function save() { isSaving = true; S.trigger(m_save_('cs_type', rowIdx), form); }
+  async function save() { isSaving = true; S.trigger([[ save_('cs_type', rowIdx), form ]]); }
   function clearError() { er = ""; }
 
 </script>

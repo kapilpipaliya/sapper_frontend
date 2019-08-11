@@ -1,7 +1,7 @@
 
 <script>
   import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { sfx, all, s_save_, p_save_,p_del_, makeObject, nullFirstarrayFix, getToneName } from "../../../_modules/functions.js";
+  import { sfx, all, save_, del, makeObject, nullFirstarrayFix, getToneName  } from "../../../_modules/functions.js";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import flatpickr from 'flatpickr';
   import SubmitButton from '../../ui/SubmitButton.svelte'
@@ -103,16 +103,31 @@
 
   }
   
-  fns.push(p_save_("product", rowIdx)); S.bind$(...fns.i(-1), (d) => {isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } });
-  S.bind$(p_del_("product", rowIdx), (d) => { isSaving = false; if (d.ok) {  er = ""; dp("deleteRow", { rowIdx, d }); } else { er = d.error; } });
+  fns.push(save_("product", rowIdx)); S.bind$(fns.i(-1), ([d]) => {isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } }, 1);
+  fns.push(del("product", rowIdx)); S.bind$(fns.i(-1), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("deleteRow", { rowIdx, d }); } else { er = d.error; } }, 1);
 
-  fns.push(all("shipping_class", rowIdx)); S.bind_(...fns.i(-1), (d) => { shipping_class = [[0, "No Shipping Class"], ...d]; form.p_shipping_class_id = item.length ? form["p_shipping_class_id"] : (shipping_class[0] ? shipping_class[0][0] : 0) }, [[]]);
-  fns.push(all("category_tree", rowIdx)); S.bind_(...fns.i(-1), (d) => { pc_category_id = d; form.pc_category_id = item.length ? nullFirstarrayFix(form["pc_category_id"]) : [] }, [[]]);
+  const batch1 = []
+  batch1.push([
+    all("shipping_class", rowIdx), ([d]) => { shipping_class = [[0, "No Shipping Class"], ...d]; form.p_shipping_class_id = item.length ? form["p_shipping_class_id"] : (shipping_class[0] ? shipping_class[0][0] : 0) },
+    [[]]
+  ]);
+  batch1.push([
+    ["product", "categorytreedata", sfx(rowIdx)], ([d]) => { pc_category_id = d; form.pc_category_id = item.length ? nullFirstarrayFix(form["pc_category_id"]) : [] },
+    [[]]
+  ]);
+
   
-  fns.push(all("tone", rowIdx)); S.bind_(...fns.i(-1), (d) => { p_tones_tone_id = d; form.p_tones_tone_id = item.length ? form["p_tones_tone_id"] : [] }, [[]]);
-  fns.push(all("certified_by", rowIdx)); S.bind_(...fns.i(-1), (d) => { p_certified_by_certified_by = d; form.p_certified_by_certified_by = item.length ? form["p_certified_by_certified_by"] : [] }, [[]]);
-  fns.push(all("policy", rowIdx)); S.bind_(...fns.i(-1), (d) => { p_policy_post_policy = d; form.p_policy_post_policy = item.length ? form["p_policy_post_policy"] : [] }, [[]]);
-  fns.push(all("clarity", rowIdx)); S.bind_(...fns.i(-1), (d) => { 
+  batch1.push([
+    all("tone", rowIdx), ([d]) => { p_tones_tone_id = d; form.p_tones_tone_id = item.length ? form["p_tones_tone_id"] : [] }, [[]]
+  ])
+  batch1.push([
+    all("certified_by", rowIdx), ([d]) => { p_certified_by_certified_by = d; form.p_certified_by_certified_by = item.length ? form["p_certified_by_certified_by"] : [] }, [[]]
+  ])
+  batch1.push([
+    all("policy", rowIdx), ([d]) => { p_policy_post_policy = d; form.p_policy_post_policy = item.length ? form["p_policy_post_policy"] : [] }, [[]]
+  ])
+  batch1.push([
+    all("clarity", rowIdx), ([d]) => {
       p_clarity_clarity_id = d; 
       form.p_clarity_clarity_id = item.length ? form["p_clarity_clarity_id"] : [] 
       clarity_new_id = Array.from(d, (_, i)=>{
@@ -123,8 +138,10 @@
       }
       return [d[i][0], 0, 0, 0, false] // clarity, pcs, weight, price, isMain
       });
-    }, [[]]);
-  fns.push(all("purity", rowIdx)); S.bind_(...fns.i(-1), (d) => { 
+    }, [[]]
+  ]);
+  batch1.push([
+    all("purity", rowIdx), ([d]) => { 
     p_purities_purity_id = d; // This contain all the rows.
     form.p_purities_purity_id = item.length ? form["p_purities_purity_id"] : [];
     form.p_purity_id = item.length && form["p_purity_id"] ? form["p_purity_id"] : (d[0] ? d[0][0] : 0)
@@ -166,24 +183,28 @@
       return [d[i][0], [], false, all] // purity, required[], all[]
     });
     updateVolume()
-    }, [[], [0]]);
+    }, [[], [0]]
+  ]);
 
-  fns.push(all("setting_type", rowIdx)); S.bind_(...fns.i(-1), (d) => { setting_type_id = [[0, "No Setting Type"], ...d];; }, [[]]);
+  batch1.push([
+    all("setting_type", rowIdx), ([d]) => { setting_type_id = [[0, "No Setting Type"], ...d];; }, [[]]
+  ]);
   
   const size_ = () => {form.p_d_size_diamond_size_id = form.p_d_size_diamond_size_id}
 
-  fns.push(all("shape", rowIdx)); S.bind_(...fns.i(-1), (d) => { shapes = d; size_()}, [[]]);
-  fns.push(all("d_color", rowIdx)); S.bind_(...fns.i(-1), (d) => { d_colors = d; size_()}, [[]]);
-  fns.push(all("cs_color", rowIdx)); S.bind_(...fns.i(-1), (d) => { cs_colors = d; size_()}, [[]]);
-  fns.push(all("cs_type", rowIdx)); S.bind_(...fns.i(-1), (d) => { cs_types = d; size_()}, [[]]);
-  fns.push(all("size", rowIdx)); S.bind_(...fns.i(-1), (d) => { sizes = d; size_()}, [[], [0]]);
+  batch1.push([ all("shape", rowIdx), ([d]) => { shapes = d; size_()}, [[]]  ])
+  batch1.push([ all("d_color", rowIdx), ([d]) => { d_colors = d; size_()}, [[]]  ])
+  batch1.push([ all("cs_color", rowIdx), ([d]) => { cs_colors = d; size_()}, [[]]  ])
+  batch1.push([ all("cs_type", rowIdx), ([d]) => { cs_types = d; size_()}, [[]]  ])
+  batch1.push([ all("size", rowIdx), ([d]) => { sizes = d; size_()}, [[], [0]]  ])
+  S.batchBind_T(batch1)
   
   // setup thumnails:
   for (let i = 0; i < form.p_attachments_attachement_id.length; i++) {
     const e = form.p_attachments_attachement_id[i];
     if(!e[1]) continue;
     
-    fns.push(all("attachment", `${sfx(rowIdx)}${i}${e[0]}`)); S.bind_(...fns.i(-1), (data) => {
+    S.bind_(["product", "attachment_data", sfx(rowIdx + i + e[0])], (data) => {
       // thumbnails[i] = new Blob([data])
     if(data instanceof Blob){
       const url = URL.createObjectURL(data)
@@ -225,10 +246,10 @@
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
   
   
-  async function save() {if(!form.pc_category_id.length) {alert("Please Select Category"); return;} isSaving = true; S.trigger(p_save_("product", rowIdx), form); }
+  async function save() {if(!form.pc_category_id.length) {alert("Please Select Category"); return;} isSaving = true; S.trigger([[ save_("product", rowIdx), form ]]); }
   function clearError() { er = ""; }
 
-  async function deleteRow() { isSaving = true; S.trigger(p_del_("product", rowIdx), [form.id]); }
+  async function deleteRow() { isSaving = true; S.trigger( [[ del("product", rowIdx), [form.id] ]] ); }
   // ------------
   function setPasswordDisabled() { if (form.visibility != "password protected") { form.password = ""; } }
   function setManageStock() { if (!form.p_manage_stock) { form.p_stock_quantity = 0; /*form.p_backorders = "do not allow"*/ } }
@@ -237,7 +258,7 @@
     const selectedFile = event.target.files[0];
     if (!selectedFile.type.startsWith('image/')){ return }
     
-    fns.push(s_save_('attachment', `${sfx(rowIdx)}${row}`)); S.bind_F(fns.i(-1), (d) => {
+    S.bind_F(["image", 'save_attachment_data', sfx(rowIdx + row)], ([d]) => {
       const r = form.p_attachments_attachement_id[row]; form.p_attachments_attachement_id[row] = [r[0], r[1], d] // d will be temp_id
       
       // Show Thumbnail when successfully uploaded:
@@ -307,9 +328,11 @@
       let sumPurDen = purityRow[5] * purityRow[6] / 100;// purity_per * sp_dencity / 100
       const tone=purityRow[7].find(x=>x[0]===form.p_tone_id)
       if(tone){ // y = pt.p_tone_id, pu_metal.pt2, pt.price
-        tone[1].forEach(z=>{ //pm.metal_id, pm.purity, pm.price, m1.specific_density
-          sumPurDen += z[1]*z[3] / 100
-        })
+        if(tone[1]){
+          tone[1].forEach(z=>{ //pm.metal_id, pm.purity, pm.price, m1.specific_density
+            sumPurDen += z[1]*z[3] / 100
+          })
+        }
       }
       form.p_volume = form.p_weight / sumPurDen
     } else {
@@ -504,7 +527,7 @@
 
   const diamondChange = (d) => async() => {
     if(d[4] > 0) {
-      const prices = await new Promise((resolve, reject) => { S.bind_(all("diamond_price", 111), (data) => { resolve(data) }, d); });
+      const prices = await new Promise((resolve, reject) => { S.bind_("product", "diamond_price_data", 111, ([data]) => { resolve(data) }, d); });
       
       prices.forEach(ele => {
         const v = d[6].find(v => v[0] == ele[0])
@@ -521,7 +544,7 @@
   }
   const csChange = (d) => async() => {
     if(d[5] > 0) {
-      const prices = await new Promise((resolve, reject) => { S.bind_(all("cs_price", 111), (data) => { resolve(data) }, d); });
+      const prices = await new Promise((resolve, reject) => { S.bind_("product", "cs_price_data", 111, ([data]) => { resolve(data) }, d); });
       
       prices.forEach(ele => {
         // const v = d[5].find(v => v[0] == ele[0])

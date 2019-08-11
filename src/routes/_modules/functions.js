@@ -13,34 +13,18 @@ export const ws_server = process.env.NODE_ENV === 'development' ? `ws://${domain
 export function all_h(t, p) {  return [ t, "header", sfx(p)]; }
 
 export function all(t, p) {  return [ t, "data", sfx(p)]; }
-
-function save(t, p) {return `save_${t}_data${sfx(p)}`}
-export function m_save_(t, p) { return save(`material_${t}`, p) }
-export function p_save_(t, p) { return save(`product_${t}`, p) }
-export function s_save_(t, p) { return save(`setting_${t}`, p) }
-export function e_save_(t, p) { return save(`entity_${t}`, p) }
-export function a_save_(t, p) { return save(`account_${t}`, p) }
-export function f_save_(t, p) { return save(`mfg_${t}`, p) }
-export function node_save_(t, p) { return save(`node_${t}`, p) }
-
-function del(t, p) {return `del_${t}_data${sfx(p)}`}
-export function m_del_(t, p) { return del(`material_${t}`, p) }
-export function p_del_(t, p) { return del(`product_${t}`, p) }
-export function s_del_(t, p) { return del(`setting_${t}`, p) }
-export function e_del_(t, p) { return del(`entity_${t}`, p) }
-export function a_del_(t, p) { return del(`account_${t}`, p) }
-export function f_del_(t, p) { return del(`mfg_${t}`, p) }
-export function node_del_(t, p) { return del(`node_${t}`, p) }
+export function save_(t, p) {return [t, "save", sfx(p)]}
+export function del(t, p) {return [t, "del", sfx(p)]}
 
 const e_category = all("category", 111);
-export const menuCategories = (S) => new Promise((resolve, reject) => { S.bind_(e_category, (data) => { resolve(data); S.unbind(e_category)  }, [[null, "=NULL"],[null, null, null, null, 0]]); });
+export const menuCategories = (S) => new Promise((resolve, reject) => { S.bind_(e_category, ([d]) => { resolve(d); S.unbind(e_category)  }, [[null, "=NULL"],[null, null, null, null, 0]]); });
 const e_entity = all("entity", 110)
-export const getUser = (S, id) => new Promise((resolve, reject) => { S.bind_(e_entity, (data) => { resolve(data); S.unbind(e_entity) }, [[`=${id}`]]); });
+export const getUser = (S, id) => new Promise((resolve, reject) => { S.bind_(e_entity, ([d]) => { resolve(d); S.unbind(e_entity) }, [[`=${id}`]]); });
 
 export const productImageBase = async (S, id) => {
     if (false && process.browser) { 
         const url = await new Promise((resolve, reject) => {
-        S.bind_("product_attachment_data", "", "", (data) => {
+        S.bind_("product", "attachment_data", 0, (data) => {
             if(data instanceof Blob){
                 const url = URL.createObjectURL(data)
                 resolve(url)
@@ -75,8 +59,8 @@ export const authCeck = async(S) => {
     //const { Server: S_ } = await import("../_modules/ws_events_dispatcher.js");
     //let S; if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
 
-    const isAuth = await new Promise((resolve, reject) => { S.bind_( "is_admin_auth", "", "", data => { 
-      resolve(data); }, [[]] );
+    const isAuth = await new Promise((resolve, reject) => { S.bind_( ["auth", "is_admin_auth", 0], ([d]) => { 
+      resolve(d); }, [[]] );
 		});
 		if(!isAuth){
       if(window.location.pathname !== "/admin/account/Login"){
@@ -191,24 +175,24 @@ export const getTotalArray = (p) => {
 }
 // check it already logged in
 export const isAuthFn = async (S, type="user") => {
-    const auth = await new Promise((resolve, reject) => { S.bind_( `is_${type}_auth`, data => { S.unbind(`is_${type}_auth`); resolve(data); }, [[]] ); });
+    const auth = await new Promise((resolve, reject) => { S.bind_( ["auth", `is_${type}_auth`, 0], ([d]) => { resolve(d); }, [[]] ); });
     return auth;
 }
 export const getPost = async (S, slug="home") => {
     const page = await new Promise((resolve, reject) => {
-        S.bind_( all("post", 112), data => { S.unbind(all("post", 112)); resolve(data); }, [[null, 'post', null, null, `=${slug}`]] ); // 6=code // = means excact
+        S.bind_( all("post", 112), ([d]) => { S.unbind(all("post", 112)); resolve(d); }, [[null, 'post', null, null, `=${slug}`]] ); // 6=code // = means excact
     });
     return page;
 }
 export const getSetting = async (S) => {
     const setting = await new Promise((resolve, reject) => {
-        S.bind_( all("setting", 112), data => { S.unbind(all("setting", 112)); resolve(data);}, [[]] );
+        S.bind_( all("setting", 112), ([d]) => { resolve(d);}, [[]] );
     });
     return setting;
 }
 export const getSettingKey = async (S, key="mobile") => {
     const setting = await new Promise((resolve, reject) => {
-        S.bind_( all("setting", 112), data => { S.unbind(all("setting", 112)); resolve(data);}, [[`=${key}`]] );
+        S.bind_( all("setting", 112), ([d]) => { resolve(d);}, [[`=${key}`]] );
     });
     return setting;
 }

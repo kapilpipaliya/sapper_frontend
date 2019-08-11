@@ -1,6 +1,6 @@
 <script>
   import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { all, e_save_, makeObject } from "../../../_modules/functions.js";
+  import { all, save_, makeObject } from "../../../_modules/functions.js";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import flatpickr from 'flatpickr';
   import SubmitButton from '../../ui/SubmitButton.svelte'
@@ -57,13 +57,13 @@
   const fns = [];
 
   if (item.length) { form = makeObject(hs, item) };
-  S.bind$(e_save_('entity', rowIdx), (d) => { isSaving = false; if (d.ok) { isSubmited = true;  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }); 
+  S.bind$(save_('entity', rowIdx), ([d]) => { isSaving = false; if (d.ok) { isSubmited = true;  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }, 1); 
 
-  async function save() { isSaving = true; S.trigger(e_save_('entity', rowIdx), form); }
+  async function save() { isSaving = true; S.trigger([[ save_('entity', rowIdx), form ]]); }
   function clearError() { er = ""; }
 
-  fns.push(all("entity_type", rowIdx)); S.bind_(...fns.i(-1), (d) => { entity_type_id = d; form.entity_type_id = item.length ? form["entity_type_id"] : (entity_type_id[0] ? entity_type_id[0][0] : 0) }, [[]]);
-  fns.push(all("address_type", rowIdx)); S.bind_(...fns.i(-1), (d) => { address_type_id = d;}, [[]]);
+  fns.push(all("entity_type", rowIdx)); S.bind_(fns.i(-1), ([d]) => { entity_type_id = d; form.entity_type_id = item.length ? form["entity_type_id"] : (entity_type_id[0] ? entity_type_id[0][0] : 0) }, [[]]);
+  fns.push(all("address_type", rowIdx)); S.bind_(fns.i(-1), ([d]) => { address_type_id = d;}, [[]]);
 
 
     onMount(async () => {

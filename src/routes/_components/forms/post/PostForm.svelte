@@ -1,7 +1,7 @@
 
 <script>
   import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { sfx, all, p_save_,p_del_, makeObject, nullFirstarrayFix } from "../../../_modules/functions.js";
+  import { sfx, all, save_,del, makeObject, nullFirstarrayFix } from "../../../_modules/functions.js";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import flatpickr from 'flatpickr';
   import SubmitButton from '../../ui/SubmitButton.svelte'
@@ -37,8 +37,8 @@
     setPasswordDisabled(); /* take care*/
   }
   
-  fns.push(p_save_("post", rowIdx)); S.bind$(...fns.i(-1), (d) => {isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } });
-  S.bind$(p_del_("post", rowIdx), (d) => { isSaving = false; if (d.ok) {  er = ""; dp("deleteRow", { rowIdx, d }); } else { er = d.error; } });
+  fns.push(save_("post", rowIdx)); S.bind$(fns.i(-1), ([d]) => {isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } }, 1);
+  fns.push(del("post", rowIdx)); S.bind$(fns.i(-1), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("deleteRow", { rowIdx, d }); } else { er = d.error; } });
 
   onMount(async () => {
     // setup date:
@@ -66,10 +66,10 @@
   });
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
   
-  async function save() { isSaving = true; S.trigger(p_save_("post", rowIdx), form); }
+  async function save() { isSaving = true; S.trigger([[ save_("post", rowIdx), form ]]); }
   function clearError() { er = ""; }
 
-  async function deleteRow() { isSaving = true; S.trigger(p_del_("post", rowIdx), [form.id]); }
+  async function deleteRow() { isSaving = true; S.trigger(del("post", rowIdx), [form.id]); }
   // ------------
   function setPasswordDisabled() { if (form.visibility != "password protected") { form.password = ""; } }
 

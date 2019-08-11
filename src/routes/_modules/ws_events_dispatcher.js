@@ -23,8 +23,6 @@ class ServerEventsDispatcher {
     
     this.setupConnection(req, res)
     this.callbacks = {};
-    this.event_meta = "";
-    this.meta_data = null;
 
 
   }
@@ -43,57 +41,68 @@ class ServerEventsDispatcher {
     this.conn.addEventListener("open", this.onopen);
   }
 
-  bind (event1, event2, no, callback) {
-    this.callbacks[JSON.stringify([event1, event2, no])] = this.callbacks[JSON.stringify([event1, event2, no])] || [];
-    this.callbacks[JSON.stringify([event1, event2, no])].push(callback);
+  bind (event1, callback, handleMultiple=0) {
+    this.callbacks[JSON.stringify(event1)] = this.callbacks[JSON.stringify(event1)] || [];
+    this.callbacks[JSON.stringify(event1)].push([handleMultiple, callback]); // 0 means unsubscribe using first time
     return this;// chainable
   };
   unbind_ (event_names) {
-    event_names.forEach(([event1, event2, no]) => {
-      this.unbind(JSON.stringify([event1, event2, no]));
+    event_names.forEach((event1) => {
+      this.unbind(JSON.stringify(event1));
     });
     return this;// chainable
   };
-  bind$ (event1, event2, no, callback) {
-    this.unbind(event1, event2, no);
-    this.bind(event1, event2, no, callback);
+  batchBind (events) {
+    const payload = []
+    for (let i = 0; i < events.length; i++) {
+      const e = events[i];
+      this.bind(...e)
+      payload.push(e)
+    }
+    return payload;// chainable
+  };
+  batchBind_T (events) {
+    const payload = this.batchBind(events)
+    this.trigger(payload)
     return this;// chainable
   };
-  bind_ (event1, event2, no, callback, data) {
-    this.unbind(event1, event2, no);
-    this.bind(event1, event2, no, callback);
-    this.trigger(event1, event2, no, data);
+  bind$ (event1, callback, handleMultiple) {
+    this.unbind(event1);
+    this.bind(event1, callback, handleMultiple);
     return this;// chainable
   };
-  bind_F (event1, event2, no, callback, data) {
-    this.unbind(event1, event2, no);
-    this.bind(event1, event2, no, callback);
-    this.triggerFile(event1, event2, no, data);
+  bind_ (event1, callback, data, handleMultiple) {
+    this.bind$(event1, callback, handleMultiple);
+    this.trigger([[event1, data]]);
     return this;// chainable
   };
-  unbind (event1, event2, no) {
-    this.callbacks[event1, event2, no] = [];
+  bind_F (event1, callback, data, handleMultiple) {
+    this.bind$(event1, callback, handleMultiple);
+    this.triggerFile(event1, data);
+    return this;// chainable
+  };
+  unbind (event1) {
+    this.callbacks[JSON.stringify(event1)] = [];
   }
-  trigger (event1, event2, no, data) {
+  trigger (payload) {
     const f = this.trigger
     switch (this.conn.readyState) {
       case 0: // CONNECTING
         // code block
         //This will added to onopen list, take care
         this.conn.addEventListener("open", function() {
-          f(event1, event2, no, data)
+          f(payload)
         })
         return this;
       case 1: // OPEN
-        const payload = JSON.stringify([event1, event2, no, data]);
-        this.conn.send(payload); // <= send JSON data to socket server
+        this.conn.send(JSON.stringify(payload)); // <= send JSON data to socket server
         return this;
       case 2: // CLOSING
       case 3: //CLOSED
         // try to reconnect/logout
         this.setupConnection()
         this.conn.addEventListener("open", function() {
-          f(event1, event2, no, data)
+          f(payload)
         })
         return this;
       default:
@@ -101,7 +110,7 @@ class ServerEventsDispatcher {
       // code block
     }
   };
-  triggerFile (event1, event2, no, data) {
+  triggerFile (event1, data) {
     const f = this.triggerFile
     const f2 = this.trigger
     switch (this.conn.readyState) {
@@ -109,7 +118,7 @@ class ServerEventsDispatcher {
         // code block
         //This will added to onopen list, take care
         this.conn.addEventListener("open", function() {
-          f(event1, event2, no, data)
+          f(event1, data)
         })
         return this;
       case 1: // OPEN
@@ -123,7 +132,7 @@ class ServerEventsDispatcher {
         reader.onload = function(e) {
             rawData = e.target.result;
             // conn.binaryType = "arraybuffer"
-            f2("save_image_meta_data", "", "", [event1, event2, no, file.name, file.size, file.type])
+            f2([[ ["auth", "save_image_meta_data", 0], [event1, file.name, file.size, file.type] ]])
             conn.send(rawData);
             // conn.binaryType = "blob"
             //alert("the File has been transferred.")
@@ -136,7 +145,7 @@ class ServerEventsDispatcher {
         // try to reconnect/logout
         this.conn = new IsomorphicWs('ws://localhost:8300/echo');
         this.conn.addEventListener("open", function() {
-          f(event1, event2, no, data)
+          f(event1, data)
         })
         return this;
       default:
@@ -147,18 +156,19 @@ class ServerEventsDispatcher {
 
   onmessage (evt) {
     if(typeof evt.data === "string" ) {
-      const data = JSON.parse(evt.data),
-        event1 = data[0],
-        event2 = data[1],
-        no = data[2],
-        message = data[3];
-      this.dispatch(event1, event2, no, message)
+      const data = JSON.parse(evt.data);
+      for (let i = 0; i < data.length; i++) {
+        const e = data[i];
+        const event1 = e[0];
+        const message = e.splice(1);
+        this.dispatch(event1, message)
+      }
     }
     // if(evt.data instanceof ArrayBuffer ){
       else {
       const buffer = evt.data;
       console.log("Received arraybuffer");
-      this.dispatch(this.event1, event2, no, buffer)
+      this.dispatch(this.event1, buffer)
     }
     // if(evt.data instanceof Blob ){
     //   const buffer = event.data;
@@ -167,22 +177,25 @@ class ServerEventsDispatcher {
     // }
   };
 
-  onclose () { this.dispatch('close',"","", null) }
+  onclose () { this.dispatch(['close',"",0], null) }
   onopen () { 
     //console.log(this.conn.extensions);
     // console.log("Server Opened")
-    this.dispatch('open', "", "", null) }
+    this.dispatch(['open', "", 0], null) }
   onerror (error) { 
     console.log(`[error] ${error.message}`);
     //todo depend on error try to reconnect
-    this.dispatch('error', "", "", null) 
+    this.dispatch(['error', "", 0], null) 
   }
 
-  dispatch (event1, event2, no, message) {
-    const chain = this.callbacks[JSON.stringify([event1, event2, no])];
+  dispatch (event1, message) {
+    const chain = this.callbacks[JSON.stringify(event1)];
     if (typeof chain == 'undefined') return; // no callbacks for this event
     for (let i = 0; i < chain.length; i++) {
-      chain[i](message)
+      chain[i][1](message)
+      if(chain[i][0] == 0) {
+        this.callbacks[JSON.stringify(event1)] = []
+      }
     }
   }
 
@@ -190,10 +203,9 @@ class ServerEventsDispatcher {
 let e;
 if (process.browser) { 
   e = new ServerEventsDispatcher()
-  e.bind("take_image_meta","", "", function(data) {
-    e.event_name = data[0]
-    e.event_meta = data[1]
-  });
+  e.bind(["take_image_meta"], function(data) {
+    e.event1 = data[0] // save value on class.
+  }, 1);
  } else {
    e = ServerEventsDispatcher;
  }

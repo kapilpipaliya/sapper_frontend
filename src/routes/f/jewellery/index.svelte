@@ -8,7 +8,7 @@
       let products = []
       for (let i = 0; i < categories.length; i++) {
         const ele = categories[i];
-        products[i] = await new Promise((resolve, reject) => { S.bind_(all("product", 112), (data) => { resolve(data) }, [[], [], [5]]); });
+        products[i] = await new Promise((resolve, reject) => { S.bind_(all("product", 112), ([d]) => { resolve(d) }, [[], [], [5]]); });
       }
       const isAuth = await isAuthFn(S)
       const footerData = await getFooterData(S)

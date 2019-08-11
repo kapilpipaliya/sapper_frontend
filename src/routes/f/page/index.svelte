@@ -7,8 +7,8 @@
 		
     const categories = await menuCategories(S);
     const posts = await new Promise((resolve, reject) => {
-      S.bind_( all("post", 111), data => {
-          resolve(data);
+      S.bind_( all("post", 111), ([d]) => {
+          resolve(d);
           // reject(new Error('Fail!'))
           // throw(new Error())
         },

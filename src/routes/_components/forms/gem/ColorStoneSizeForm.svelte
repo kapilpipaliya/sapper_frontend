@@ -1,6 +1,6 @@
 <script>
   import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { all, m_save_, makeObject } from "../../../_modules/functions.js";
+  import { all, save_, makeObject } from "../../../_modules/functions.js";
   import { onMount, createEventDispatcher } from "svelte";
   import SubmitButton from '../../ui/SubmitButton.svelte'
   import CancelButton from '../../ui/CancelButton.svelte';
@@ -28,15 +28,15 @@
   const fns = [];
   let new_name = false;
 
-  if (item.length) { form = makeObject(hs, item) }; S.bind$(m_save_('color_stone_size', rowIdx), (d) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }); 
+  if (item.length) { form = makeObject(hs, item) }; S.bind$(save_('color_stone_size', rowIdx), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }, 1); 
 
-  fns.push(all("shape", rowIdx));S.bind_(...fns.i(-1), (d) => { shape_id = d; form.shape_id = item.length ? form["shape_id"] : (shape_id[0] ? shape_id[0][0] : 0) }, [[]]);
-  fns.push(all("currency", rowIdx));S.bind_(...fns.i(-1), (d) => { currency_id = d; form.currency_id = item.length ? form["currency_id"] : (currency_id[0] ? currency_id[0][0] : 0) }, [[]]);
-  fns.push(all("size", rowIdx)); S.bind_(...fns.i(-1), (d) => { sizes = d; form.size_name = item.length ? form["size_name"] : (sizes[0] ? sizes[0][1] : ""); if(!sizes[0]) {new_name = true}}, [[]]);
-  fns.push(all("cs_type", rowIdx)); S.bind_(...fns.i(-1), (d) => { cs_type_id = d; form.cs_type_id = item.length ? form["cs_type_id"] : (cs_type_id[0] ? cs_type_id[0][0] : 0); }, [[]]);
+  fns.push(all("shape", rowIdx));S.bind_(fns.i(-1), ([d]) => { shape_id = d; form.shape_id = item.length ? form["shape_id"] : (shape_id[0] ? shape_id[0][0] : 0) }, [[]]);
+  fns.push(all("currency", rowIdx));S.bind_(fns.i(-1), ([d]) => { currency_id = d; form.currency_id = item.length ? form["currency_id"] : (currency_id[0] ? currency_id[0][0] : 0) }, [[]]);
+  fns.push(all("size", rowIdx)); S.bind_(fns.i(-1), ([d]) => { sizes = d; form.size_name = item.length ? form["size_name"] : (sizes[0] ? sizes[0][1] : ""); if(!sizes[0]) {new_name = true}}, [[]]);
+  fns.push(all("cs_type", rowIdx)); S.bind_(fns.i(-1), ([d]) => { cs_type_id = d; form.cs_type_id = item.length ? form["cs_type_id"] : (cs_type_id[0] ? cs_type_id[0][0] : 0); }, [[]]);
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
 
-  async function save() { isSaving = true; S.trigger(m_save_('color_stone_size', rowIdx), form); }
+  async function save() { isSaving = true; S.trigger([[ save_('color_stone_size', rowIdx), form ]]); }
   function clearError() { er = ""; }
 
   const clearSizeName = () => {
