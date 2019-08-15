@@ -56,8 +56,8 @@ class ServerEventsDispatcher {
     const payload = []
     for (let i = 0; i < events.length; i++) {
       const e = events[i];
-      this.bind(...e)
-      payload.push(e)
+      this.bind(e[0], e[1])
+      payload.push([e[0], e[2]])
     }
     return payload;// chainable
   };

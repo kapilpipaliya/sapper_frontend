@@ -17,7 +17,7 @@ export function save_(t, p) {return [t, "save", sfx(p)]}
 export function del(t, p) {return [t, "del", sfx(p)]}
 
 const e_category = all("category", 111);
-export const menuCategories = (S) => new Promise((resolve, reject) => { S.bind_(e_category, ([d]) => { resolve(d); S.unbind(e_category)  }, [[null, "=NULL"],[null, null, null, null, 0]]); });
+export const menuCategories = (S) => new Promise((resolve, reject) => { S.bind_(e_category, ([d]) => { resolve(d); }, [[null, "=NULL"],[null, null, null, null, 0]]); });
 const e_entity = all("entity", 110)
 export const getUser = (S, id) => new Promise((resolve, reject) => { S.bind_(e_entity, ([d]) => { resolve(d); S.unbind(e_entity) }, [[`=${id}`]]); });
 

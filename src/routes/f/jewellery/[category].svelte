@@ -7,22 +7,36 @@
     let S; if (typeof(S_) == "function") { S = new S_(this.req, this.res); } else { S = S_; }
     const { category } = page.params;
 
-    const categories = await menuCategories(S);
-    const footerData = await getFooterData(S)
-    const headerData = await getHeaderData(S)
-    const categoryRow = await new Promise((resolve, reject) => {
-      S.bind_( all("category", 222), ([d]) => {
-          resolve(d);
-          // reject(new Error('Fail!'))
-          // throw(new Error())
-        },
-        [[null, null, null, null, null, null, `=${category}`]]
-      ); // 6=code // = means excact
-    });
+    let categories = []
+    let footerData = {}
+    let headerData = {}
+    let categoryRow = []
+    await new Promise((resolve, reject) => {
+      const batch1 = []
+      let r1 = false, r2 = false, r3 = false, r4 = false
+      const myResolve = () => {
+        if(r1 && r2 && r3 && r4) resolve(1)
+      }
+  
+      batch1.push([
+        all("category", 111), ([d]) => { categories = d; r1 = true; myResolve()},  [[null, "=NULL"],[null, null, null, null, 0]]
+      ])
+      batch1.push([
+        all("setting", 112), ([d]) => {footerData.mobile = d; r2 = true; myResolve()}, [[`=mobile`]]
+      ])
+      batch1.push([
+        all("setting", 113), ([d]) => {headerData.company = d; r3 = true; myResolve()}, [[`=company_name`]]
+      ])
+      batch1.push([
+        all("category", 222), ([d]) => {categoryRow = d; r4 = true; myResolve()}, [[null, null, null, null, null, null, `=${category}`]] // 6=code // = means excact
+      ])
+      S.batchBind_T(batch1)
+    })
+
     if (!categoryRow.length) {
       // console.log("No category exist.");
     }
-
+    // This is not good programming
     let sub_categories = [];
     let sub_category_products = [];
     let products = [];
