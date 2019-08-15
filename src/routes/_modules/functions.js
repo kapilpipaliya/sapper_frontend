@@ -10,11 +10,11 @@ export const img_url = `${server}/demo/v1/user/download_id?path=`
 export const thumb_url = `${server}/demo/v1/user/thumb_id?path=`
 export const ws_server = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/echo` : `ws://${domain}:${port}/echo`;
 
-export function all_h(t, p) {  return [ t, "header", sfx(p)]; }
+export function all_h(t, p) {  return ["legacy", t, "header", sfx(p)]; }
 
-export function all(t, p) {  return [ t, "data", sfx(p)]; }
-export function save_(t, p) {return [t, "save", sfx(p)]}
-export function del(t, p) {return [t, "del", sfx(p)]}
+export function all(t, p) {  return ["legacy", t, "data", sfx(p)]; }
+export function save_(t, p) {return ["legacy", t, "save", sfx(p)]}
+export function del(t, p) {return ["legacy", t, "del", sfx(p)]}
 
 const e_category = all("category", 111);
 export const menuCategories = (S) => new Promise((resolve, reject) => { S.bind_(e_category, ([d]) => { resolve(d); }, [[null, "=NULL"],[null, null, null, null, 0]]); });
@@ -24,7 +24,7 @@ export const getUser = (S, id) => new Promise((resolve, reject) => { S.bind_(e_e
 export const productImageBase = async (S, id) => {
     if (false && process.browser) { 
         const url = await new Promise((resolve, reject) => {
-        S.bind_("product", "attachment_data", 0, (data) => {
+        S.bind_("legacy", "product", "attachment_data", 0, (data) => {
             if(data instanceof Blob){
                 const url = URL.createObjectURL(data)
                 resolve(url)
@@ -59,7 +59,7 @@ export const authCeck = async(S) => {
     //const { Server: S_ } = await import("../_modules/ws_events_dispatcher.js");
     //let S; if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
 
-    const isAuth = await new Promise((resolve, reject) => { S.bind_( ["auth", "is_admin_auth", 0], ([d]) => { 
+    const isAuth = await new Promise((resolve, reject) => { S.bind_( ["legacy", "auth", "is_admin_auth", 0], ([d]) => { 
       resolve(d); }, [[]] );
 		});
 		if(!isAuth){
@@ -175,7 +175,7 @@ export const getTotalArray = (p) => {
 }
 // check it already logged in
 export const isAuthFn = async (S, type="user") => {
-    const auth = await new Promise((resolve, reject) => { S.bind_( ["auth", `is_${type}_auth`, 0], ([d]) => { resolve(d); }, [[]] ); });
+    const auth = await new Promise((resolve, reject) => { S.bind_( ["legacy", "auth", `is_${type}_auth`, 0], ([d]) => { resolve(d); }, [[]] ); });
     return auth;
 }
 export const getPost = async (S, slug="home") => {

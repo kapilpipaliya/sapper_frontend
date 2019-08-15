@@ -112,7 +112,7 @@
     [[]]
   ]);
   batch1.push([
-    ["product", "categorytreedata", sfx(rowIdx)], ([d]) => { pc_category_id = d; form.pc_category_id = item.length ? nullFirstarrayFix(form["pc_category_id"]) : [] },
+    ["legacy", "product", "categorytreedata", sfx(rowIdx)], ([d]) => { pc_category_id = d; form.pc_category_id = item.length ? nullFirstarrayFix(form["pc_category_id"]) : [] },
     [[]]
   ]);
 
@@ -204,7 +204,7 @@
     const e = form.p_attachments_attachement_id[i];
     if(!e[1]) continue;
     
-    S.bind_(["product", "attachment_data", sfx(rowIdx + i + e[0])], (data) => {
+    S.bind_(["legacy", "product", "attachment_data", sfx(rowIdx + i + e[0])], (data) => {
       // thumbnails[i] = new Blob([data])
     if(data instanceof Blob){
       const url = URL.createObjectURL(data)
@@ -258,7 +258,7 @@
     const selectedFile = event.target.files[0];
     if (!selectedFile.type.startsWith('image/')){ return }
     
-    S.bind_F(["image", 'save_attachment_data', sfx(rowIdx + row)], ([d]) => {
+    S.bind_F(["legacy", "image", 'save_attachment_data', sfx(rowIdx + row)], ([d]) => {
       const r = form.p_attachments_attachement_id[row]; form.p_attachments_attachement_id[row] = [r[0], r[1], d] // d will be temp_id
       
       // Show Thumbnail when successfully uploaded:
@@ -527,7 +527,7 @@
 
   const diamondChange = (d) => async() => {
     if(d[4] > 0) {
-      const prices = await new Promise((resolve, reject) => { S.bind_("product", "diamond_price_data", 111, ([data]) => { resolve(data) }, d); });
+      const prices = await new Promise((resolve, reject) => { S.bind_("legacy", "product", "diamond_price_data", 111, ([data]) => { resolve(data) }, d); });
       
       prices.forEach(ele => {
         const v = d[6].find(v => v[0] == ele[0])
@@ -544,7 +544,7 @@
   }
   const csChange = (d) => async() => {
     if(d[5] > 0) {
-      const prices = await new Promise((resolve, reject) => { S.bind_("product", "cs_price_data", 111, ([data]) => { resolve(data) }, d); });
+      const prices = await new Promise((resolve, reject) => { S.bind_("legacy", "product", "cs_price_data", 111, ([data]) => { resolve(data) }, d); });
       
       prices.forEach(ele => {
         // const v = d[5].find(v => v[0] == ele[0])

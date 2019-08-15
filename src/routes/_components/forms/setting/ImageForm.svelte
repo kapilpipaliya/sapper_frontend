@@ -31,7 +31,7 @@
   let thumbnail = "./images/great-success.png"
   // setup thumnails:
   if(item.length){
-    fns.push("image", "thumb_data", `${sfx(rowIdx)}`); S.bind_(fns.i(-1), ([data]) => {
+    fns.push(["legacy", "image", "thumb_data", `${sfx(rowIdx)}`]); S.bind_(fns.i(-1), ([data]) => {
       if(data instanceof Blob){
         const url = URL.createObjectURL(data)
         thumbnail = url
@@ -42,7 +42,7 @@
     const selectedFile = event.target.files[0];
     if (!selectedFile.type.startsWith('image/')){ return }
     
-    fns.push(["image", 'save_attachment_data', sfx(rowIdx)]); S.bind_F(...fns.i(-1), ([d]) => {
+    fns.push(["legacy", "image", 'save_attachment_data', sfx(rowIdx)]); S.bind_F(...fns.i(-1), ([d]) => {
       form.temp_id = d // d will be temp_id
       // Show Thumbnail when successfully uploaded:
       thumbnail = URL.createObjectURL(selectedFile)

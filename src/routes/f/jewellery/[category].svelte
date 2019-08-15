@@ -91,7 +91,7 @@
 				product = await new Promise((resolve, reject) => {
 				const event_name = `attachment_data`;
 				
-				S.bind_("product", event_name, 0, (data) => {
+				S.bind_("legacy", "product", event_name, 0, (data) => {
 					const url = URL.createObjectURL(data)
 					resolve(url)
 					// const reader = new FileReader();
