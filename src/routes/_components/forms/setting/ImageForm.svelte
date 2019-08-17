@@ -1,7 +1,7 @@
 <script>
   import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { all, sfx, save_, makeObject } from "../../../_modules/functions.js";
-  import { onMount, createEventDispatcher } from "svelte";
+  import { all, sfx, save_, makeObject, thumb_url } from "../../../_modules/functions.js";
+  import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import SubmitButton from '../../ui/SubmitButton.svelte'
   import CancelButton from '../../ui/CancelButton.svelte';
   const dp = createEventDispatcher();
@@ -29,7 +29,8 @@
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
 
   let thumbnail = "./images/great-success.png"
-  // setup thumnails:
+  /*
+  // request thumnails with websocket:
   if(item.length){
     fns.push(["legacy", "image", "thumb_data", `${sfx(rowIdx)}`]); S.bind_(fns.i(-1), ([data]) => {
       if(data instanceof Blob){
@@ -38,11 +39,15 @@
       }
     }, form.id);
   }
+  */
+  if(item.length){
+    thumbnail = `${thumb_url}/${form.id}/${form.version}`
+  }
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     if (!selectedFile.type.startsWith('image/')){ return }
     
-    fns.push(["legacy", "image", 'save_attachment_data', sfx(rowIdx)]); S.bind_F(...fns.i(-1), ([d]) => {
+    S.bind_F(["legacy", "image", 'save_attachment_data', sfx(rowIdx)], ([d]) => {
       form.temp_id = d // d will be temp_id
       // Show Thumbnail when successfully uploaded:
       thumbnail = URL.createObjectURL(selectedFile)

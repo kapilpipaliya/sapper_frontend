@@ -1,7 +1,7 @@
 
 <script>
   import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { sfx, all, save_, del, makeObject, nullFirstarrayFix, getToneName  } from "../../../_modules/functions.js";
+  import { sfx, all, save_, del, makeObject, nullFirstarrayFix, getToneName, product_img_url  } from "../../../_modules/functions.js";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import flatpickr from 'flatpickr';
   import SubmitButton from '../../ui/SubmitButton.svelte'
@@ -199,7 +199,8 @@
   batch1.push([ all("size", rowIdx), ([d]) => { sizes = d; size_()}, [[], [0]]  ])
   S.batchBind_T(batch1)
   
-  // setup thumnails:
+  /*
+  // request thumnails with websocket:
   for (let i = 0; i < form.p_attachments_attachement_id.length; i++) {
     const e = form.p_attachments_attachement_id[i];
     if(!e[1]) continue;
@@ -212,6 +213,9 @@
     }
     }, e[0]);
   }
+  */
+  form.p_attachments_attachement_id.map((x, i) => thumbnails[i] = `${product_img_url}/${x[0]}/${x[4]}`)
+ 
   onMount(async () => {
     // setup date:
     const elem = date
@@ -272,7 +276,7 @@
   }
   function handleFileAdd() {
     // Not need This: if(!form.p_tones_tone_id[0]) { alert("Please Select a tone first."); return }
-    form.p_attachments_attachement_id = form.p_attachments_attachement_id.concat([[0, p_tones_tone_id[0][0], 0, false]]) //form.p_tones_tone_id[0],
+    form.p_attachments_attachement_id = form.p_attachments_attachement_id.concat([[0, p_tones_tone_id[0][0], 0, false, 0]]) //form.p_tones_tone_id[0],
     thumbnails[form.p_attachments_attachement_id.length - 1] = "images/great-success.png"
   }
   const handleFileDelete = (row) => () => {
@@ -527,7 +531,7 @@
 
   const diamondChange = (d) => async() => {
     if(d[4] > 0) {
-      const prices = await new Promise((resolve, reject) => { S.bind_("legacy", "product", "diamond_price_data", 111, ([data]) => { resolve(data) }, d); });
+      const prices = await new Promise((resolve, reject) => { S.bind_(["legacy", "product", "diamond_price_data", 111], ([data]) => { resolve(data) }, d); });
       
       prices.forEach(ele => {
         const v = d[6].find(v => v[0] == ele[0])
@@ -544,7 +548,7 @@
   }
   const csChange = (d) => async() => {
     if(d[5] > 0) {
-      const prices = await new Promise((resolve, reject) => { S.bind_("legacy", "product", "cs_price_data", 111, ([data]) => { resolve(data) }, d); });
+      const prices = await new Promise((resolve, reject) => { S.bind_(["legacy", "product", "cs_price_data", 111], ([data]) => { resolve(data) }, d); });
       
       prices.forEach(ele => {
         // const v = d[5].find(v => v[0] == ele[0])

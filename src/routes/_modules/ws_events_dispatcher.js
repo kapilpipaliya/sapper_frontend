@@ -125,15 +125,21 @@ class ServerEventsDispatcher {
         var file = data
         var reader = new FileReader();
         var rawData = new ArrayBuffer();
-        const conn = this.conn    
+        const conn = this.conn
+        const bind$ = this.bind$   
         reader.loadend = function() {
 
         }
         reader.onload = function(e) {
             rawData = e.target.result;
             // conn.binaryType = "arraybuffer"
-            f2([[ ["legacy", "auth", "save_image_meta_data", 0], [event, file.name, file.size, file.type] ]])
-            conn.send(rawData);
+            const evt = ["legacy", "auth", "save_image_meta_data", 0]
+            f2([[ evt, [event, file.name, file.size, file.type] ]])
+            
+            bind$(evt, () => {
+              conn.send(rawData);
+            })
+
             // conn.binaryType = "blob"
             //alert("the File has been transferred.")
         }

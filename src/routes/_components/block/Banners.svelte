@@ -27,7 +27,7 @@
     <a
         href={i[5]}>
         <img
-          src={`${thumb_url}${i[0]}`}
+          src={`${thumb_url}/${i[0]}/${i[10]}`}
           alt={i[4]}
           class="img-responsive-c lazy-img"
            />

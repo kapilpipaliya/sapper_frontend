@@ -3,7 +3,7 @@
 <script>
 
   import { onMount } from 'svelte';
-  export let img_url = "";
+  export let product_img_url = "";
   export let images = []
 	onMount(() => {
     if (window.hasOwnProperty("Slider")) {
@@ -128,8 +128,8 @@
         <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:372px;height:372px;overflow:hidden;">
             {#each images as i}
               <div>
-                  <img data-u="image" src={`${img_url}${i[0]}`} alt=""/>
-                  <img data-u="thumb" src={`${img_url}${i[0]}`} alt=""/>
+                  <img data-u="image" src={`${product_img_url}/${i[0]}/${i[4]}`} alt=""/>
+                  <img data-u="thumb" src={`${product_img_url}/${i[0]}/${i[4]}`} alt=""/>
               </div>
             {/each}
         </div>

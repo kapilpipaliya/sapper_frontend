@@ -6,8 +6,8 @@ import StorageDB from "./indexdb/storage.js";
 const port = process.env.NODE_ENV === 'development' ? '8300' : '8300'
 const domain = process.env.NODE_ENV === 'development' ? 'localhost' : 'marvelartjewellery.com'
 const server = process.env.NODE_ENV === 'development' ? `http://${domain}:${port}` : `http://${domain}:${port}`;
-export const img_url = `${server}/demo/v1/user/download_id?path=`
-export const thumb_url = `${server}/demo/v1/user/thumb_id?path=`
+export const product_img_url = `${server}/demo/v1/user/download_id`
+export const thumb_url = `${server}/demo/v1/user/thumb_id`
 export const ws_server = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/echo` : `ws://${domain}:${port}/echo`;
 
 export function all_h(t, p) {  return ["legacy", t, "header", sfx(p)]; }
@@ -21,10 +21,10 @@ export const menuCategories = (S) => new Promise((resolve, reject) => { S.bind_(
 const e_entity = all("entity", 110)
 export const getUser = (S, id) => new Promise((resolve, reject) => { S.bind_(e_entity, ([d]) => { resolve(d); S.unbind(e_entity) }, [[`=${id}`]]); });
 
-export const productImageBase = async (S, id) => {
+export const productImageBase = async (S, id, version=0) => {
     if (false && process.browser) { 
         const url = await new Promise((resolve, reject) => {
-        S.bind_("legacy", "product", "attachment_data", 0, (data) => {
+        S.bind_(["legacy", "product", "attachment_data", 0], (data) => {
             if(data instanceof Blob){
                 const url = URL.createObjectURL(data)
                 resolve(url)
@@ -41,7 +41,7 @@ export const productImageBase = async (S, id) => {
          });
         return url
     } else {
-        return `${img_url}${id}`
+        return `${product_img_url}/${id}/${version}`
     }
 }
 
@@ -74,8 +74,9 @@ export const authCeck = async(S) => {
 export const productImage = async (S, parray) => {
     for (let c of parray) {
         const idx = c[48].findIndex(v => v[3])
-        const main = idx > -1 ? c[48][idx][0] : 0
-        const i = await productImageBase(S, main)
+        const mainId = idx > -1 ? c[48][idx][0] : 0
+        const version = idx > -1 ? c[48][idx][4] : 0
+        const i = await productImageBase(S, mainId, version)
         c.push(i)
     }
 }

@@ -60,7 +60,7 @@
   import ProductDetail from "../../../_components/block/ProductDetail.svelte";
   import HaveAQue from "../../../_components/block/HaveAQue.svelte";
   import StorageDB from "../../../_modules/indexdb/storage.js";
-  import { getClarityName, getToneName, getPurityName, img_url} from "../../../_modules/functions.js";
+  import { getClarityName, getToneName, getPurityName, product_img_url} from "../../../_modules/functions.js";
   export let isAuth = false;
   export let categories = [];
   export let product = {};
@@ -228,7 +228,7 @@
       {#if false}
         <img src={product.main_image} alt=""/>
       {/if}
-      <Slider images={product.p_attachments_attachement_id} {img_url}/>
+      <Slider images={product.p_attachments_attachement_id} {product_img_url}/>
       {#if product.p_certified_by_certified_by[0] }
         <div class="certification">
             <span> Certified By </span>
