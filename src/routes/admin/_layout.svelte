@@ -1,24 +1,3 @@
-<script context="module">
-	export async function preload(page, session){
-		// TODO: if no cookie , or cookie is rejected by server Redirect to login page.
-		// user="ABCXYY"
-
-		//1. Login page set cookie, restart ws connection
-		//2. Logout page remove cookie, restart ws connection
-		/*
-		let user = session.user
-		if(!user){
-			this.redirect(302, '/connexion')
-		}
-
-		if(user && !user.isAdmin){
-			this.redirect(302, '/connexion')
-		}
-		*/
-
-		return {}
-	}
-</script>
 <script>
 	export let segment;
 </script>

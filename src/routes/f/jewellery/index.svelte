@@ -1,7 +1,7 @@
 <script context="module">
 		import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
     import { all, menuCategories, isAuthFn, getFooterData, getHeaderData } from "../../_modules/functions.js";
-    import MyLayout from '../_myLayout.svelte'
+
 		export async function preload(page, session) {
       let S; if (typeof(S_) == "function") { S = new S_(this.req, this.res); } else { S = S_; }
       const categories = await menuCategories(S);
@@ -18,6 +18,7 @@
     }
 </script>
 <script>
+    import MyLayout from '../_myLayout.svelte'
     export let categories = [];
     export let footerData = {};
   export let headerData = {};

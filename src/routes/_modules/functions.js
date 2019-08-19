@@ -54,6 +54,7 @@ export const setCookie  = res => {
     }));
 }*/
 
+// dont use this function:
 export const authCeck = async(S) => {
     const fns = [];
     //const { Server: S_ } = await import("../_modules/ws_events_dispatcher.js");
@@ -63,10 +64,10 @@ export const authCeck = async(S) => {
       resolve(d); }, [[]] );
 		});
 		if(!isAuth){
-      if(window.location.pathname !== "/admin/account/Login"){
-          window.location.href = "/admin/account/Login"
-      }
-    }
+            if(window.location.pathname !== "/admin/account/Login"){
+                window.location.href = "/admin/account/Login"
+            }
+        }
     S.unbind_(fns)
     return isAuth;
 }

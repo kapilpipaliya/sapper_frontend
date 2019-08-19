@@ -23,7 +23,7 @@
 <script>
   import MyLayout from './_myLayout.svelte'
   import Banners from "./_Banners.svelte";
-  // import Carousel from '../_components/ui/carousel/Carousel.svelte'
+  // import Carousel from '../_components/carousel/Carousel.svelte'
   import { onMount } from "svelte";
 
   export let categories = [];

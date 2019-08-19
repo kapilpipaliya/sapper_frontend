@@ -1,5 +1,5 @@
 <script>
-  import TablePage from "../../_components/ui/table/TablePage.svelte";
+  import TablePage from "../../_components/table/TablePage.svelte";
   import MetalIssueForm from "./_MetalIssueForm.svelte";
 
   import { onMount, onDestroy, createEventDispatcher } from "svelte";

@@ -10,12 +10,13 @@
   export let formcomponent;
   export let quickcomponent=false;
   export let requiredFilter = {}
+  export let items= []
+  export let h = []
+  export let url = "";
   let myTable;
   let item = [];
 
   let modalIsVisible = false;
-
-  export let url = "";
 
   function onItemClick(litem) {
     item = litem;
@@ -59,6 +60,8 @@
     {url} 
     {quickcomponent}
     {requiredFilter}
+    {h}
+    {items}
     />
 
 
@@ -74,6 +77,9 @@
       {item}
       on:close={closeModal}
       on:successSave={refresh}
-      {url} />
+      {url} 
+      {h}
+      {items}
+      />
   </Modal>
 {/if}

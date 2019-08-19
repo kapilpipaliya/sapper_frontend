@@ -1,5 +1,5 @@
 <script>
-  import TablePage from "../../_components/ui/table/TablePage.svelte";
+  import TablePage from "../../_components/table/TablePage.svelte";
   import ShapeForm from "./_ShapeForm.svelte";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import { authCeck } from "../../_modules/functions.js";

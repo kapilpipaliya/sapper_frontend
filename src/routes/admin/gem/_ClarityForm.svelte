@@ -7,8 +7,8 @@
   import { Server as S } from "../../_modules/ws_events_dispatcher.js";
   import { all, save_, makeObject } from "../../_modules/functions.js";
   import { onMount, createEventDispatcher } from "svelte";
-  import SubmitButton from '../../_components/ui/SubmitButton.svelte'
-  import CancelButton from '../../_components/ui/CancelButton.svelte';
+  import SubmitButton from '../../_components/SubmitButton.svelte'
+  import CancelButton from '../../_components/CancelButton.svelte';
   const dp = createEventDispatcher();
 
   export let rowIdx = 0;

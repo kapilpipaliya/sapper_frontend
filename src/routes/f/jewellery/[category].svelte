@@ -114,10 +114,10 @@
 </script>
 
 <script>
-  import Cards from "../../_components/ui/Cards.svelte";
-  import CardItem from "../../_components/ui/CardItem.svelte";
-  import ScrollTop from "../../_components/ui/ScrollTop.svelte";
-  import TextButton from "../../_components/ui/TextButton.svelte";
+  import Cards from "../../_components/Cards.svelte";
+  import CardItem from "../../_components/CardItem.svelte";
+  import ScrollTop from "../../_components/ScrollTop.svelte";
+  import TextButton from "../../_components/TextButton.svelte";
   import Filter from "./_Filter.svelte";
   import MyLayout from '../_myLayout.svelte'
   import { getTotalArray } from "../../_modules/functions.js";

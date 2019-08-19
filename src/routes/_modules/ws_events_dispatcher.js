@@ -20,6 +20,8 @@ class ServerEventsDispatcher {
     this.onopen = this.onopen.bind(this);
     this.onerror = this.onerror.bind(this);
     this.dispatch = this.dispatch.bind(this);
+    this.batchBind = this.batchBind.bind(this);
+    this.batchBind_T = this.batchBind_T.bind(this);
     
     this.setupConnection(req, res)
     this.callbacks = {};

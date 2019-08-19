@@ -1,10 +1,6 @@
-<script context="module">
-
-</script>
-
 <script>
   import { stores } from "@sapper/app";
-  import PreloadingIndicator from "../_components/ui/PreloadingIndicator.svelte";
+  import PreloadingIndicator from "../_components/PreloadingIndicator.svelte";
   const { page, preloading } = stores();
 
   import TopMenu from "./_TopMenu.svelte";

@@ -3,11 +3,11 @@
   import { all, save_, makeObject } from "../../_modules/functions.js";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import flatpickr from 'flatpickr';
-  import SubmitButton from '../../_components/ui/SubmitButton.svelte'
-  import CancelButton from '../../_components/ui/CancelButton.svelte';
+  import SubmitButton from '../../_components/SubmitButton.svelte'
+  import CancelButton from '../../_components/CancelButton.svelte';
   
-  import Cards from "../../_components/ui/Cards.svelte";
-  import CardItem from "../../_components/ui/CardItem.svelte";
+  import Cards from "../../_components/Cards.svelte";
+  import CardItem from "../../_components/CardItem.svelte";
   const dp = createEventDispatcher();
 
   export let rowIdx = 0;

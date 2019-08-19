@@ -1,7 +1,6 @@
 <script context="module">
   import { Server as S_ } from "../../../_modules/ws_events_dispatcher.js";
   import { all, all_h, save_, makeObject, product_purity_price, product_clarity_price, productImage, get_p_purity_idx, get_p_clarity_idx, menuCategories, get_p_purity_tone_idx, getToneIdx,getPrice,getTotal, isAuthFn, getFooterData, getHeaderData  } from "../../../_modules/functions.js";
-  import MyLayout from '../../_myLayout.svelte'
   export async function preload(page, session) {
     let S; if (typeof S_ == "function") { S = new S_(this.req, this.res); } else { S = S_; }
     const { p } = page.params;
@@ -53,10 +52,11 @@
 <script>
   import { onMount } from "svelte";
   import { fade, fly } from 'svelte/transition';
-  import Cards from "../../../_components/ui/Cards.svelte";
-  import FadeOutButton from "../../../_components/ui/FadeOutButton.svelte";
-  import Slider from "../../../_components/ui/Slider.svelte";
-  import ScrollTop from "../../../_components/ui/ScrollTop.svelte";
+  import MyLayout from '../../_myLayout.svelte'
+  import Cards from "../../../_components/Cards.svelte";
+  import FadeOutButton from "../../../_components/FadeOutButton.svelte";
+  import Slider from "../../../_components/Slider.svelte";
+  import ScrollTop from "../../../_components/ScrollTop.svelte";
   import ProductDetail from "./_ProductDetail.svelte";
   import HaveAQue from "./_HaveAQue.svelte";
   import StorageDB from "../../../_modules/indexdb/storage.js";

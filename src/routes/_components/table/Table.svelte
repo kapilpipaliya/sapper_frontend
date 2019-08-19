@@ -2,8 +2,8 @@
   // import { getFirstElementOr, tailOrEmpty } from "../jreason/src/list.bs.js";
   // import * as _ from "lamb";
   import { onMount, onDestroy, beforeUpdate } from "svelte";
-  import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { all, all_h, del } from "../../../_modules/functions.js";
+  import { Server as S } from "../../_modules/ws_events_dispatcher.js";
+  import { all, all_h, del } from "../../_modules/functions.js";
   import { createEventDispatcher } from "svelte";
   const dp = createEventDispatcher();
 
@@ -11,7 +11,10 @@
   export let quickcomponent=false;
   export let requiredFilter = {}
 
-  let items = [];
+  export let h = []
+
+  export let items = [];
+  
   let headers = [];
   let visible_columns = [];
   let offset_columns = [];
@@ -32,9 +35,39 @@
   let limit = 0;
 
   const fns = [];
-
-  onMount(() => {
-    fns.push(all_h(url)); S.bind_(fns.i(-1), ([data]) => {
+  
+  export const refresh = () => {
+    // items = await getItems(baseUrl + url); // This not working..
+    //items = getItems(baseUrl + url);
+    S.trigger([[ all(url), [filterSettings, sortSettings, [limit]] ]]);
+    return true;
+  }
+  const successSave = (e) => {
+    const {rowIdx, d} = e.detail
+    if(rowIdx === null) {
+      toogleAddForm()
+      refresh()
+    } else {
+      quickview[rowIdx] = false
+      reFetchRow(rowIdx)
+    }
+  }
+  const handleFilter = col => event => {
+    // S.trigger(event_columns_filters_name, filterSettings);
+    refresh();
+  };
+  const resetFilter_ = () => {
+      const array = new Array(headers.length);
+      array.fill(null);
+      for (let key in requiredFilter) {array[key] = requiredFilter[key]}
+      filterSettings = array;
+  }
+  const resetFilter = event => {
+    resetFilter_();
+    //S.trigger(event_columns_filters_name, filterSettings);
+    refresh();
+  };
+  const fillHeadersArray = (data) => {
       headers = data[0] || [];
       headersSelectors = data[1] || [];
       headerColTypes = data[2] || [];
@@ -49,14 +82,28 @@
       offset_columns = data[4]
       tooltip_offset_columns = data[5]
       resetFilter_();
-    }, {}, 1);
+  }
+
+  onMount(() => {
+    if(h.length > 0){
+      fillHeadersArray(h)
+    } else{
+      fns.push(all_h(url)); S.bind_(fns[0], ([data]) => {
+        fillHeadersArray(data)
+      }, {}, 1);
+    }
     // [...Array(20)].map(_=>0)
-    fns.push(all(url)); S.bind$(fns.i(-1), ([data]) => { 
-      quickview = Array.from({length: data.length}, ()=>0); items = data || []; }, 1);
+    fns.push(all(url)); S.bind$(fns[1], ([data]) => { 
+      quickview = Array.from({length: data.length}, ()=>0); items = data || []; 
+      }, {}, 1);
     resetFilter_();
-    refresh();
+    if(items.length == 0) {
+      refresh();
+    }
     return true;
   });
+
+
   onDestroy(() => { if(process.browser) { S.unbind_(fns) } });
 
   function onItemClick(litem) {
@@ -79,22 +126,6 @@
     //}
   }
 
-  export const refresh = () => {
-    // items = await getItems(baseUrl + url); // This not working..
-    //items = getItems(baseUrl + url);
-    S.trigger([[ all(url), [filterSettings, sortSettings, [limit]] ]]);
-    return true;
-  }
-  const successSave = (e) => {
-    const {rowIdx, d} = e.detail
-    if(rowIdx === null) {
-      toogleAddForm()
-      refresh()
-    } else {
-      quickview[rowIdx] = false
-      reFetchRow(rowIdx)
-    }
-  }
   const reFetchRow = async(rowIdx) => {
       const e = all(url,rowIdx)
       const d = await new Promise((resolve, reject) => { S.bind_(e, ([data]) => { resolve(data) }, [[`=${items[rowIdx][0]}`]]); });
@@ -141,21 +172,7 @@
 	  //   }
 	  // }
   };
-  const handleFilter = col => event => {
-    // S.trigger(event_columns_filters_name, filterSettings);
-    refresh();
-  };
-  const resetFilter_ = () => {
-      const array = new Array(headers.length);
-      array.fill(null);
-      for (let key in requiredFilter) {array[key] = requiredFilter[key]}
-      filterSettings = array;
-  }
-  const resetFilter = event => {
-    resetFilter_();
-    //S.trigger(event_columns_filters_name, filterSettings);
-    refresh();
-  };
+
   let menuDisplayed = false;
   let inputMenuDisplayed = false;
 
