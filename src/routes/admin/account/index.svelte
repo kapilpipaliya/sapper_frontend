@@ -1,14 +1,17 @@
+<script context="module">
+  import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
+  import { getTableData } from "../../_modules/functions.js";
+  export async function preload(page, session) {
+    return await getTableData.call(this, S_, "account");
+  }
+</script>
 <script>
   import TablePage from "../../_components/table/TablePage.svelte";
   import AccountForm from "./_AccountForm.svelte";
-  import { onMount, onDestroy, createEventDispatcher } from "svelte";
-  import { authCeck } from "../../_modules/functions.js";
-  let isAuth = false;
-  onMount(async () => {
-    const { Server: S_ } = await import( "../../_modules/ws_events_dispatcher.js" );
-    let S; if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
-    isAuth = await authCeck(S);
-  });
+  export let isAuth = false
+  export let url = ""
+  export let h = []
+  export let data = []
 </script>
 
 <svelte:options immutable />
@@ -18,8 +21,11 @@
 
 {#if isAuth}
   <h1>Account</h1>
-  <TablePage url="account" 
-  formcomponent={AccountForm}
-  quickcomponent={AccountForm}
-   />
+  <TablePage
+    {url}
+    {h}
+    items={data}
+    formcomponent={AccountForm}
+    quickcomponent={AccountForm}
+    />
 {/if}

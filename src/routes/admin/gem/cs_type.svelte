@@ -1,14 +1,17 @@
+<script context="module">
+  import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
+  import { getTableData } from "../../_modules/functions.js";
+  export async function preload(page, session) {
+    return await getTableData.call(this, S_, "cs_type");
+  }
+</script>
 <script>
   import TablePage from "../../_components/table/TablePage.svelte";
   import CSTypeForm from "./_CSTypeForm.svelte";
-  import { onMount, onDestroy, createEventDispatcher } from "svelte";
-  import { authCeck } from "../../_modules/functions.js";
-  let isAuth = false;
-  onMount(async () => {
-    const { Server: S_ } = await import( "../../_modules/ws_events_dispatcher.js" );
-    let S; if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
-    isAuth = await authCeck(S);
-  });
+  export let isAuth = false
+  export let url = ""
+  export let h = []
+  export let data = []
 </script>
 
 <svelte:options immutable />
@@ -19,7 +22,9 @@
 {#if isAuth}
   <h1>Color Stone Type</h1>
   <TablePage
-    url="cs_type"
+    {url}
+    {h}
+    items={data}
     formcomponent={CSTypeForm}
     quickcomponent={CSTypeForm} />
 {/if}

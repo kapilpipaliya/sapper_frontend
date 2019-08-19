@@ -1,14 +1,18 @@
+<script context="module">
+  import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
+  import { getTableData } from "../../_modules/functions.js";
+  export async function preload(page, session) {
+    return await getTableData.call(this, S_, "address_type");
+  }
+</script>
+
 <script>
   import TablePage from "../../_components/table/TablePage.svelte";
   import AddressTypeForm from "./_AddressTypeForm.svelte";
-  import { onMount, onDestroy, createEventDispatcher } from "svelte";
-  import { authCeck } from "../../_modules/functions.js";
-  let isAuth = false;
-  onMount(async () => {
-    const { Server: S_ } = await import( "../../_modules/ws_events_dispatcher.js" );
-    let S; if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
-    isAuth = await authCeck(S);
-  });
+  export let isAuth = false
+  export let url = ""
+  export let h = []
+  export let data = []
 </script>
 
 <svelte:options immutable />
@@ -23,7 +27,10 @@ span{
 {#if isAuth}
   <h1>Address Type</h1>
   <span>Do not change in this table.</span>
-  <TablePage url="address_type"
+  <TablePage
+    {url}
+    {h}
+    items={data}
     formcomponent={AddressTypeForm}
     quickcomponent={AddressTypeForm} />
 {/if}

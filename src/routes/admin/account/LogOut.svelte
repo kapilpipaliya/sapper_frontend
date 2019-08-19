@@ -1,6 +1,5 @@
 <script>
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
-
   const dp = createEventDispatcher();
   
   let logout = false;
