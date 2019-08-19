@@ -53,10 +53,10 @@
   import { onMount } from "svelte";
   import { fade, fly } from 'svelte/transition';
   import MyLayout from '../../_myLayout.svelte'
-  import Cards from "../../../_components/Cards.svelte";
-  import FadeOutButton from "../../../_components/FadeOutButton.svelte";
-  import Slider from "../../../_components/Slider.svelte";
-  import ScrollTop from "../../../_components/ScrollTop.svelte";
+  import Cards from "../../_Cards.svelte";
+  import FadeOutButton from "../../_FadeOutButton.svelte";
+  import Slider from "./_Slider.svelte";
+  import ScrollTop from "../../../_ScrollTop.svelte";
   import ProductDetail from "./_ProductDetail.svelte";
   import HaveAQue from "./_HaveAQue.svelte";
   import StorageDB from "../../../_modules/indexdb/storage.js";

@@ -7,7 +7,7 @@
 </script>
 
 <script>
-  import TablePage from "../../_components/table/TablePage.svelte";
+  import TablePage from "../_TablePage.svelte";
   import CurrencyForm from "./_CurrencyForm.svelte";
   export let isAuth = false
   export let url = ""

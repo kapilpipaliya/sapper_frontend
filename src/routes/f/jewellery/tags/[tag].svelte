@@ -54,10 +54,10 @@
 </script>
 
 <script>
-  import Cards from "../../../_components/Cards.svelte";
-  import CardItem from "../../../_components/CardItem.svelte";
-  import ScrollTop from "../../../_components/ScrollTop.svelte";
-  import TextButton from "../../../_components/TextButton.svelte";
+  import Cards from "../../_Cards.svelte";
+  import CardItem from "../../_CardItem.svelte";
+  import ScrollTop from "../../../_ScrollTop.svelte";
+  import TextButton from "../_TextButton.svelte";
   import Filter from "../_Filter.svelte";
   import MyLayout from '../../_myLayout.svelte'
   import { getTotalArray } from "../../../_modules/functions.js";

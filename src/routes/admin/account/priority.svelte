@@ -6,7 +6,7 @@
   }
 </script>
 <script>
-  import TablePage from "../../_components/table/TablePage.svelte";
+  import TablePage from "../_TablePage.svelte";
   import PriorityForm from "./_PriorityForm.svelte";
   export let isAuth = false
   export let url = ""

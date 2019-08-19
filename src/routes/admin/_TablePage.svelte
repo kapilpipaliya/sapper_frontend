@@ -4,8 +4,8 @@
   import { onMount } from "svelte";
   // import http from "../http";
   //import { getItems } from "../jreason/src/getJson.bs.js";
-  import Table from "./Table.svelte";
-  import Modal from "../Model.svelte";
+  import Table from "./_Table.svelte";
+  import Modal from "./_Model.svelte";
 
   export let formcomponent;
   export let quickcomponent=false;

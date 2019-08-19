@@ -3,11 +3,9 @@
   import { all, save_, makeObject } from "../../_modules/functions.js";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import flatpickr from 'flatpickr';
-  import SubmitButton from '../../_components/SubmitButton.svelte'
-  import CancelButton from '../../_components/CancelButton.svelte';
+  import SubmitButton from '../_SubmitButton.svelte'
+  import CancelButton from '../_CancelButton.svelte';
   
-  import Cards from "../../_components/Cards.svelte";
-  import CardItem from "../../_components/CardItem.svelte";
   const dp = createEventDispatcher();
 
   export let rowIdx = 0;
@@ -209,29 +207,6 @@
       </table>
     {/if}
 
-    <Cards>
-      {#each form.ea_entity_address as a, index}
-        {#if a[1]}
-          <CardItem selected={form.ea_entity_address[index][10]}>
-                <label><span>Address Type</span><select bind:value={form.ea_entity_address[index][1]}  required>
-                {#each address_type_id as c}
-                  <option value={c[0]}> {c[1]} </option>
-                {/each}
-              </select></label>
-            <label><span>Line1</span><input bind:value={form.ea_entity_address[index][2]} required/></label>
-            <label><span>line2</span><input bind:value={form.ea_entity_address[index][3]} required/></label>
-            <label><span>Line3</span><input bind:value={form.ea_entity_address[index][4]} /></label>
-            <label><span>City</span><input bind:value={form.ea_entity_address[index][5]} required/></label>
-            <label><span>State</span><input bind:value={form.ea_entity_address[index][6]} required/></label>
-            <label><span>Country</span><input bind:value={form.ea_entity_address[index][7]} required/></label>
-            <label><span>Zip Code</span><input bind:value={form.ea_entity_address[index][8]} required/></label>
-            <label><span>Phone</span><input bind:value={form.ea_entity_address[index][9]} required/></label>
-            <label><span>Selected</span><input type="checkbox" bind:checked={form.ea_entity_address[index][10]} on:click={(e)=>addressIsMainChange(e, index)}/></label>
-            <button type="button" on:click={handleAddressDelete(index)}  >delete</button>
-          </CardItem>
-        {/if}
-      {/each}
-    </Cards>
   </div>
 
   <button type="button" on:click={handleAddressAdd} >Add New Address</button>

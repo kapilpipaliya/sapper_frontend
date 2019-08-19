@@ -3,7 +3,7 @@
 
     import * as api from '../../api/_api.js';
 	import { goto } from '@sapper/app';
-    import Error from '../../_components/Error.svelte';
+    import Error from '../../_Error.svelte';
 
     export let reset = false;
 

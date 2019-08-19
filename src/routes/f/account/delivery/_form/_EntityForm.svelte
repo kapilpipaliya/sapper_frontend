@@ -3,11 +3,9 @@
   import { all, save_, makeObject } from "../../../../_modules/functions.js";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import flatpickr from 'flatpickr';
-  import SubmitButton from '../../../../_components/SubmitButton.svelte'
-  import CancelButton from '../../../../_components/CancelButton.svelte';
   
-  import Cards from "../../../../_components/Cards.svelte";
-  import CardItem from "../../../../_components/CardItem.svelte";
+  import Cards from "../../../_Cards.svelte";
+  import CardItem from "../../../_CardItem.svelte";
   const dp = createEventDispatcher();
 
   export let rowIdx = 0;
@@ -240,7 +238,6 @@
   <div> {er} </div>
 
   <footer>
-    <SubmitButton {isSaving} />
-    <CancelButton {isSaving} {rowIdx} on:close />
+    <button type="submit">Submit</button>
   </footer>
 </form>

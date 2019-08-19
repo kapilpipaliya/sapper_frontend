@@ -4,8 +4,8 @@
   import { sfx, all, save_, del, makeObject, nullFirstarrayFix, getToneName, product_img_url  } from "../../_modules/functions.js";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import flatpickr from 'flatpickr';
-  import SubmitButton from '../../_components/SubmitButton.svelte'
-  import CancelButton from '../../_components/CancelButton.svelte';
+  import SubmitButton from '../_SubmitButton.svelte'
+  import CancelButton from '../_CancelButton.svelte';
   import ToneGroup from './_ToneGroup.svelte'
   const dp = createEventDispatcher();
 

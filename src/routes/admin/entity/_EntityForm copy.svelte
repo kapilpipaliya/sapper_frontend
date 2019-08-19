@@ -3,8 +3,8 @@
   import { all, save_, makeObject } from "../../_modules/functions.js";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import flatpickr from 'flatpickr';
-  import SubmitButton from '../../_components/SubmitButton.svelte'
-  import CancelButton from '../../_components/CancelButton.svelte';
+  import SubmitButton from '../_SubmitButton.svelte'
+  import CancelButton from '../_CancelButton.svelte';
   const dp = createEventDispatcher();
 
   export let rowIdx = 0;

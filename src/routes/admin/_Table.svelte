@@ -2,8 +2,8 @@
   // import { getFirstElementOr, tailOrEmpty } from "../jreason/src/list.bs.js";
   // import * as _ from "lamb";
   import { onMount, onDestroy, beforeUpdate } from "svelte";
-  import { Server as S } from "../../_modules/ws_events_dispatcher.js";
-  import { all, all_h, del } from "../../_modules/functions.js";
+  import { Server as S } from "../_modules/ws_events_dispatcher.js";
+  import { all, all_h, del } from "../_modules/functions.js";
   import { createEventDispatcher } from "svelte";
   const dp = createEventDispatcher();
 
@@ -84,25 +84,26 @@
       resetFilter_();
   }
 
+
   onMount(() => {
+    // [...Array(20)].map(_=>0)
+    fns.push(all(url)); S.bind$(fns[0], ([data]) => { 
+      quickview = Array.from({length: data.length}, ()=>0); items = data || []; 
+      }, 1);
     if(h.length > 0){
       fillHeadersArray(h)
     } else{
-      fns.push(all_h(url)); S.bind_(fns[0], ([data]) => {
+      fns.push(all_h(url)); S.bind_(fns[1], ([data]) => {
         fillHeadersArray(data)
       }, {}, 1);
     }
-    // [...Array(20)].map(_=>0)
-    fns.push(all(url)); S.bind$(fns[1], ([data]) => { 
-      quickview = Array.from({length: data.length}, ()=>0); items = data || []; 
-      }, {}, 1);
+
     resetFilter_();
     if(items.length == 0) {
       refresh();
     }
     return true;
   });
-
 
   onDestroy(() => { if(process.browser) { S.unbind_(fns) } });
 
@@ -227,7 +228,7 @@
   const deleteRow2 = (i) => async() => {
     const r = confirm("Press a button!");
     if (r == true) {
-    	const [d] = await new Promise((resolve, reject) => { S.bind_(del(url, i), (d) => { console.log(d); resolve(d) }, [items[i][0]]); }, 1); // result is not array
+    	const [d] = await new Promise((resolve, reject) => { S.bind_(del(url, i), (d) => { resolve(d) }, [items[i][0]]); }, 1); // result is not array
       if (d.ok) { deleteRow({detail: {rowIdx: i}}) } else { alert(d.error) }
       }
     }

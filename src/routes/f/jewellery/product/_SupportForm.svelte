@@ -2,8 +2,6 @@
 <script>
   import { all, save_, makeObject } from "../../../_modules/functions.js";
   import { onMount, createEventDispatcher } from "svelte";
-  import SubmitButton from '../../../_components/SubmitButton.svelte'
-  import CancelButton from '../../../_components/CancelButton.svelte';
   const dp = createEventDispatcher();
 
   export let rowIdx = 0;
@@ -46,7 +44,6 @@ label textarea { flex-basis: 250px; flex-grow: 1}
   <div> {er} </div>
 
   <footer>
-    <SubmitButton {isSaving} />
-    <CancelButton {isSaving} {rowIdx} on:close />
+    <button type="submit">Submit</button>
   </footer>
 </form>

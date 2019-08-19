@@ -6,7 +6,7 @@
   }
 </script>
 <script>
-  import TablePage from "../../_components/table/TablePage.svelte";
+  import TablePage from "../_TablePage.svelte";
   import MfgTxnForm from "./_MfgTxnForm.svelte";
 
   export let isAuth = false

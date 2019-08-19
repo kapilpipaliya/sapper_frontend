@@ -27,7 +27,7 @@
 
 <script>
   import MyLayout from '../_myLayout.svelte'
-  import ScrollTop from "../../_components/ScrollTop.svelte";
+  import ScrollTop from "../../_ScrollTop.svelte";
 	export let post;
   export let categories = [];
   export let footerData = {};
