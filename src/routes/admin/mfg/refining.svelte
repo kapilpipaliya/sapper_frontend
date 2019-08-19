@@ -1,6 +1,6 @@
 <script>
   import TablePage from "../../_components/ui/table/TablePage.svelte";
-  import RefiningForm from "../../_components/forms/mfg/RefiningForm.svelte";
+  import RefiningForm from "./_RefiningForm.svelte";
 
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import { authCeck } from "../../_modules/functions.js";

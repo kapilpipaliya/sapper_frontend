@@ -1,6 +1,6 @@
 <script>
   import TablePage from "../../_components/ui/table/TablePage.svelte";
-  import TaskForm from "../../_components/forms/menu/TaskForm.svelte";
+  import TaskForm from "./_TaskForm.svelte";
 
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import { authCeck } from "../../_modules/functions.js";

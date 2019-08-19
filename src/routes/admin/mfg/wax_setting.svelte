@@ -1,6 +1,6 @@
 <script>
   import TablePage from "../../_components/ui/table/TablePage.svelte";
-  import WaxSettingForm from "../../_components/forms/mfg/WaxSettingForm.svelte";
+  import WaxSettingForm from "./_WaxSettingForm.svelte";
 
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import { authCeck } from "../../_modules/functions.js";

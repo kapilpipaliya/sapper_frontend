@@ -57,8 +57,8 @@
   import FadeOutButton from "../../../_components/ui/FadeOutButton.svelte";
   import Slider from "../../../_components/ui/Slider.svelte";
   import ScrollTop from "../../../_components/ui/ScrollTop.svelte";
-  import ProductDetail from "../../../_components/block/ProductDetail.svelte";
-  import HaveAQue from "../../../_components/block/HaveAQue.svelte";
+  import ProductDetail from "./_ProductDetail.svelte";
+  import HaveAQue from "./_HaveAQue.svelte";
   import StorageDB from "../../../_modules/indexdb/storage.js";
   import { getClarityName, getToneName, getPurityName, product_img_url} from "../../../_modules/functions.js";
   export let isAuth = false;

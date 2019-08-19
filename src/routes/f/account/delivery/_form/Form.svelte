@@ -5,7 +5,7 @@
   import { Server as S } from "../../../../_modules/ws_events_dispatcher.js";
   import { all_h, getUser } from "../../../../_modules/functions.js";
   import { fade, fly } from 'svelte/transition';
-  import EntityForm from "../../../../_components/forms/entity/EntityForm.svelte";
+  import EntityForm from "./_EntityForm.svelte";
   let isSubmited = false
 
   let user = []

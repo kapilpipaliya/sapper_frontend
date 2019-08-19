@@ -1,6 +1,6 @@
 <script>
   import TablePage from "../../_components/ui/table/TablePage.svelte";
-  import ImageCollectionForm from "../../_components/forms/setting/ImageCollectionForm.svelte";
+  import ImageCollectionForm from "./_ImageCollectionForm.svelte";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import { authCeck } from "../../_modules/functions.js";
   let isAuth = false;

@@ -1,6 +1,6 @@
 <script>
   import TablePage from "../../_components/ui/table/TablePage.svelte";
-  import MTransferForm from "../../_components/forms/mfg/MTransferForm.svelte";
+  import MTransferForm from "./_MTransferForm.svelte";
 
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import { authCeck } from "../../_modules/functions.js";

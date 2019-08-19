@@ -1,6 +1,6 @@
 <script>
   import TablePage from "../../_components/ui/table/TablePage.svelte";
-  import JournalTypeForm from "../../_components/forms/account/JournalTypeForm.svelte";
+  import JournalTypeForm from "./_JournalTypeForm.svelte";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import { authCeck } from "../../_modules/functions.js";
   let isAuth = false;

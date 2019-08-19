@@ -7,9 +7,9 @@
   import PreloadingIndicator from "../_components/ui/PreloadingIndicator.svelte";
   const { page, preloading } = stores();
 
-  import TopMenu from "../_components/block/TopMenu.svelte";
-  import Footer from "../_components/block/Footer.svelte";
-  import LiveChat from "../_components/block/LiveChat.svelte";
+  import TopMenu from "./_TopMenu.svelte";
+  import Footer from "./_Footer.svelte";
+  import LiveChat from "./_LiveChat.svelte";
   export let categories = [];
   export let isAuth = false;
   export let footerData = {};

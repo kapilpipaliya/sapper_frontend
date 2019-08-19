@@ -22,7 +22,7 @@
 
 <script>
   import MyLayout from './_myLayout.svelte'
-  import Banners from "../_components/block/Banners.svelte";
+  import Banners from "./_Banners.svelte";
   // import Carousel from '../_components/ui/carousel/Carousel.svelte'
   import { onMount } from "svelte";
 

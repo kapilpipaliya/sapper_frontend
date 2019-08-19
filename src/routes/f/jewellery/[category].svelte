@@ -118,7 +118,7 @@
   import CardItem from "../../_components/ui/CardItem.svelte";
   import ScrollTop from "../../_components/ui/ScrollTop.svelte";
   import TextButton from "../../_components/ui/TextButton.svelte";
-  import Filter from "../../_components/block/Filter.svelte";
+  import Filter from "./_Filter.svelte";
   import MyLayout from '../_myLayout.svelte'
   import { getTotalArray } from "../../_modules/functions.js";
 
