@@ -5,42 +5,7 @@
   let isSubmited = false
   export let headerData = {};
 </script>
-<style>
-  /*  */
-  
-  .column {
-    display: flex;
-    flex-direction: column;
-  }
-  .row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-
-    font-size: 1.3rem;
-  }
-  a {
-    color: #f15d47;
-
-    vertical-align: middle;
-    display: inline-block;
-    text-decoration: none;
-    font-family: Muli, Arial, sans-serif;
-    margin: 0 10px 0 0;
-  }
-  h3 {
-    text-transform: uppercase;
-  }
-  p{
-
-  font-family: arial;
-  color: green;
-  font-weight: 550;
-  text-align: center;
-  word-wrap: break-word;
-}
-</style>
-
+<style src="./_HaveAQue.scss"></style>
 <div class="card">
 
   <h3>{headerData.company[0][4]} Promise</h3>

@@ -143,7 +143,7 @@
 	label select{
 		flex-basis: 250px;
 	}
-    input[type=checkbox] {width:20px; height:20px;} 
+  /* input[type=checkbox] {width:20px; height:20px;}  */
 </style>
 
 <form on:submit|preventDefault={save} >

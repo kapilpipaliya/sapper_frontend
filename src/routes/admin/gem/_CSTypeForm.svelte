@@ -22,9 +22,6 @@
 
 </script>
 
-<style>
-
-</style>
 
 <form on:submit|preventDefault={save} >
   <label><span>Size Name</span><input type="text" bind:value={form.name} required on:focus={clearError} disabled={item.length}/></label>

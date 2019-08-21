@@ -32,20 +32,7 @@
   })
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
 </script>
-<style>
- /* Header/Logo Title */
-.header {
-  padding: 5px;
-  text-align: center;
-  background: salmon;
-  color: white;
-
-}
-.header a{text-decoration: none}
-
-/* Page Content */
-.content {padding:10px;}
-</style>
+<style src="./_Logout.scss"></style>
 <MyLayout {categories}  {isAuth} {footerData} {headerData} >
 {#if logout}
   <div class="header">

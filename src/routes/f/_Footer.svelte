@@ -2,38 +2,8 @@
   export let footerData = {};
   export let headerData = {};
 </script>
-<style>
 
-footer{
-		padding-top: 5px;
-		padding-bottom: 5px;
-  
-    display: flex;
-    flex-direction: column;
-  
-    color: white;
-    flex-wrap: wrap;
-	}
-
-.row {
-  display: flex;
-  flex-direction: row;
-  
-  justify-content: center;
-  flex-wrap: wrap;
-}
-  a {
-    color: white;
-    text-decoration: none;
-  }
-section{margin: 0 10px;}
-
-@media screen and (max-width: 600px){
-  .row{
-    justify-content: space-between;
-  }
-}
-</style>
+<style src="./_Footer.scss"></style>
 <footer>
 
       <div class="row">

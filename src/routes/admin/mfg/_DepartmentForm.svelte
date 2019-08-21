@@ -28,9 +28,6 @@
   function clearError() { er = ""; }
 </script>
 
-<style>
-
-</style>
 
 <form on:submit|preventDefault={save} >
   <label><span>Code</span><input type="text" bind:value={form.slug} required on:focus={clearError}/></label>

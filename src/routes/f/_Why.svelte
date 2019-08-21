@@ -2,28 +2,7 @@
   <script>
   export let headerData = {};
   </script>
-  <style>
-    .container {
-    display: flex;
-    flex-direction: column;
-    }
-
-    .row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    }
-    
-    .inner{
-      flex-grow: 1;
-      flex-shrink: 0;
-      flex-basis: calc(100% / 3);
-    }
-
-
-  </style>
-  
+  <style src="./_Why.scss"></style>
   <div class="container">
     
 

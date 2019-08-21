@@ -11,9 +11,6 @@
     
 </script>
 
-<style>
-    
-</style>
 
 <svelte:head>
   <title>SCE Jewelry Software</title>

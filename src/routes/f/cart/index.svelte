@@ -138,32 +138,7 @@ const getSum = () => {
 }
 </script>
 
-<style>
-    .container{
-		display: flex;
-		flex-direction: column;
-	}
-	.row{
-		display: flex;
-		flex-direction: row;
-	}
-	.aligncenter{align-items: center;}
-	.row-center{
-		flex: 1 1 auto;
-	}
-	img{width: 252px; height: 252px;}
-	
-	.title{
-
-	}
-	.top{
-		vertical-align: top;
-	}
-	h1, h2 {text-align: center}
-	.w100{width: 100px}
-	td{white-space: nowrap;}
-</style>
-
+<style src="./_index.scss"></style>
 <svelte:head>
 	<title>Cart</title>
 </svelte:head>

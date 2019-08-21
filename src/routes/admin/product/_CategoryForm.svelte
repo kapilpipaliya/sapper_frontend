@@ -30,9 +30,6 @@
 </script>
 
 
-<style>
-
-</style>
 
 <form on:submit|preventDefault={save} >
 

@@ -146,27 +146,7 @@
 
 </script>
 
-<style>
-	img{
-		width: 372px;
-		height: 372px;
-		display: block;
-	}
-	span{
-
-		text-align: center;
-	}
-	a{
-		display: contents;
-		text-decoration: none;
-	}
-  .categorytext{
-
-    color: green;
-    display: block;
-    text-align: center;
-  }
-</style>
+<style src="./_Category.scss"></style>
 
 <svelte:head>
   <title>{headerData.company[0][4]}</title>

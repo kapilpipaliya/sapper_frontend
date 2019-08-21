@@ -110,9 +110,6 @@
   }
 </script>
 
-<style>
-
-</style>
 
 <form on:submit|preventDefault={save} >
   <label><span>Entity Type</span>

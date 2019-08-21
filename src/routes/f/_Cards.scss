@@ -1,0 +1,26 @@
+.cards {
+  display: flex;
+  flex-flow: row wrap;
+
+  justify-content: center;
+}
+.card {
+  border: 1px dashed #ccc;
+  margin: 10px 10px;
+  /* padding: 0 20px; */
+
+  display: flex;
+  flex-direction: column;
+  
+}
+button {
+  height: 40px;
+  background: #fff;
+  padding: 0 40px;
+  border: 1px solid #000;
+}
+p:last-child {
+  text-align: center;
+  margin-top: auto;
+}
+/* ￼    transition: all 0.25s ease-in; */

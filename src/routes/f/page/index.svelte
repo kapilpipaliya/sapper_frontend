@@ -33,12 +33,7 @@
   export let isAuth = false;
 </script>
 
-<style>
-	ul {
-		margin: 0 0 1em 0;
-		line-height: 1.5;
-	}
-</style>
+<!-- <style src="./_index.scss"></style> -->
 
 <svelte:head>
 	<title>Page</title>

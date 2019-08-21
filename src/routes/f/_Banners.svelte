@@ -6,8 +6,6 @@
 <style src="./_Banners.scss"></style>
 
 <div class="container">
-  
-
 {#each banners as i}
     <a
         href={i[5]}>

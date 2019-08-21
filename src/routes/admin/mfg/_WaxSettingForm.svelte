@@ -51,9 +51,6 @@
   function clearError() { er = ""; }
 </script>
 
-<style>
-
-</style>
 
 <form on:submit|preventDefault={save} >
   <label><span>Date</span><input bind:this={date} /></label>

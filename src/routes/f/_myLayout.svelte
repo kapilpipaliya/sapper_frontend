@@ -12,50 +12,7 @@
   export let headerData = {};
 </script>
 
-<style>
-  .container {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .content-body {
-    flex: 1 1 auto;
-
-    display: flex;
-    flex-direction: row;
-  }
-
-  .content-body .content {
-    flex: 1 1 auto;
-    overflow: auto;
-  }
-
-  .content-body .sidenav {
-    order: -1;
-    flex: 0 0 100px;
-    overflow: auto;
-  }
-
-  .content-body .ads {
-    flex: 0 0 100px;
-    overflow: auto;
-  }
-
-  .footer {
-    flex: 0 0 50px;
-    background: #34495e;
-  }
-  @media (max-width: 600px) {
-  .content-body .sidenav {
-    display: none;
-  }
-
-  .content-body .ads {
-    display: none;
-  }
-	}
-</style>
-
+<style src="./_myLayout.scss"></style>
 <svelte:head>
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script> -->
 

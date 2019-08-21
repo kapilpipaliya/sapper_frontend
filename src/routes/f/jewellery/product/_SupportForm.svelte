@@ -27,13 +27,7 @@
   function clearError() { er = ""; }
 </script>
 
-<style>
-label { display: flex; margin-bottom: 5px; }
-label span { flex-basis: 100px; }
-label input,
-label textarea { flex-basis: 250px; flex-grow: 1}
-</style>
-
+<style src="./_SupportForm.scss"></style>
 <form on:submit|preventDefault={save} >
 
   <label><span>Name</span><input type="text" bind:value={form.name} required on:focus={clearError}/></label>

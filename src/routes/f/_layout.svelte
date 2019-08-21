@@ -7,13 +7,8 @@
 // 	script src="https://code.createjs.com/1.0.0/createjs.min.js"
 //
 </script>
-<style>
-	img{
-		position: fixed;
-		top: calc(50% - 50px /2);
-		left: calc(50% - 50px /2);
-	}
-</style>
+
+<style src="./_layout.scss"></style>
 {#if $preloading}
   <img src="./images/spinner/Eclipse-1s-200px.svg" alt=""/>
 {/if}

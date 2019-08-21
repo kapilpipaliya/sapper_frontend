@@ -12,10 +12,7 @@
 	import user from '../../_modules/stores/user.js'
 </script>
 
-<style>
-	 
-</style>
-
+<!-- <style src="./_confirmation.scss"></style> -->
 <svelte:head>
 	<title>docteur - confirmation</title>
 </svelte:head>

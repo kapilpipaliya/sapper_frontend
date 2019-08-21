@@ -2,21 +2,10 @@
 import { init, isAuth, authChange } from "../../_modules/store";
 import { goto, stores } from '@sapper/app'
 let { session } = stores()
-// session data is available on $session.user
-/*
-	{#if $session.user && $session.user.isAdmin }
-		Voir l'agenda
-	{:else}
-		Prendre rendez-vous
-	{/if}
-*/
 
 if($isAuth === null) {
-  // This is the responsibility of this component to check authentication.
-  // Fix on server it always return null!!
   init()
 }
-
 </script>
 
 {#if $isAuth === null}

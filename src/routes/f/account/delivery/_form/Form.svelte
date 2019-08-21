@@ -19,17 +19,7 @@
   });
   
 </script>
-<style>
-  p{
-
-  font-family: arial;
-  color: green;
-  font-weight: 550;
-  text-align: center;
-  word-wrap: break-word;
-}
-</style>
-
+<style src="./_Form.scss"></style>
 <div class="card">
   {#if !isSubmited}
     {#if user && user.length && headersSelectors.length}

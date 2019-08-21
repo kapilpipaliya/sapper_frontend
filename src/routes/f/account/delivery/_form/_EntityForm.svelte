@@ -129,23 +129,7 @@
 
 </script>
 
-<style>
-	label {
-		display: flex;
-		margin-bottom: 5px;
-	}
- 	label span {
-		flex-basis: 160px;
-        text-align: left;
-	}
-
-	label input,
-	label select{
-		flex-basis: 250px;
-	}
-    input[type=checkbox] {width:20px; height:20px;} 
-</style>
-
+<style src="./_EntityForm.scss"></style>
 <form on:submit|preventDefault={save} >
 {#if !nameHidden}
     <label><span>Entity Type</span>

@@ -48,15 +48,7 @@
 		})
 	}
 </script>
-
-<style>
-	.row{
-		display: flex;
-		flex-direction: row;
-	}
-	h1, h2 {text-align: center}
-</style>
-
+<style src="./_index.scss"></style>
 <svelte:head>
 	<title>Address</title>
 </svelte:head>
