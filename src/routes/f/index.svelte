@@ -39,9 +39,7 @@
   });
 </script>
 
-<style>
-  /* h1 { text-align: center; margin: 0 auto; } */
-</style>
+
 
 <svelte:head>
   <title>{headerData.company[0][4]}</title>

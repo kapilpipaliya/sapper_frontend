@@ -6,6 +6,10 @@ import babel from 'rollup-plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
+import { scss } from 'svelte-preprocess'
+import sveltePreprocess from 'svelte-preprocess';
+const preprocess = sveltePreprocess({
+});
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -25,7 +29,10 @@ export default {
 			svelte({
 				dev,
 				hydratable: true,
-				emitCss: true
+				emitCss: true,
+				preprocess: [
+					scss({ sourceMap: true }),
+				]
 			}),
 			resolve({
 				browser: true
@@ -67,7 +74,10 @@ export default {
 			}),
 			svelte({
 				generate: 'ssr',
-				dev
+				dev,
+				preprocess: [
+					scss({ sourceMap: true }),
+				]
 			}),
 			resolve(),
 			commonjs( {sourceMap: false})

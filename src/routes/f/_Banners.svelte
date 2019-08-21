@@ -3,22 +3,7 @@
   export let banners = []
 
 </script>
-<style>
-    .container a{
-        display: flex;
-        flex-direction: column;
-
-        align-items: center;
-    }
-    img{
-            margin: 0 auto;
-            height: auto;
-            max-width: 100%;
-            border: none;
-            display: block;
-            padding: 5px 0;
-    }
-</style>
+<style src="./_Banners.scss"></style>
 
 <div class="container">
   
