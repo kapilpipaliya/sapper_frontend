@@ -2,7 +2,7 @@
   import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
   import { getTableData } from "../../_modules/functions.js";
   export async function preload(page, session) {
-    return await getTableData.call(this, S_, "post");
+    return await getTableData.call(this, S_, "post", [null, 'post']);
   }
 </script>
 

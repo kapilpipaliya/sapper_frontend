@@ -211,7 +211,7 @@ export const getHeaderData = async(S)=>{
     const company = await getSettingKey(S, "company_name");
     return {company}
 }
-export async function getTableData (S_, url) {
+export async function getTableData (S_, url, filterSettings=[]) {
     let S; if (typeof S_ == "function") { S = new S_(this.req, this.res); } else { S = S_; }
     
     let h = []
@@ -230,7 +230,7 @@ export async function getTableData (S_, url) {
           all_h(url), ([d]) => {h = d; r2 = true; myResolve()}, [[]]
         ])
         batch1.push([
-          all(url), ([d]) => {data = d; r3 = true; myResolve()}, [[]]
+          all(url), ([d]) => {data = d; r3 = true; myResolve()}, [filterSettings]
         ])
         S.batchBind_T(batch1)
       })

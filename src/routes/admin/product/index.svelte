@@ -2,7 +2,10 @@
   import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
   import { getTableData } from "../../_modules/functions.js";
   export async function preload(page, session) {
-    return await getTableData.call(this, S_, "product");
+    const filterSettings = new Array(15);
+    filterSettings.fill(null);
+    filterSettings[14] = 'product'
+    return await getTableData.call(this, S_, "product", filterSettings);
   }
 </script>
 <script>
