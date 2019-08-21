@@ -18,11 +18,6 @@
 <svelte:head>
   <title>Entity Type</title>
 </svelte:head>
-<style>
-span{
-  color: red;
-}
-</style>
 {#if isAuth}
   <h1>Entity Type</h1>
   <span>Do not change in this table.</span>

@@ -14,3 +14,41 @@ h1, h2, h3, h4, h5, h6 {
 
 select {
   vertical-align: top; }
+
+form.admin {
+  background: lightseagreen;
+  /* input:valid {
+		color: green;
+	} */
+  /* .right{ float: right; } */ }
+  form.admin label {
+    display: flex;
+    margin-bottom: 5px; }
+  form.admin label span {
+    flex-basis: 150px; }
+  form.admin label input,
+  form.admin label select,
+  form.admin label textarea {
+    flex-basis: 250px; }
+  form.admin input[type=checkbox] {
+    width: 20px;
+    height: 20px; }
+  form.admin input:invalid {
+    color: red; }
+  form.admin .w100 {
+    width: 100px; }
+  form.admin .w150 {
+    width: 150px; }
+  form.admin .row {
+    display: flex; }
+  form.admin .row div {
+    border: 1px solid green;
+    margin: 5px; }
+  form.admin .column {
+    display: flex;
+    flex-direction: column; }
+  form.admin .clarity_table,
+  form.admin .cs_table {
+    border: 1px solid black; }
+  form.admin td, form.admin th {
+    white-space: nowrap; }

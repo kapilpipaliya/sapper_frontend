@@ -52,7 +52,7 @@
 </script>
 
 
-<form on:submit|preventDefault={save} >
+<form class="admin" on:submit|preventDefault={save} >
   <label><span>Date</span><input bind:this={date} /></label>
   <label><span>Department</span>
     <select bind:value={form.department_id} >

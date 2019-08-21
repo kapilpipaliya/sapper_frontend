@@ -10,7 +10,7 @@
   export let item = [];
   export let hs = [];
 
-    let isSaving = false;
+  let isSaving = false;
   let er = "";
   let form = {
     parent_id: 0,
@@ -34,7 +34,7 @@
 
 
 
-<form on:submit|preventDefault={save} >
+<form class="admin" on:submit|preventDefault={save} >
 
   <label><span>Position</span><input type="number" bind:value={form.rank} /></label>
   <label><span>Slug</span><input type="text" bind:value={form.slug} /></label>

@@ -23,7 +23,7 @@
 </script>
 
 
-<form on:submit|preventDefault={save} >
+<form class="admin" on:submit|preventDefault={save} >
 
   <label><span>Name</span><input type="text" bind:value={form.name} required on:focus={clearError}/></label>
 

@@ -59,7 +59,7 @@
 </script>
 
 
-<form on:submit|preventDefault={save} >
+<form class="admin" on:submit|preventDefault={save} >
 
   <label><span>Collection</span>
     <select bind:value={form.image_collection_id} >

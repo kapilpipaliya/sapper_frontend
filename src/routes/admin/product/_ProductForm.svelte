@@ -608,43 +608,7 @@
   }
 </script>
 
-<style>
-
-  .row{
-    display: flex;
-  }
-  .row div{
-      border: 1px solid green;
-      margin: 5px;
-  }
-  input[type=checkbox] {width:20px; height:20px;}
-
-  /* input:valid {
-    color: green;
-  } */
-  input:invalid {
-    color: red;
-  }
-  .column {
-    display: flex;
-    flex-direction: column;
-  }
-  .w150{
-    width: 150px;
-  }
-  .w100{
-    width: 100px;
-  }
-  .clarity_table,
-  .cs_table{
-    border: 1px solid black;
-  }
-  td, th {
-    white-space:nowrap
-  }
-</style>
-
-<form on:submit|preventDefault={save} >
+<form class="admin" on:submit|preventDefault={save} >
 	<label><span>Title</span><input type="text" bind:value={form.title} required on:change={_=> {if(!form.name.length){form.name = form.title.toLowerCase().replace(/\s/g, "_")}}} /></label>
 	<label><span>Slug</span><input type="text" bind:value={form.name} required/></label>
 	<label><span>Date</span><input bind:this={date} /></label>

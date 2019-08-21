@@ -48,12 +48,7 @@
   }
 </script>
 
-<style>
-input[type=checkbox] {width:20px; height:20px;}
-
-</style>
-
-<form on:submit|preventDefault={save} >
+<form class="admin" on:submit|preventDefault={save} >
   <label><span>Type</span>
     <select bind:value={form.cs_type_id} disabled={item.length} >
       {#each cs_type_id as s}

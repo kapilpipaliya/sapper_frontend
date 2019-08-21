@@ -51,12 +51,7 @@
   }
 </script>
 
-<style>
-input[type=checkbox] {width:20px; height:20px;}
-
-</style>
-
-<form on:submit|preventDefault={save} >
+<form class="admin" on:submit|preventDefault={save} >
   <label><span>Clarity</span>
     <select bind:value={form.clarity_id} disabled={item.length} >
       {#each clarity_id as s}

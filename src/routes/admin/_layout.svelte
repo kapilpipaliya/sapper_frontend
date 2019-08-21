@@ -6,41 +6,7 @@
 	<script src="https://cdn.tiny.cloud/1/smt6zl4b5zkhghams45ri2maeopvjhfo4euolf224yt2emhm/tinymce/5/tinymce.min.js"></script>
 </svelte:head>
 
-<style>
-	div {
-		display: flex;
-	}
-	b{
-    	flex-basis: 100px;
-	}
-	a{
-		text-decoration: none;
-		background-color: aliceblue;
-		padding: 0 10px;
-		border: 1px solid rgb(125, 125, 125);
-	}
-	.common1{
-		background-color: lightsalmon;
-	}
-
-	:global(form){
-    background: lightseagreen;
-	}
-	:global(label) {
-		display: flex;
-		margin-bottom: 5px;
-	}
-	:global(label span) {
-		flex-basis: 150px;
-	}
-
-	:global(label input,
-	label select,
-	label textarea){
-		flex-basis: 250px;
-	}
-	/* .right{ float: right; } */
-</style>
+<style src="./_layout.scss"></style>
 <nav>
 	<a class="" href='/admin/account/LogOut'>Logout</a>
 	<div>

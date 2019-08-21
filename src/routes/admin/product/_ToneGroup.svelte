@@ -35,10 +35,6 @@
 		};
 	}
 </script>
-<style>
-  input[type=checkbox] {width:20px; height:20px;}
-  .w100{ width: 100px; }
-</style>
 
 <td>{toneName}</td>
 <td> <input type=checkbox use:foo on:change={eve=>{

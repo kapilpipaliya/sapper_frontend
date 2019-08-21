@@ -18,11 +18,7 @@
 <svelte:head>
   <title>Contact Type</title>
 </svelte:head>
-<style>
-span{
-  color: red;
-}
-</style>
+
 {#if isAuth}
   <h1>Contact Type</h1>
   <span>Do not change in this table.</span>

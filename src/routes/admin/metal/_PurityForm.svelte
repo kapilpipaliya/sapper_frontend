@@ -114,14 +114,7 @@
   }*/
 </script>
 
-<style>
-.w100{
-  width: 100px;
-}
-
-</style>
-
-<form on:submit|preventDefault={save} >
+<form class="admin" on:submit|preventDefault={save} >
 
   <label><span>Slug</span><input type="text" bind:value={form.slug} required on:focus={clearError}/></label>
   <label><span>Name</span><input type="text" bind:value={form.name} required on:focus={clearError}/></label>

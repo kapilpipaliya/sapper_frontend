@@ -24,7 +24,7 @@
 
 
 
-<form on:submit|preventDefault={save} >
+<form class="admin" on:submit|preventDefault={save} >
 
 	<label><span>Slug</span><input type="text" bind:value={form.slug} /></label>
 	<label><span>Name</span><input type="text" bind:value={form.name} /></label>

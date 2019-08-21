@@ -233,73 +233,7 @@
       }
     }
 </script>
-
-<style>
-    table {
-        border-collapse: collapse;
-    }
-    table th,
-    table td {
-        border: 1px solid rgb(191, 191, 191);
-        white-space: nowrap;
-    }
-    table input {
-        border: none;
-        width: 100%;
-    }
-
-    .menu,
-    .menu-input
-    {
-        width: 150px;
-        box-shadow: 3px 3px 5px #888888;
-        border-style: solid;
-        border-width: 1px;
-        border-color: grey;
-        border-radius: 2px;
-        padding-left: 5px;
-        padding-right: 5px;
-        padding-top: 3px;
-        padding-bottom: 3px;
-        position: fixed;
-        display: none;
-        
-        background: #fff;
-    }
-    
-    .menu-item
-    {
-        height: 20px;
-    }
-    
-    .menu-item:hover
-    {
-        background-color: #6CB5FF;
-        cursor: pointer;
-    }
-
-    .hidden_attrs .row-actions {
-      display: none;
-    }
-    .row-actions {
-      display: unset;
-    }
-
-  input {
-    background: lightyellow;
-  }
-  .pressed{
-     background-color: lightgrey;
-  }
-  .w60{
-    width: 60px;
-  }
-  tr:hover {background-color:#f5f5f5;}
-  td, th {
-    white-space:nowrap
-  }
-</style>
-
+<style src="./_Table.scss"></style>
 {er}
 <div>
   <span>{items.length}{items.length <= 1 ? " item" : " items"}</span>

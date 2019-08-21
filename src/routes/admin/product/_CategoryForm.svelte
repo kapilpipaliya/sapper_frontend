@@ -31,7 +31,7 @@
 
 
 
-<form on:submit|preventDefault={save} >
+<form class="admin" on:submit|preventDefault={save} >
 
   <label><span>Parent</span>
     <select bind:value={form.parent_id} >

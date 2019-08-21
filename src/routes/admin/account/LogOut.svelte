@@ -15,12 +15,7 @@
   })
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
 </script>
-<style>
-  span{
-    color: red;
-  }
-</style>
 {#if logout}
-  <span>Logged out successfully!</span>
+  <span style="color: red;">Logged out successfully!</span>
 {/if}
 

@@ -23,7 +23,7 @@
 </script>
 
 
-<form on:submit|preventDefault={save} >
+<form class="admin" on:submit|preventDefault={save} >
   {#if !item.length}
 	  <label><span>Key</span><input type="text" bind:value={form.key} required /></label>
     <label><span>Setting Type</span>

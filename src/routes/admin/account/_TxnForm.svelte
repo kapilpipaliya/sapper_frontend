@@ -74,11 +74,7 @@
   function clearError() { er = ""; }
 </script>
 
-<style>
-.w100{width: 100px;}
-</style>
-
-<form on:submit|preventDefault={save} >
+<form class="admin" on:submit|preventDefault={save} >
   <label><span>Journal Type</span>
     <select bind:value={form.journal_type_id} >
       {#each journal_type_id as s}

@@ -78,14 +78,7 @@
 
 </script>
 
-<style>
-input[type=checkbox] {width:20px; height:20px;}
-input:invalid {
-  color: red;
-}
-</style>
-
-<form on:submit|preventDefault={save} >
+<form class="admin" on:submit|preventDefault={save} >
 	<label><span>Title</span><input type="text" bind:value={form.title} required on:change={_=> {if(!form.name.length){form.name = form.title.toLowerCase().replace(/\s/g, "_")}}} /></label>
 	<label><span>Slug</span><input type="text" bind:value={form.name} required/></label>
 	<label><span>Date</span><input bind:this={date} /></label>

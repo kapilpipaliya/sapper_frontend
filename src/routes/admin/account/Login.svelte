@@ -36,42 +36,12 @@
   const logout = async() => {isSaving = true; S.trigger([[ ["legacy", "auth", "admin_logout", 0] ]]); }
 </script>
 
-<style>
-  .row {
-    display: flex;
-    margin-left: auto;
-    margin-right: auto;
-    flex: 1;
-    justify-content: center;
-  }
-  table {
-    margin: auto;
-    table-layout: fixed;
-    border-collapse: collapse;
-    border: 1px solid #dae1e7;
-  }
-  .box {
-    padding: 0.2rem;
-    margin: 0.2rem;
-    border-radius: 0.25rem;
-    box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
-      0 5px 15px 0 rgba(0, 0, 0, 0.08);
-  }
-  h3 {
-    margin: 1rem;
-    text-align: center;
-
-    font-family: monospace;
-  }
-  td {
-    padding: 5px;
-  }
-</style>
+<style src="./_Login.scss"></style>
 {#if !isAuth}
   <div class="row">
     <div class="box">
       <h3>Sign In</h3>
-      <form on:submit|preventDefault={save} >
+      <form class="admin" on:submit|preventDefault={save} >
         <table>
           <tbody>
             <tr>

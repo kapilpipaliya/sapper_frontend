@@ -111,7 +111,7 @@
 </script>
 
 
-<form on:submit|preventDefault={save} >
+<form class="admin" on:submit|preventDefault={save} >
   <label><span>Entity Type</span>
     <select bind:value={form.entity_type_id} >
       {#each entity_type_id as s}
