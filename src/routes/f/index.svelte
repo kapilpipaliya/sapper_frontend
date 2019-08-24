@@ -1,9 +1,9 @@
 <script context="module">
   import { Server as S_ } from "../_modules/ws_normal.js";
-  import { all, getPost, menuCategories, getFooterData, getHeaderData } from "../_modules/functions.js";
+  import { ws_server, all, getPost, menuCategories, getFooterData, getHeaderData } from "../_modules/functions.js";
   // Here We will Show some Top Images for each category
   export async function preload(_page, session) {
-    let S; if (typeof(S_) == "function") { S = new S_(this.req, this.res); } else { S = S_; }
+    let S; if (typeof(S_) == "function") { S = new S_(ws_server, this.req, this.res); } else { S = S_; }
     
     const categories = await menuCategories(S);
     const footerData = await getFooterData(S)
