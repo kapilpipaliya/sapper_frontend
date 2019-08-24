@@ -213,8 +213,8 @@ export const getHeaderData = async(S)=>{
     const company = await getSettingKey(S, "company_name");
     return {company}
 }
-export async function getTableData (S_, url, filterSettings=[]) {
-    let S; if (typeof S_ == "function") { S = new S_(this.req, this.res); } else { S = S_; }
+export async function getTableData (S_, path, url, filterSettings=[]) {
+    let S; if (typeof S_ == "function") { S = new S_(path, this.req, this.res); } else { S = S_; }
     
     let h = []
     let data = []

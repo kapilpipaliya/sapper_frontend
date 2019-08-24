@@ -1,8 +1,8 @@
 <script context="module">
   import { Server as S_ } from "../../_modules/ws_normal.js";
-  import { getTableData } from "../../_modules/functions.js";
+  import { getTableData, ws_server } from "../../_modules/functions.js";
   export async function preload(page, session) {
-    return await getTableData.call(this, S_, "account_heading");
+    return await getTableData.call(this, S_, ws_server, "account_heading");
   }
 </script>
 
