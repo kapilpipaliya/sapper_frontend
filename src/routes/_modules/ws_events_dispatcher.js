@@ -2,10 +2,9 @@
 Simplified WebSocket events dispatcher
 */
 import IsomorphicWs from "isomorphic-ws";
-import {ws_server} from './functions.js'
 // import * as cookie from 'cookie';
 
-class ServerEventsDispatcher {
+export class ServerEventsDispatcher {
   constructor(req, res) {
     this.bind = this.bind.bind(this);
     this.bind$ = this.bind$.bind(this);
@@ -25,16 +24,14 @@ class ServerEventsDispatcher {
     
     this.setupConnection(req, res)
     this.callbacks = {};
-
-
   }
-  setupConnection(req, res) {
+  setupConnection(path, req, res) {
     if (!process.browser) { 
       process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     }
     const c = process.browser ? "" : req.headers.cookie || null;
     
-    this.conn = new IsomorphicWs(ws_server, [], { 'headers': { 'Cookie': c } });
+    this.conn = new IsomorphicWs(path, [], { 'headers': { 'Cookie': c } });
     // dispatch to the right handlers
     this.conn.onmessage = this.onmessage;
 
@@ -208,16 +205,7 @@ class ServerEventsDispatcher {
   }
 
 };
-let e;
-if (process.browser) { 
-  e = new ServerEventsDispatcher()
-  e.bind(["take_image_meta"], function(data) {
-    e.event = data[0] // save value on class.
-  }, 1);
- } else {
-   e = ServerEventsDispatcher;
- }
-export const Server = e
+
 
 /*
 export const ServerEventsDispatcher = function(){
