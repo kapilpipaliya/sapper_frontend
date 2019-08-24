@@ -1,12 +1,13 @@
 <svelte:options immutable/>
 <script>
-  import { all, save_, makeObject } from "../../../_modules/functions.js";
+  import { all, ins_, upd_, makeObject } from "../../../_modules/functions.js";
   import { onMount, createEventDispatcher } from "svelte";
   const dp = createEventDispatcher();
 
   export let rowIdx = 0;
   export let item = [];
   export let hs = [];
+  export let event = "ins"
   export let isSubmited = false // used to change parent boolean variable easily.
 
   let isSaving = false;
@@ -14,7 +15,9 @@
   let form = { name: "", email: "", phone: "", message: "" };
   let metals = [];
 
-  if (item.length) { form = makeObject(hs, item) }; 
+  if (item.length) { form = makeObject(hs, item)};
+  const evt_type = event == "ins" && item.length == 0 && !form.id ? 1 : 2
+  const save_ = evt_type == 1 ? ins_ : upd_
   
   let S; 
   onMount(async()=>{
@@ -23,7 +26,7 @@
     S.bind$(save_("support", rowIdx), ([d]) => { isSaving = false; if (d.ok) {  isSubmited = true; er = ""; dp("successSave", { rowIdx, d });  } else { er = d.error; } }, 1);
   })
   
-  async function save() { isSaving = true; S.trigger([[ save_("support", rowIdx), form ]]); }
+  async function save() { isSaving = true; S.trigger([[ save_("support", rowIdx), [form, [form.id]] ]]); }
   function clearError() { er = ""; }
 </script>
 

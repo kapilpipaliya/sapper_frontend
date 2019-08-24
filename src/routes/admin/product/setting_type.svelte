@@ -7,7 +7,7 @@
 </script>
 <script>
   import TablePage from "../_TablePage.svelte";
-  import CategoryForm from "./_SettingType.svelte";
+  import SettingTypeForm from "./_SettingTypeForm.svelte";
   export let isAuth = false
   export let url = ""
   export let h = []
@@ -25,6 +25,6 @@
     {url}
     {h}
     items={data}
-    formcomponent={CategoryForm}
-    quickcomponent={CategoryForm} />
+    formcomponent={SettingTypeForm}
+    quickcomponent={SettingTypeForm} />
 {/if}

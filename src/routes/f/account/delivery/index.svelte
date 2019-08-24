@@ -15,7 +15,7 @@
 <script>
   import { onMount } from "svelte";
   import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { all_h, save_, all, makeObject, first, productImage, product_purity_price, product_clarity_price, getTotalArray } from "../../../_modules/functions.js";
+  import { all_h, ins_, all, makeObject, first, productImage, product_purity_price, product_clarity_price, getTotalArray } from "../../../_modules/functions.js";
   import MyLayout from '../../_myLayout.svelte'
 	import StorageDB from "../../../_modules/indexdb/storage.js";
 	import Form from './_form/Form.svelte'

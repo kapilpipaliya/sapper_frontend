@@ -17,7 +17,7 @@
 <script>
   import { onMount } from "svelte";
   import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
-  import { save_, all, makeObject, first, productImage, product_purity_price, product_clarity_price, getTotalArray } from "../../../_modules/functions.js";
+  import { ins_, all, makeObject, first, productImage, product_purity_price, product_clarity_price, getTotalArray } from "../../../_modules/functions.js";
   import FadeOutButton from "../../_FadeOutButton.svelte";
 	import user from '../../../_modules/stores/user.js' 
   import MyLayout from '../../_myLayout.svelte'

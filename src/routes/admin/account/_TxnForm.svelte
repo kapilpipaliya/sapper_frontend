@@ -1,6 +1,6 @@
 <script>
   import { Server as S } from "../../_modules/ws_events_dispatcher.js";
-  import { save_, all, makeObject, first } from "../../_modules/functions.js";
+  import { ins_, all, makeObject, first } from "../../_modules/functions.js";
   import { onMount, createEventDispatcher } from "svelte";
   import flatpickr from 'flatpickr';
   import SubmitButton from '../_SubmitButton.svelte'
@@ -10,6 +10,7 @@
   export let rowIdx = 0;
   export let item = [];
   export let hs = [];
+  export let event = "ins"
 
   let isSaving = false;
   let er = "";
@@ -31,7 +32,9 @@
   let clarity = []
 
   const fns = [];
-  if (item.length) { form = makeObject(hs, item) };
+  if (item.length) { form = makeObject(hs, item)};
+  const evt_type = event == "ins" && item.length == 0 && !form.id ? 1 : 2
+  const save_ = evt_type == 1 ? ins_ : upd_
   S.bind$(save_('txn', rowIdx), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }, 1); 
 
   fns.push(all("journal_type", rowIdx)); S.bind_(fns.i(-1), ([d]) => { journal_type_id = d; form.journal_type_id = item.length && form["journal_type_id"] ? form["journal_type_id"] : 15 }, [[], [0]]);
@@ -70,7 +73,7 @@
     form.o_i_order_item = form.o_i_order_item.filter((_, i) => i !== row);
   }
 
-  async function save() { isSaving = true; S.trigger([[ save_('txn', rowIdx), form ]]); }
+  async function save() { isSaving = true; S.trigger([[ save_('txn', rowIdx), [form, [form.id]] ]]); }
   function clearError() { er = ""; }
 </script>
 

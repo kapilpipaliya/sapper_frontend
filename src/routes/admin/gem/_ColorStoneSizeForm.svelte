@@ -1,6 +1,6 @@
 <script>
   import { Server as S } from "../../_modules/ws_events_dispatcher.js";
-  import { all, save_, makeObject } from "../../_modules/functions.js";
+  import { all, ins_, upd_, makeObject } from "../../_modules/functions.js";
   import { onMount, createEventDispatcher } from "svelte";
   import SubmitButton from '../_SubmitButton.svelte'
   import CancelButton from '../_CancelButton.svelte';
@@ -9,6 +9,7 @@
   export let rowIdx = 0;
   export let item = [];
   export let hs = [];
+  export let event = "ins"
 
   let isSaving = false;
   let er = "";
@@ -28,7 +29,10 @@
   const fns = [];
   let new_name = false;
 
-  if (item.length) { form = makeObject(hs, item) }; S.bind$(save_('color_stone_size', rowIdx), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }, 1); 
+  if (item.length) { form = makeObject(hs, item)};
+  const evt_type = event == "ins" && item.length == 0 && !form.id ? 1 : 2
+  const save_ = evt_type == 1 ? ins_ : upd_
+  S.bind$(save_('color_stone_size', rowIdx), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }, 1); 
 
   fns.push(all("shape", rowIdx));S.bind_(fns.i(-1), ([d]) => { shape_id = d; form.shape_id = item.length ? form["shape_id"] : (shape_id[0] ? shape_id[0][0] : 0) }, [[]]);
   fns.push(all("currency", rowIdx));S.bind_(fns.i(-1), ([d]) => { currency_id = d; form.currency_id = item.length ? form["currency_id"] : (currency_id[0] ? currency_id[0][0] : 0) }, [[]]);
@@ -36,7 +40,7 @@
   fns.push(all("cs_type", rowIdx)); S.bind_(fns.i(-1), ([d]) => { cs_type_id = d; form.cs_type_id = item.length ? form["cs_type_id"] : (cs_type_id[0] ? cs_type_id[0][0] : 0); }, [[]]);
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
 
-  async function save() { isSaving = true; S.trigger([[ save_('color_stone_size', rowIdx), form ]]); }
+  async function save() { isSaving = true; S.trigger([[ save_('color_stone_size', rowIdx), [form, [form.id]] ]]); }
   function clearError() { er = ""; }
 
   const clearSizeName = () => {

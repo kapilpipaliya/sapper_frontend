@@ -1,6 +1,6 @@
 <script>
   import { Server as S } from "../../_modules/ws_events_dispatcher.js";
-  import { all, save_, makeObject } from "../../_modules/functions.js";
+  import { all, ins_, upd_, makeObject } from "../../_modules/functions.js";
   import { onMount, createEventDispatcher } from "svelte";
   import SubmitButton from '../_SubmitButton.svelte'
   import CancelButton from '../_CancelButton.svelte';
@@ -9,6 +9,7 @@
   export let rowIdx = 0;
   export let item = [];
   export let hs = [];
+  export let event = "ins"
 
   let isSaving = false;
   let er = "";
@@ -17,7 +18,10 @@
   let tones = [];
 
   const fns = [];
-  if (item.length) { form = makeObject(hs, item) }; S.bind$(save_("purity", rowIdx), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d });  } else { er = d.error; } }, 1);
+  if (item.length) { form = makeObject(hs, item)};
+  const evt_type = event == "ins" && item.length == 0 && !form.id ? 1 : 2
+  const save_ = evt_type == 1 ? ins_ : upd_
+  S.bind$(save_("purity", rowIdx), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d });  } else { er = d.error; } }, 1);
   fns.push(all("metal", rowIdx)); S.bind_(fns.i(-1), ([d]) => { metals = d; form.metal_id = item.length ? form['metal_id'] : (metals[0] ? metals[0][0] : 0) }, []);
   fns.push(all("tone", rowIdx)); S.bind_(fns.i(-1), ([d]) => { tones = d; form.pt_purity_tone = (form.pt_purity_tone) }, []);
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
@@ -46,7 +50,7 @@
     if(isDupMetals){alert("Duplicate Metals Not Allowed");return}
     if(isSumNot100){alert("Total Purity Must be 100");return}
 
-    isSaving = true; S.trigger([[ save_("purity", rowIdx), form ]]); }
+    isSaving = true; S.trigger([[ save_("purity", rowIdx), [form, [form.id]] ]]); }
   function clearError() { er = ""; }
 
   // if(item.length) validate = 100

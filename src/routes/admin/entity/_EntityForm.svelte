@@ -1,6 +1,6 @@
 <script>
   import { Server as S } from "../../_modules/ws_events_dispatcher.js";
-  import { all, save_, makeObject } from "../../_modules/functions.js";
+  import { all, ins_, upd_, makeObject } from "../../_modules/functions.js";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import flatpickr from 'flatpickr';
   import SubmitButton from '../_SubmitButton.svelte'
@@ -11,6 +11,7 @@
   export let rowIdx = 0;
   export let item = [];
   export let hs = [];
+  export let event = "ins"
   export let isSubmited = false
 
   export let nameHidden = false
@@ -60,10 +61,12 @@
   let address_type_id = [];
   const fns = [];
 
-  if (item.length) { form = makeObject(hs, item) };
+  if (item.length) { form = makeObject(hs, item)};
+  const evt_type = event == "ins" && item.length == 0 && !form.id ? 1 : 2
+  const save_ = evt_type == 1 ? ins_ : upd_
   S.bind$(save_('entity', rowIdx), ([d]) => { isSaving = false; if (d.ok) { isSubmited = true;  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }, 1); 
 
-  async function save() { isSaving = true; S.trigger([[ save_('entity', rowIdx), form ]]); }
+  async function save() { isSaving = true; S.trigger([[ save_('entity', rowIdx), [form, [form.id]] ]]); }
   function clearError() { er = ""; }
 
   fns.push(all("entity_type", rowIdx)); S.bind_(fns.i(-1), ([d]) => { entity_type_id = d; form.entity_type_id = item.length ? form["entity_type_id"] : (entity_type_id[0] ? entity_type_id[0][0] : 0) }, [[]]);

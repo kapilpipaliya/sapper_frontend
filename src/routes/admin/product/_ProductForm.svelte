@@ -1,7 +1,7 @@
 
 <script>
   import { Server as S } from "../../_modules/ws_events_dispatcher.js";
-  import { sfx, all, save_, del, makeObject, nullFirstarrayFix, getToneName, product_img_url  } from "../../_modules/functions.js";
+  import { sfx, all, ins_, del, makeObject, nullFirstarrayFix, getToneName, product_img_url  } from "../../_modules/functions.js";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import flatpickr from 'flatpickr';
   import SubmitButton from '../_SubmitButton.svelte'
@@ -12,6 +12,7 @@
   export let rowIdx = 0;
   export let item = [];
   export let hs = [];
+  export let event = "ins"
 
   let isSaving = false;
   let er = "";  
@@ -102,7 +103,9 @@
     form.p_cs_size_cs_size_id.forEach(x=> {if(x[7] == null) {x[6] = []; }  } )
 
   }
-  
+  const evt_type = event == "ins" && item.length == 0 && !form.id ? 1 : 2
+  const save_ = evt_type == 1 ? ins_ : upd_
+
   fns.push(save_("product", rowIdx)); S.bind$(fns.i(-1), ([d]) => {isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } }, 1);
   fns.push(del("product", rowIdx)); S.bind$(fns.i(-1), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("deleteRow", { rowIdx, d }); } else { er = d.error; } }, 1);
 
@@ -250,7 +253,7 @@
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
   
   
-  async function save() {if(!form.pc_category_id.length) {alert("Please Select Category"); return;} isSaving = true; S.trigger([[ save_("product", rowIdx), form ]]); }
+  async function save() {if(!form.pc_category_id.length) {alert("Please Select Category"); return;} isSaving = true; S.trigger([[ save_("product", rowIdx), [form, [form.id]] ]]); }
   function clearError() { er = ""; }
 
   async function deleteRow() { isSaving = true; S.trigger( [[ del("product", rowIdx), [form.id] ]] ); }

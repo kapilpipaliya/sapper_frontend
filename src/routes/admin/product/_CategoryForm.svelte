@@ -1,6 +1,6 @@
 <script>
   import { Server as S } from "../../_modules/ws_events_dispatcher.js";
-  import { all, save_, del, makeObject } from "../../_modules/functions.js";
+  import { all, ins_, upd_, del, makeObject } from "../../_modules/functions.js";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import SubmitButton from '../_SubmitButton.svelte'
   import CancelButton from '../_CancelButton.svelte';
@@ -18,13 +18,16 @@
 
   const fns = [];
   if (item.length) { form = makeObject(hs, item)};
+  const evt_type = event == "ins" && item.length == 0 && !form.id ? 1 : 2
+  const save_ = evt_type == 1 ? ins_ : upd_
+
   fns.push(save_("category", rowIdx, event)); S.bind$(fns.i(-1), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } }, 1);
   fns.push(del("category", rowIdx)); S.bind$(fns.i(-1), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("deleteRow", { rowIdx, d }); } else { er = d.error; } }, 1);
   
   fns.push(all("category", rowIdx)); S.bind_(fns.i(-1), ([d]) => { parent = [[0, 0, 0, 0, 0, "No Parent"], ...d]; form.parent_id = item.length ? form["parent_id"] : (parent[0] ? parent[0][0] : 0) }, [[]]);
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
 
-  async function save() { isSaving = true; S.trigger([[save_("category", rowIdx), [form] ]]); }
+  async function save() { isSaving = true; S.trigger([[save_("category", rowIdx), [form, [form.id]] ]]); }
   function clearError() { er = ""; }
   
   async function deleteRow() { isSaving = true; S.trigger([[del("category", rowIdx, event), [form.id] ]]); }

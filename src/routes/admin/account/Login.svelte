@@ -30,7 +30,7 @@
   })
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
 
-  const save = async() => {isSaving = true; S.trigger([[ ["legacy", "auth", "admin_login", 0], form ]]); }
+  const save = async() => {isSaving = true; S.trigger([[ ["legacy", "auth", "admin_login", 0], [form] ]]); }
   const clearError = () => { er = ""; }
 
   const logout = async() => {isSaving = true; S.trigger([[ ["legacy", "auth", "admin_logout", 0] ]]); }
