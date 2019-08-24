@@ -226,9 +226,9 @@
   }
  
   const deleteRow2 = (i) => async() => {
-    const r = confirm("Press a button!");
+    const r = confirm("Are You Sure!");
     if (r == true) {
-    	const [d] = await new Promise((resolve, reject) => { S.bind_(del(url, i), (d) => { resolve(d) }, [items[i][0]]); }, 1); // result is not array
+    	const [d] = await new Promise((resolve, reject) => { S.bind_(del(url, i), (d) => { resolve(d) }, [ [items[i][0]] ] ); }, 1); // result is not array
       if (d.ok) { deleteRow({detail: {rowIdx: i}}) } else { alert(d.error) }
       }
     }

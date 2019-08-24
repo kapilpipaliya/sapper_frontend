@@ -23,6 +23,7 @@
     openModal();
   }
 
+  // not used now, but its good to use this function.
   async function onDeleteClick(litem) {
     item = litem;
     if (confirm(`Delete "${item.name}"?`)) {

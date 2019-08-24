@@ -30,7 +30,7 @@
   async function save() { isSaving = true; S.trigger([[save_("category", rowIdx), [form, [form.id]] ]]); }
   function clearError() { er = ""; }
   
-  async function deleteRow() { isSaving = true; S.trigger([[del("category", rowIdx, event), [form.id] ]]); }
+  async function deleteRow() { isSaving = true; S.trigger([[del("category", rowIdx, event), [[form.id]] ]]); }
 </script>
 
 
