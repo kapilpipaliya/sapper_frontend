@@ -59,7 +59,7 @@ export const setCookie  = res => {
 // dont use this function:
 export const authCeck = async(S) => {
     const fns = [];
-    //const { Server: S_ } = await import("../_modules/ws_events_dispatcher.js");
+    //const { Server: S_ } = await import("../_modules/ws_normal.js");
     //let S; if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
 
     const isAuth = await new Promise((resolve, reject) => { S.bind_( ["legacy", "auth", "is_admin_auth", 0], ([d]) => { 

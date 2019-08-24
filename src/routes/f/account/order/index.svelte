@@ -1,6 +1,6 @@
 <script context="module">
   //This page is same like checkout page.
-  import { Server as S_ } from "../../../_modules/ws_events_dispatcher.js";
+  import { Server as S_ } from "../../../_modules/ws_normal.js";
   import { menuCategories, getPurityName, getToneName, getClarityName, isAuthFn, getFooterData, getHeaderData } from "../../../_modules/functions.js";
 	export async function preload(page, session){
 		// let user = session.user
@@ -16,7 +16,7 @@
 </script>
 <script>
   import { onMount } from "svelte";
-  import { Server as S } from "../../../_modules/ws_events_dispatcher.js";
+  import { Server as S } from "../../../_modules/ws_normal.js";
   import { ins_, all, makeObject, first, productImage, product_purity_price, product_clarity_price, getTotalArray } from "../../../_modules/functions.js";
   import FadeOutButton from "../../_FadeOutButton.svelte";
 	import user from '../../../_modules/stores/user.js' 

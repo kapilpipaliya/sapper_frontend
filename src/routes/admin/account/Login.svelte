@@ -16,7 +16,7 @@
   const fns = [];
   let S; 
   onMount(async ()=>{
-    const { Server: S_ } = await import("../../_modules/ws_events_dispatcher.js");
+    const { Server: S_ } = await import("../../_modules/ws_normal.js");
     if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
 
     fns.push(["legacy", "auth", "admin_login", 0]); S.bind$(fns.i(-1), ([d]) => {

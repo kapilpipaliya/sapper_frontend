@@ -2,7 +2,7 @@
 <script>
   import { onMount } from "svelte";
   import * as sapper from '@sapper/app';
-  import { Server as S } from "../../../../_modules/ws_events_dispatcher.js";
+  import { Server as S } from "../../../../_modules/ws_normal.js";
   import { all_h, getUser } from "../../../../_modules/functions.js";
   import { fade, fly } from 'svelte/transition';
   import EntityForm from "./_EntityForm.svelte";

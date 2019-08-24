@@ -1,5 +1,5 @@
 <script context="module">
-  import { Server as S_ } from "../_modules/ws_events_dispatcher.js";
+  import { Server as S_ } from "../_modules/ws_normal.js";
   import { all, getPost, menuCategories, getFooterData, getHeaderData } from "../_modules/functions.js";
   // Here We will Show some Top Images for each category
   export async function preload(_page, session) {

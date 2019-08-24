@@ -1,5 +1,5 @@
 <script context="module">
-  import { Server as S_ } from "../../_modules/ws_events_dispatcher.js";
+  import { Server as S_ } from "../../_modules/ws_normal.js";
   import { menuCategories, isAuthFn, getFooterData, getHeaderData  } from "../../_modules/functions.js";
 	export async function preload(page, session){
     let S; if (typeof S_ == "function") { S = new S_(this.req, this.res); } else { S = S_; }
@@ -35,7 +35,7 @@
   let S; 
 
   onMount(async ()=>{
-    const { Server: S_ } = await import("../../_modules/ws_events_dispatcher.js");
+    const { Server: S_ } = await import("../../_modules/ws_normal.js");
     if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
 
     fns.push(["legacy", "auth", "user_login", 0]); S.bind$(fns.i(-1), ([d]) => {isSaving = false; if (d.ok) {  er = ""; formSave = true; dp("successSave", { d }); } else { er = d.error; } }, 1)

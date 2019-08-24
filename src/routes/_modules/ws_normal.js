@@ -1,4 +1,4 @@
-import {ServerEventsDispatcher} from 'ws_events_dispatcher.js'
+import {ServerEventsDispatcher} from './ws_events_dispatcher.js'
 import {ws_server} from './functions.js'
 
 let e;

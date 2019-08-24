@@ -23,7 +23,7 @@
   
   let S; 
   onMount(async()=>{
-    const { Server: S_ } = await import( "../../_modules/ws_events_dispatcher.js" );
+    const { Server: S_ } = await import( "../../_modules/ws_normal.js" );
     if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
     S.bind$(save_("support", rowIdx), ([d]) => { isSaving = false; if (d.ok) {  isSubmited = true; er = ""; dp("successSave", { rowIdx, d });  } else { er = d.error; } }, 1);
   })

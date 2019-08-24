@@ -1,5 +1,5 @@
 <script>
-  import { Server as S } from "../../_modules/ws_events_dispatcher.js";
+  import { Server as S } from "../../_modules/ws_normal.js";
   import { all, sfx, ins_, makeObject, thumb_url } from "../../_modules/functions.js";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import SubmitButton from '../_SubmitButton.svelte'
