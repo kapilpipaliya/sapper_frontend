@@ -9,24 +9,25 @@
   export let rowIdx = 0;
   export let item = [];
   export let hs = [];
+  export let event = "ins"
 
-    let isSaving = false;
+  let isSaving = false;
   let er = "";
   let form = { parent_id: 0, slug: "", name: "", description: "", display_type: "default", position: 0 }
   let parent = []
 
   const fns = [];
   if (item.length) { form = makeObject(hs, item)};
-  fns.push(save_("category", rowIdx)); S.bind$(fns.i(-1), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } }, 1);
+  fns.push(save_("category", rowIdx, event)); S.bind$(fns.i(-1), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } }, 1);
   fns.push(del("category", rowIdx)); S.bind$(fns.i(-1), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("deleteRow", { rowIdx, d }); } else { er = d.error; } }, 1);
   
   fns.push(all("category", rowIdx)); S.bind_(fns.i(-1), ([d]) => { parent = [[0, 0, 0, 0, 0, "No Parent"], ...d]; form.parent_id = item.length ? form["parent_id"] : (parent[0] ? parent[0][0] : 0) }, [[]]);
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
 
-  async function save() { isSaving = true; S.trigger([[save_("category", rowIdx), form ]]); }
+  async function save() { isSaving = true; S.trigger([[save_("category", rowIdx), [form] ]]); }
   function clearError() { er = ""; }
   
-  async function deleteRow() { isSaving = true; S.trigger([[del("category", rowIdx), [form.id] ]]); }
+  async function deleteRow() { isSaving = true; S.trigger([[del("category", rowIdx, event), [form.id] ]]); }
 </script>
 
 

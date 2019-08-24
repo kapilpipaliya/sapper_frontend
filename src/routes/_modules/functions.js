@@ -13,7 +13,7 @@ export const ws_server = process.env.NODE_ENV === 'development' ? `ws://${domain
 export function all_h(t, p) {  return ["legacy", t, "header", sfx(p)]; }
 
 export function all(t, p) {  return ["legacy", t, "data", sfx(p)]; }
-export function save_(t, p) {return ["legacy", t, "save", sfx(p)]}
+export function save_(t, p, event="ins") {return ["legacy", t, event, sfx(p)]}
 export function del(t, p) {return ["legacy", t, "del", sfx(p)]}
 
 const e_category = all("category", 111);

@@ -245,6 +245,7 @@
         this={quickcomponent}
         rowIdx={null}
         hs={headersSelectors}
+        event={"ins"}
         on:close={toogleAddForm}
         on:successSave={successSave }
           />
@@ -333,6 +334,7 @@
                   rowIdx={cindex} 
                   item={l} 
                   hs={headersSelectors}
+                  event={"upd"}
                   on:close={(event) => quickview[event.detail] = false }
                   on:successSave={successSave }
                   on:deleteRow={deleteRow }
