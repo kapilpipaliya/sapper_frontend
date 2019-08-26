@@ -1,7 +1,7 @@
 <svelte:options immutable/>
 <script>
   import { Server as S } from "../../_modules/ws_normal.js";
-  import { ins_, makeObject } from "../../_modules/functions.js";
+  import { ins_, upd_, makeObject } from "../../_modules/functions.js";
   import { onMount, createEventDispatcher } from "svelte";
   import SubmitButton from '../_SubmitButton.svelte'
   import CancelButton from '../_CancelButton.svelte';

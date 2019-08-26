@@ -1,7 +1,7 @@
 
 <script>
   import { Server as S } from "../../_modules/ws_normal.js";
-  import { sfx, all, ins_,del, makeObject, nullFirstarrayFix } from "../../_modules/functions.js";
+  import { sfx, all, ins_, upd_, del, makeObject, nullFirstarrayFix } from "../../_modules/functions.js";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import flatpickr from 'flatpickr';
   import SubmitButton from '../_SubmitButton.svelte'

@@ -1,6 +1,6 @@
 <script>
   import { Server as S } from "../../_modules/ws_normal.js";
-  import { all, sfx, ins_, makeObject, thumb_url } from "../../_modules/functions.js";
+  import { all, sfx, ins_, upd_, makeObject, thumb_url } from "../../_modules/functions.js";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import SubmitButton from '../_SubmitButton.svelte'
   import CancelButton from '../_CancelButton.svelte';
