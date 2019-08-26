@@ -1,35 +1,9 @@
-<style src="./_side_menu.scss"></style>
-
 <script>
-  import { onMount, onDestroy, createEventDispatcher } from "svelte";
-  let active = false;
+    import MyLayout from "./_myLayout.svelte"
 </script>
+<style src="./_index.scss"></style>
 
-<div id="layout" class={active ? "active" : ""}>
-    <!-- Menu toggle -->
-    <a href="#menu" id="menuLink" class="menu-link {active ? "active" : ""}">
-        <!-- Hamburger icon -->
-        <span></span>
-    </a>
-
-    <div id="menu" on:click={()=>{active = !active}} class={active ? "active" : ""}>
-        <div class="pure-menu">
-            <a class="pure-menu-heading" href="#">Company</a>
-
-            <ul class="pure-menu-list">
-                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Home</a></li>
-                <li class="pure-menu-item"><a href="#" class="pure-menu-link">About</a></li>
-
-                <li class="pure-menu-item menu-item-divided pure-menu-selected">
-                    <a href="#" class="pure-menu-link">Services</a>
-                </li>
-
-                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Contact</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <div id="main" on:click={()=>{ if(active) {active = !active}}} >
+<MyLayout>
         <div class="header">
             <h1>Page Title</h1>
             <h2>A subtitle for your page goes here</h2>
@@ -66,5 +40,4 @@
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
         </div>
-    </div>
-</div>
+</MyLayout>
