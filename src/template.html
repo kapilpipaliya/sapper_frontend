@@ -4,44 +4,16 @@
 	<meta charset='utf-8'>
 	<meta name='viewport' content='width=device-width,initial-scale=1.0'>
 	<meta name='theme-color' content='#333333'>
-
 	%sapper.base%
-
 	<link rel='stylesheet' href='css/normalize.css'>
 	<link rel='stylesheet' href='scss/bundle.css'>
 	<link rel='manifest' href='manifest.json'>
 	<link rel='icon' type='image/png' href='images/favicon.png'>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jssor-slider/27.5.0/jssor.slider.min.js"></script>
-
-	<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-	<!-- Sapper generates a <style> tag containing critical CSS
-	     for the current page. CSS for the rest of the app is
-	     lazily loaded when it precaches secondary pages -->
 	%sapper.styles%
-	<style>
-		#google_translate_element{position: absolute;top: 0;right: 0;}
-	</style>
 	%sapper.head%
 </head>
 <body>
-	<div id="google_translate_element"></div>
-
 	<div id='sapper'>%sapper.html%</div>
-
-	<script>
-		var Slider = $JssorSlider$
-		var SR = $JssorSlideshowRunner$
-		var AN = $JssorArrowNavigator$
-		var TN =  $JssorThumbnailNavigator$
-		var JS = $Jssor$
-		var Jease = $Jease$
-	</script>
-
-	<script type="text/javascript">
-	function googleTranslateElementInit() {
-		new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-	}
-	</script>
 	%sapper.scripts%
 </body>
 </html>
