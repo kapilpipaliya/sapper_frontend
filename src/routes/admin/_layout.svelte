@@ -4,6 +4,7 @@
 
 <svelte:head>
 	<script src="https://cdn.tiny.cloud/1/smt6zl4b5zkhghams45ri2maeopvjhfo4euolf224yt2emhm/tinymce/5/tinymce.min.js"></script>
+	<link rel='icon' type='image/png' href='images/favicon.png'>
 	<link rel='stylesheet' href='scss/jadmin/bundle.css'>
 </svelte:head>
 
