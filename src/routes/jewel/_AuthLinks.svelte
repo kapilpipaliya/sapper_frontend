@@ -14,6 +14,6 @@ if($isAuth === null) {
     <li><a href="/profile">Profile</a></li>
     <li><a  href="javascript:;" on:click={() => authChange(false)} >Sign Out</a></li>
 {:else}
-    <li><a href="/auth/Register">Register</a></li>
-    <li><a href="/auth/Login">Login</a></li>
+    <li><a href="jewel/auth/Register">Register</a></li>
+    <li><a href="jewel/auth/Login">Login</a></li>
 {/if}

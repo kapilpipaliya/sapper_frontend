@@ -160,11 +160,11 @@
   <div class="container">
     {#if sub_categories.length}
       {#each sub_categories as c, index}
-        <a class="categorytext" href={`./f/jewellery/${c[6]}`} alt="category">{c[5]} :</a>
+        <a class="categorytext" href={`jewel/jewellery/${c[6]}`} alt="category">{c[5]} :</a>
         <Cards>
           {#each sub_category_products[index] as p}
             <CardItem>
-              <a href={`./f/jewellery/product/${p[0]}`}>
+              <a href={`jewel/jewellery/product/${p[0]}`}>
                 <img src={p[p.length - 3]} alt="product image"/>
                 <span>{p[7]}</span>
                 <TextButton><span>₹ {getTotalArray(p).toFixed(0)}</span></TextButton>
@@ -180,7 +180,7 @@
     <Cards>
       {#each products as p}
         <CardItem>
-          <a href={`./f/jewellery/product/${p[0]}`}>
+          <a href={`jewel/jewellery/product/${p[0]}`}>
             <img src={p[p.length - 3]} alt="product image"/>
             <span>{p[7]}</span>
             <TextButton><span>₹ {getTotalArray(p).toFixed(0)}</span></TextButton>

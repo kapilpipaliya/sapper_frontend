@@ -234,7 +234,7 @@
       {#each product.p_policy_post_policy as p}
          <a href={getPolicyUrl(p)}>{getPolicyName(p)}</a>
       {/each}
-      <a href="./f/page/certifications">Certified Jewellery</a>
+      <a href="jewel/page/certifications">Certified Jewellery</a>
 
       <p>Any Questions? Please feel free to reach us at: 1800-419-0066</p>
 

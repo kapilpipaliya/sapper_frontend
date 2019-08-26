@@ -19,13 +19,13 @@
   </div>
 
     <div class="line1">
-      <a href="./f/page/contact_us"> Customer care </a> |
-      <span> <a href="./f/page/store"> Visit Our Stores </a> </span> |
+      <a href="jewel/page/contact_us"> Customer care </a> |
+      <span> <a href="jewel/page/store"> Visit Our Stores </a> </span> |
       {#if isAuth}
-        <a href="./f/auth/LogOut">Logout</a>
+        <a href="jewel/auth/LogOut">Logout</a>
       {:else}
-      <a href="./f/auth/Login">Login</a> |
-      <a href="./f/auth/Register">Signup</a>
+      <a href="jewel/auth/Login">Login</a> |
+      <a href="jewel/auth/Register">Signup</a>
       {/if}
 
     </div>
@@ -36,7 +36,7 @@
         <a href="#!"><img class="small" alt="Free Try at Home" src="../../images/feather/home.svg" /> <span>Free Try at Home |</span></a>
       {/if}
       <a href="#!"><img class="small" alt="Recently Viewed" src="../../images/feather/heart.svg" /><span>Wishlist |</span></a>
-      <a href="/f/cart"> <img class="small" alt="Recently Viewed" src="../../images/feather/shopping-cart.svg" /> </a>
+      <a href="jewel/cart"> <img class="small" alt="Recently Viewed" src="../../images/feather/shopping-cart.svg" /> </a>
     </div>
 
 </div>

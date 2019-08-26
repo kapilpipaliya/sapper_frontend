@@ -81,7 +81,7 @@
             </tbody>
           </table>
           <hr>
-          <p>By creating an account you agree to our <a href="./f/page/privacy">Terms & Privacy</a>.</p>
+          <p>By creating an account you agree to our <a href="jewel/page/privacy">Terms & Privacy</a>.</p>
         </form>
 
       </div>
@@ -92,13 +92,13 @@
   <div> {er} </div>
 
   <div class="signin">
-    <p>Already have an account? <a href="./f/auth/Login">Sign in</a>.</p>
+    <p>Already have an account? <a href="jewel/auth/Login">Sign in</a>.</p>
     <p>An account is needed to purchase a product</p>
   </div>
 
 {:else}
   {#if false}
-    <a href="./f/auth/LogOut">Logout</a>
+    <a href="jewel/auth/LogOut">Logout</a>
   {/if}
   <div class="header">
     <a href="./"><h1>Logged in successfully</h1></a>

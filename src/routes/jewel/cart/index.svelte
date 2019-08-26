@@ -203,11 +203,11 @@ const getSum = () => {
 
 					<div class="row">
 						<div class="">
-							<a href="./f/page/30_day_money_back_policy" alt="30-day money back">30-Day Money back </a>
+							<a href="jewel/page/30_day_money_back_policy" alt="30-day money back">30-Day Money back </a>
 							<div class="">If you are not satisfied with the product, you can return within 30 days of delivery. We will refund 100% of your money. No Questions Asked!</div>
 						</div>
 						<div class="">
-							<a href="./f/page/30_day_money_back_policy#lifetime-exchange">Eligible for Lifetime exchange &amp; Buy back </a>
+							<a href="jewel/page/30_day_money_back_policy#lifetime-exchange">Eligible for Lifetime exchange &amp; Buy back </a>
 							<div class="">If ever you feel like exchanging your old {headerData.company[0][4]} Jewellery for newer designs, we are game! Exchange the product for its current value or get Cash with just minor deductions.</div>
 						</div>
 						<div class="">
@@ -246,7 +246,7 @@ const getSum = () => {
 					</form>
 				{/if}
 
-				<a class="checkout" href="./f/account/delivery" >Place Order</a><br/>
+				<a class="checkout" href="./account/delivery" >Place Order</a><br/>
 				{#if false}
 					<button type="button">I have a voucher code</button><br/>
 					<form>

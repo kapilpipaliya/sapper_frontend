@@ -5,7 +5,7 @@
 		let S; if (typeof S_ == "function") { S = new S_(ws_admin, this.req, this.res); } else { S = S_; }
     const categories = await menuCategories(S);
     const isAuth = await isAuthFn(S)
-		if(!isAuth){ this.redirect(302, './f/auth/Login') }
+		if(!isAuth){ this.redirect(302, 'jewel/auth/Login') }
     const footerData = await getFooterData(S)
     const headerData = await getHeaderData(S)
 
@@ -66,7 +66,7 @@
 			</div>
 
 			<div>
-				<a href="./f/account/checkout" >Checkout</a><br/>
+				<a href="jewel/account/checkout" >Checkout</a><br/>
 				<div class="contact-details"> Any Questions?<br>Please call us at <strong>1800-419-0066</strong> or <span class="live-chat">Chat with us</span> </div>
 			</div>
 

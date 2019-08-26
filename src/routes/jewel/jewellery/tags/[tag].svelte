@@ -98,7 +98,7 @@
     <Cards>
       {#each products as p}
         <CardItem>
-          <a href={`./f/jewellery/product/${p[0]}`}>
+          <a href={`jewel/jewellery/product/${p[0]}`}>
             <img src={p[p.length - 3]} alt="product image"/>
             <span>{p[7]}</span>
             <TextButton><span>₹ {getTotalArray(p).toFixed(0)}</span></TextButton>

@@ -12,18 +12,18 @@
 
   <div class="column">
     <div class="row">
-      <a href="./f/page/30_day_money_back_policy">30-DAY MONEY BACK</a>
-      <a href="./f/page/30_day_money_back_policy#lifetime-exchange">
+      <a href="jewel/page/30_day_money_back_policy">30-DAY MONEY BACK</a>
+      <a href="jewel/page/30_day_money_back_policy#lifetime-exchange">
         LIFETIME EXCHANGE & BUY-BACK POLICY
       </a>
-      <a href="./f/page/certifications">CERTIFIED JEWELLERY</a>
+      <a href="jewel/page/certifications">CERTIFIED JEWELLERY</a>
     </div>
     <div class="row">
-      <a href="./f/page/30_day_money_back_policy#refund">100% REFUND</a>
-      <a href="./f/page/30_day_money_back_policy#free_shipping">
+      <a href="jewel/page/30_day_money_back_policy#refund">100% REFUND</a>
+      <a href="jewel/page/30_day_money_back_policy#free_shipping">
         FREE SHIPPING
       </a>
-      <a href="./f/page/30_day_money_back_policy#free-returns">FREE RETURNS</a>
+      <a href="jewel/page/30_day_money_back_policy#free-returns">FREE RETURNS</a>
     </div>
   </div>
 

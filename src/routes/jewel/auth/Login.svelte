@@ -90,12 +90,12 @@
   <div> {er} </div>
 
   <div class="signin">
-    <p>I want to create an account. <a href="./f/auth/Register">Sign up</a>.</p>
+    <p>I want to create an account. <a href="./auth/Register">Sign up</a>.</p>
     <p>An account is needed to purchase a product</p>
   </div>
 {:else}
   {#if false}
-    <a href="./f/auth/LogOut">Logout</a>
+    <a href="./auth/LogOut">Logout</a>
   {/if}
   <div class="header">
     <a href="./"><h1>Logged in successfully</h1></a>

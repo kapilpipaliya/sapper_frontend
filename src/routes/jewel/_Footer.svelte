@@ -12,8 +12,8 @@
               <span class="title">ABOUT US</span>
               <div class="content">
                 <ul>
-                  <li><a href="./f/page/about_us">Who we are?</a></li>
-                  <li><a href="./f/page/about_us#mgmt">Management Team</a></li>
+                  <li><a href="jewel/page/about_us">Who we are?</a></li>
+                  <li><a href="jewel/page/about_us#mgmt">Management Team</a></li>
                 </ul>
               </div>
             </section>
@@ -23,8 +23,8 @@
               <span class="title">CUSTOMER DELIGHT</span>
               <div class="content">
                 <ul>
-                  <li><a href="./f/page/contact_us">Contact Us</a></li>
-                  <li><a href="./f/page/faq">FAQ</a></li>
+                  <li><a href="jewel/page/contact_us">Contact Us</a></li>
+                  <li><a href="jewel/page/faq">FAQ</a></li>
 									<li class="phone-number">{footerData.mobile[0][4]}</li>
                   <li class="">(9 am-10 pm, 7 days a week)</li>
                 </ul>
@@ -37,12 +37,12 @@
               <span class="title">POLICIES</span>
               <div class="content">
                 <ul>
-                  <li><a href="./f/page/30_day_money_back_policy">30 -Day Retruns</a></li>
+                  <li><a href="jewel/page/30_day_money_back_policy">30 -Day Retruns</a></li>
                   
-                  <li><a href="./f/page/30_day_money_back_policy#lifetime-exchange">Lifetime Exchange & Buy-Back</a></li>
+                  <li><a href="jewel/page/30_day_money_back_policy#lifetime-exchange">Lifetime Exchange & Buy-Back</a></li>
                   
-                  <li><a href="./f/page/privacy">Privacy Policy</a></li>
-                  <li><a href="./f/page/tnc">Terms&nbsp;&amp;&nbsp;Conditions</a></li>
+                  <li><a href="jewel/page/privacy">Privacy Policy</a></li>
+                  <li><a href="jewel/page/tnc">Terms&nbsp;&amp;&nbsp;Conditions</a></li>
                 </ul>
               </div>
             </section>
@@ -53,10 +53,10 @@
               <span class="title">SHOP WITH CONFIDENCE</span>
               <div class="content">
                 <ul>
-                  <li><a href="./f/page/whybuyfromus">Why Buy From Us?</a></li>
-                  <li><a href="./f/page/certifications">Our Certifications</a></li>
-                  <li><a href="./f/page/press-room">Press Room</a></li>
-                  <li class="seperator"><a href="./f/page/testimonials">Testimonials</a></li>
+                  <li><a href="jewel/page/whybuyfromus">Why Buy From Us?</a></li>
+                  <li><a href="jewel/page/certifications">Our Certifications</a></li>
+                  <li><a href="jewel/page/press-room">Press Room</a></li>
+                  <li class="seperator"><a href="jewel/page/testimonials">Testimonials</a></li>
                 </ul>
               </div>
             </section>
@@ -107,11 +107,11 @@
 
         <div id="follow-us" class="">
           <div class="content">
-          <span ><img src="../images/feather/facebook.svg" alt="facebook"/></span>
-          <span ><img src="../images/feather/twitter.svg" alt="twitter"/></span>
-          <span ><img src="../images/feather/youtube.svg" alt="youtube"/></span>
+          <span ><img src="./images/feather/facebook.svg" alt="facebook"/></span>
+          <span ><img src="./images/feather/twitter.svg" alt="twitter"/></span>
+          <span ><img src="./images/feather/youtube.svg" alt="youtube"/></span>
           <span ><span class="icon-ion-social-pinterest"></span></span>
-          <span ><img src="../images/feather/instagram.svg" alt="instagram"/></span>
+          <span ><img src="./images/feather/instagram.svg" alt="instagram"/></span>
           </div>
         </div>
         
