@@ -4,7 +4,7 @@
 
 <svelte:head>
 	<script src="https://cdn.tiny.cloud/1/smt6zl4b5zkhghams45ri2maeopvjhfo4euolf224yt2emhm/tinymce/5/tinymce.min.js"></script>
-	<link rel='stylesheet' href='scss/bundle.css'>
+	<link rel='stylesheet' href='scss/jadmin/bundle.css'>
 </svelte:head>
 
 <style src="./_layout.scss"></style>
