@@ -8,8 +8,8 @@ const domain = process.env.NODE_ENV === 'development' ? 'localhost' : 'marvelart
 const server = process.env.NODE_ENV === 'development' ? `http://${domain}:${port}` : `http://${domain}:${port}`;
 export const product_img_url = `${server}/demo/v1/user/download_id`
 export const thumb_url = `${server}/demo/v1/user/thumb_id`
-export const ws_server = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/echo` : `ws://${domain}:${port}/echo`;
-export const ws_server_music = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/music` : `ws://${domain}:${port}/music`;
+export const ws_admin = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/jadmin` : `ws://${domain}:${port}/jadmin`;
+export const ws_madmin = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/music` : `ws://${domain}:${port}/madmin`;
 
 export function all_h(t, p) {  return ["legacy", t, "header", sfx(p)]; }
 

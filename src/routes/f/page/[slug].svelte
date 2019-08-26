@@ -1,9 +1,9 @@
 <script context="module">
   import { Server as S_ } from "../../_modules/ws_normal.js";
-  import { ws_server, all, menuCategories, isAuthFn, getFooterData, getHeaderData } from "../../_modules/functions.js";
+  import { ws_admin, all, menuCategories, isAuthFn, getFooterData, getHeaderData } from "../../_modules/functions.js";
 
 	export async function preload({ params, query }, session) {
-    let S; if (typeof(S_) == "function") { S = new S_(ws_server, this.req, this.res); } else { S = S_; }
+    let S; if (typeof(S_) == "function") { S = new S_(ws_admin, this.req, this.res); } else { S = S_; }
 		//if(!process.browser) setCookie(this.res)
 		const { slug } = params;
 

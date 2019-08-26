@@ -1,8 +1,8 @@
 <script context="module">
   import { Server as S_ } from "../../_modules/ws_normal.js";
-  import { ws_server, menuCategories, isAuthFn, getFooterData, getHeaderData  } from "../../_modules/functions.js";
+  import { ws_admin, menuCategories, isAuthFn, getFooterData, getHeaderData  } from "../../_modules/functions.js";
 	export async function preload(page, session){
-    let S; if (typeof S_ == "function") { S = new S_(ws_server, this.req, this.res); } else { S = S_; }
+    let S; if (typeof S_ == "function") { S = new S_(ws_admin, this.req, this.res); } else { S = S_; }
     const categories = await menuCategories(S);
     const footerData = await getFooterData(S)
     const headerData = await getHeaderData(S)

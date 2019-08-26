@@ -1,11 +1,11 @@
 <script context="module">
   import { Server as S_ } from "../../_modules/ws_normal.js";
-  import { getTableData, ws_server } from "../../_modules/functions.js";
+  import { getTableData, ws_admin } from "../../_modules/functions.js";
   export async function preload(page, session) {
     const filterSettings = new Array(15);
     filterSettings.fill(null);
     filterSettings[14] = 'product'
-    return await getTableData.call(this, S_, ws_server, "product", filterSettings);
+    return await getTableData.call(this, S_, ws_admin, "product", filterSettings);
   }
 </script>
 <script>

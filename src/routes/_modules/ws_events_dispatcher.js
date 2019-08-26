@@ -5,7 +5,7 @@ import IsomorphicWs from "isomorphic-ws";
 // import * as cookie from 'cookie';
 
 export class ServerEventsDispatcher {
-  constructor(req, res) {
+  constructor(path, req, res) {
     this.bind = this.bind.bind(this);
     this.bind$ = this.bind$.bind(this);
     this.bind_ = this.bind_.bind(this);
@@ -22,16 +22,19 @@ export class ServerEventsDispatcher {
     this.batchBind = this.batchBind.bind(this);
     this.batchBind_T = this.batchBind_T.bind(this);
     
-    this.setupConnection(req, res)
+    this.path = path
+    this.req = req
+    this.res = res
+    this.setupConnection()
     this.callbacks = {};
   }
-  setupConnection(path, req, res) {
+  setupConnection() {
     if (!process.browser) { 
       process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     }
-    const c = process.browser ? "" : req.headers.cookie || null;
+    const c = process.browser ? "" : this.req.headers.cookie || null;
     
-    this.conn = new IsomorphicWs(path, [], { 'headers': { 'Cookie': c } });
+    this.conn = new IsomorphicWs(this.path, [], { 'headers': { 'Cookie': c } });
     // dispatch to the right handlers
     this.conn.onmessage = this.onmessage;
 
@@ -148,7 +151,7 @@ export class ServerEventsDispatcher {
       case 2: // CLOSING
       case 3: //CLOSED
         // try to reconnect/logout
-        this.conn = new IsomorphicWs('ws://localhost:8300/echo');
+        this.conn = new IsomorphicWs(this.path);
         this.conn.addEventListener("open", function() {
           f(event, data)
         })
