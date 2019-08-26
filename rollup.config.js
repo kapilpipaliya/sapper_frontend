@@ -6,16 +6,32 @@ import babel from 'rollup-plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
-import { scss } from 'svelte-preprocess'
-import sveltePreprocess from 'svelte-preprocess';
-const preprocess = sveltePreprocess({
-});
+import autoPreprocess from 'svelte-preprocess';
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 const onwarn = (warning, onwarn) => (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
+const dedupe = importee => importee === 'svelte' || importee.startsWith('svelte/');
+
+const preprocessOptions = {
+	transformers: {
+		scss: {
+			includePaths: [
+				'node_modules',
+				'src'
+			]
+		},
+		postcss: {
+			plugins: [
+				require('autoprefixer')({
+					overrideBrowserslist: 'last 2 versions',
+				}),
+			]
+		}
+	},
+}
 
 export default {
 	client: {
@@ -30,12 +46,11 @@ export default {
 				dev,
 				hydratable: true,
 				emitCss: true,
-				preprocess: [
-					scss({ sourceMap: true }),
-				]
+				preprocess: autoPreprocess(preprocessOptions)
 			}),
 			resolve({
-				browser: true
+				browser: true,
+				dedupe
 			}),
 			commonjs(),
 
@@ -75,11 +90,11 @@ export default {
 			svelte({
 				generate: 'ssr',
 				dev,
-				preprocess: [
-					scss({ sourceMap: true }),
-				]
+				preprocess: autoPreprocess(preprocessOptions)
 			}),
-			resolve(),
+			resolve({
+				dedupe
+			}),
 			commonjs( {sourceMap: false})
 		],
 		external: Object.keys(pkg.dependencies).concat(
