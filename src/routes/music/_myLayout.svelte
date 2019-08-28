@@ -4,6 +4,7 @@
   const { page, preloading } = stores();
 
   import LeftMenu from "./_LeftMenu.svelte"
+  export let menu = {}
   export let categories = [];
   export let isAuth = false;
   export let footerData = {};
@@ -30,7 +31,7 @@
     </a>
 
 
-    <LeftMenu bind:active />
+    <LeftMenu bind:active {menu} />
 
 
     <div id="main" on:click|preventDefault={()=>{ if(active) {active = !active}}} >

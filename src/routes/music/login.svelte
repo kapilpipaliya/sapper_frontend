@@ -1,20 +1,34 @@
+<script context="module">
+/*
+1. check is_logged_in then redirect back to dashboard page..
+*/
+import { Server as S_ } from "../_modules/ws_music.js";
+import { ws_madmin, isAuthFn } from "../_modules/functions.js";
+export async function preload({query}, session) {
+  const redirect_url = "music/dashboard"
+  let S; if (typeof S_ == "function") { S = new S_(ws_madmin, this.req, this.res); } else { S = S_; }
+  const isAuth = await new Promise((resolve, reject) => { S.bind_( ["user", `is_logged_in`, 0], ([d]) => { resolve(d); }, [[]] ); });
+  if(isAuth){ this.redirect(302, redirect_url) }
+  return { isAuth, redirect_url, query };
+}
+</script>
 <script>
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import { goto } from "@sapper/app";
   const dp = createEventDispatcher();
-  //import {isAuthFn} from '../../_modules/functions.js'
+  export let isAuth = false;
+  export let redirect_url = ""
+  export let query = {}
+  
   let isSaving = false;
   let er = "";  
-  let form = { email: '', pass: ''};
+  let form = { user: '', pass: ''};
   let formSave = false;
   let getCookie = false;
   $: isAuth = formSave && getCookie
-  $: {
-    if(isAuth) {
-      goto("/music")
-    }
-  }
-  let username = null // to focus
+  $: { if(isAuth) { goto(redirect_url) } }
+
+  let user = null // to focus
   const fns = [];
   let S; 
 
@@ -22,16 +36,15 @@
     const { Server: S_ } = await import("../_modules/ws_music.js");
     if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
 
-    fns.push(["legacy", "auth", "user_login", 0]); S.bind$(fns.i(-1), ([d]) => {isSaving = false; if (d.ok) {  er = ""; formSave = true; dp("successSave", { d }); } else { er = d.error; } }, 1)
-    fns.push(["legacy", "auth", "set_cookie", 0]); S.bind$(fns.i(-1), ([d]) => { document.cookie = `user=${d.user}; path=/`; getCookie = true; }, 1)
+    fns.push(["auth","login",0]); S.bind$(fns.i(-1), ([d]) => {isSaving = false; if (d.ok) {  er = ""; formSave = true; dp("successSave", { d }); } else { er = d.error; } }, 1)
+    fns.push(["auth", "set_cookie", 0]); S.bind$(fns.i(-1), ([d]) => { 
+      document.cookie = `music=${d}; path=/`; getCookie = true; }, 1)
 
-    // check it already logged in
-    isAuth = await isAuthFn(S)
-    username.focus()
+    user.focus()
   })
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
 
-  const save = async() => {isSaving = true; S.trigger([[ ["legacy", "auth","user_login",0], form ]]); }
+  const save = async() => {isSaving = true; S.trigger([[ ["auth","login",0], form ]]); }
   const clearError = () => { er = ""; }
 
 </script>
@@ -40,6 +53,10 @@
 <svelte:head>
 	<title>Log In</title>
 </svelte:head>
+
+{#if query.message}
+  <span class="{query.type}">{query.message}</span>
+{/if}
 
 {#if !isAuth}
 <div class="container">
@@ -52,14 +69,14 @@
               <tbody>
                 <tr>
                   <td >User Name</td>
-                  <td ><input bind:value={form.email} bind:this={username}></td>
+                  <td ><input bind:value={form.user} bind:this={user}></td>
                 </tr>
                 <tr>
                   <td >Password</td>
                   <td ><input type="password" bind:value={form.pass} ></td>
                 </tr>
                 <tr>
-                  <td colspan="2" style="text-align: center;"> <button type="submit" disabled={!form.email || !form.pass} class="registerbtn"> Submit </button> </td>
+                  <td colspan="2" style="text-align: center;"> <button type="submit" disabled={!form.user || !form.pass} class="registerbtn"> Submit </button> </td>
                 </tr>
               </tbody>
             </table>

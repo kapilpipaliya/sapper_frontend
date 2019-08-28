@@ -1,22 +1,19 @@
 <script>
   export let active = false;
+  export let menu = {}
+  console.log(menu)
 </script>
 <style src="./_LeftMenu.scss"></style>
     <div id="menu"  class={active ? "active" : ""}>
         <div class="pure-menu">
-            <a class="pure-menu-heading" href="#!">Company</a>
+            <a class="pure-menu-heading" href="music/dashboard">MBA Music</a>
 
             <ul class="pure-menu-list">
-                <li class="pure-menu-item"><a href="#!" class="pure-menu-link">Dashboard</a></li>
-                <li class="pure-menu-item"><a href="#!" class="pure-menu-link">Admins</a></li>
-                <li class="pure-menu-item"><a href="#!" class="pure-menu-link">Executives</a></li>
-                <li class="pure-menu-item"><a href="#!" class="pure-menu-link">Profile</a></li>
-
-                <li class="pure-menu-item menu-item-divided pure-menu-selected">
-                    <a href="#!" class="pure-menu-link">Services</a>
+            {#each menu as m}
+                <li class="pure-menu-item {m[2] ? "menu-item-divided pure-menu-selected" : ""}">
+                    <a href="{m[1]}" class="pure-menu-link">{m[0]}</a>
                 </li>
-
-                <li class="pure-menu-item"><a href="#!" class="pure-menu-link">Contact</a></li>
+            {/each}
             </ul>
         </div>
     </div>

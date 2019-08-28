@@ -2,7 +2,7 @@
   // import { getFirstElementOr, tailOrEmpty } from "../jreason/src/list.bs.js";
   // import * as _ from "lamb";
   import { onMount, onDestroy, beforeUpdate } from "svelte";
-  import { Server as S } from "../_modules/ws_normal.js";
+  import { Server as S } from "../_modules/ws_music.js";
   import { all, all_h, del } from "../_modules/functions.js";
   import { createEventDispatcher } from "svelte";
   const dp = createEventDispatcher();
