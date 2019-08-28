@@ -9,7 +9,7 @@ const server = process.env.NODE_ENV === 'development' ? `http://${domain}:${port
 export const product_img_url = `${server}/demo/v1/user/download_id`
 export const thumb_url = `${server}/demo/v1/user/thumb_id`
 export const ws_admin = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/jadmin` : `ws://${domain}:${port}/jadmin`;
-export const ws_madmin = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/music` : `ws://${domain}:${port}/madmin`;
+export const ws_madmin = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/madmin` : `ws://${domain}:${port}/madmin`;
 
 export function all_h(t, p) {  return ["legacy", t, "header", sfx(p)]; }
 

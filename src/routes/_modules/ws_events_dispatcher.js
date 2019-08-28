@@ -165,11 +165,15 @@ export class ServerEventsDispatcher {
   onmessage (evt) {
     if(typeof evt.data === "string" ) {
       const data = JSON.parse(evt.data);
-      for (let i = 0; i < data.length; i++) {
-        const e = data[i];
-        const event = e[0];
-        const message = e.splice(1);
-        this.dispatch(event, message)
+      try {
+        for (let i = 0; i < data.length; i++) {
+          const e = data[i];
+          const event = e[0];
+          const message = e.splice(1);
+          this.dispatch(event, message)
+        }
+      } catch (error) {
+        console.warn(data)
       }
     }
     // if(evt.data instanceof ArrayBuffer ){
