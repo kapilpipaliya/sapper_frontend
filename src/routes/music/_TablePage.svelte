@@ -7,7 +7,6 @@
   import Table from "./_Table.svelte";
   import Modal from "./_Model.svelte";
 
-  export let S;
   export let events = []
   export let formcomponent;
   export let quickcomponent=false;
@@ -62,7 +61,6 @@
     bind:this={myTable}
     on:onItemClick={event => onItemClick(event.detail.item)}
     on:onDeleteClick={event => onDeleteClick(event.detail.item)}
-    {S}
     {events}
     {quickcomponent}
     {requiredFilter}

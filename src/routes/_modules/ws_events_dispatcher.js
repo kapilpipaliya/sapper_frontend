@@ -32,9 +32,9 @@ export class ServerEventsDispatcher {
     if (!process.browser) { 
       process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     }
-    const c = process.browser ? "" : this.req.headers.cookie || null;
+    const c = process.browser ? undefined : { 'headers': { 'Cookie': this.req.headers.cookie || null } };
     
-    this.conn = new IsomorphicWs(this.path, [], { 'headers': { 'Cookie': c } });
+    this.conn = new IsomorphicWs(this.path, [], c);
     // dispatch to the right handlers
     this.conn.onmessage = this.onmessage;
 

@@ -67,8 +67,6 @@ export async function preload({query}, session) {
   let customFilter = {
     1 : accountFilter
   }
-  let S
-  if (typeof S2_ == "function") { S = new S_(ws_madmin, {headers: {}}); } else { S = S2_; }
 </script>
 
 <style src="./_index.scss"></style>
@@ -81,7 +79,6 @@ export async function preload({query}, session) {
                 <div class="pure-u">
                       <h1>{user_title}</h1>
                         <TablePage
-                          {S}
                           {events}
                           {h}
                           {count}

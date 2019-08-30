@@ -4,11 +4,10 @@
   import {makeObject} from "../_modules/utils.js"
   import SubmitButton from './_SubmitButton.svelte'
   import CancelButton from './_CancelButton.svelte';
-  
+  import { Server as S } from "../_modules/ws_music.js";
   const dp = createEventDispatcher();
 
   export let isSubmited = false
-  export let S
 
   let isSaving = false;
   let er = "";
@@ -20,9 +19,11 @@
   }
   const fns = [];
 
-  S.bind$(["user", "update_password", 0], ([d]) => { 
-    isSaving = false; if (d.ok) { isSubmited = true;  er = ""; dp("successSave", {d});  } else { er = d.error; } }, 1); 
-
+  onMount(async ()=>{
+    S.bind$(["user", "update_password", 0], ([d]) => { 
+      isSaving = false; if (d.ok) { isSubmited = true;  er = ""; dp("successSave", {d});  } else { er = d.error; } }, 1); 
+  })
+  
   async function save() { 
     if(form.new_password != form.confirm_password) {
       er = "new password and confirm password mismatch"
@@ -31,7 +32,7 @@
     isSaving = true; S.trigger([[ ["user", "update_password", 0], [form] ]]); }
   function clearError() { er = ""; }
 
-  onDestroy(() => { if(process.browser) S.unbind_(fns) });
+  onDestroy(() => { if(process.browser && S) S.unbind_(fns) });
 </script>
 
 <form class="admin" on:submit|preventDefault={save} >

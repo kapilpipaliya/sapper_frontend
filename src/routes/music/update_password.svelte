@@ -36,10 +36,8 @@ export async function preload(page, session) {
     import { fade, fly } from 'svelte/transition';
     export let menu = {}
     export let user_account_type = ""
-    let S
     let saved = false;
     const handleSave = () => { saved = true}
-    if (typeof S2_ == "function") { S = new S_(ws_madmin, {headers: {}}); } else { S = S2_; }
 </script>
 <style src="./_index.scss"></style>
 
@@ -50,7 +48,7 @@ export async function preload(page, session) {
 
         <div class="content">
             {#if !saved}
-                <PasswordChangeForm {S} on:successSave={handleSave}/>
+                <PasswordChangeForm on:successSave={handleSave}/>
             {:else}
                 <p class="fly" in:fly="{{ y: 100, duration: 2000 }}" out:fade>
                     Password is Updated

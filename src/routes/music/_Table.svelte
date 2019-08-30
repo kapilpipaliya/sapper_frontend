@@ -5,7 +5,6 @@
   import { createEventDispatcher } from "svelte";
   const dp = createEventDispatcher();
 
-  export let S;
   export let events = []
   export let quickcomponent=false;
   export let requiredFilter = {}
@@ -109,8 +108,11 @@
       resetFilter_();
   }
 
-
-  onMount(() => {
+  let S; 
+  onMount(async () => {
+    const { Server: S_ } = await import("../_modules/ws_music.js");
+    if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
+    
     // [...Array(20)].map(_=>0)
     fns.push(events[1]); S.bind$(fns[0], ([data]) => { 
       quickview = Array.from({length: data.length}, ()=>0); items = data || []; 
@@ -271,7 +273,6 @@
     {#if addnewform}
       <svelte:component
         this={quickcomponent}
-        {S}
         rowIdx={null}
         hs={headersSelectors}
         event={"ins"}
@@ -383,7 +384,6 @@
             {#if quickcomponent}
                 <svelte:component
                   this={quickcomponent}
-                  {S}
                   rowIdx={cindex} 
                   item={l} 
                   hs={headersSelectors}

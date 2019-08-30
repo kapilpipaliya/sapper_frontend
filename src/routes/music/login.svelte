@@ -16,6 +16,7 @@ export async function preload({query}, session) {
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import { goto } from "@sapper/app";
   const dp = createEventDispatcher();
+  import { Server as S } from "../_modules/ws_music.js";
   export let isAuth = false;
   export let redirect_url = ""
   export let query = {}
@@ -30,19 +31,15 @@ export async function preload({query}, session) {
 
   let user = null // to focus
   const fns = [];
-  let S; 
 
   onMount(async ()=>{
-    const { Server: S_ } = await import("../_modules/ws_music.js");
-    if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
-
     fns.push(["auth","login",0]); S.bind$(fns.i(-1), ([d]) => {isSaving = false; if (d.ok) {  er = ""; formSave = true; dp("successSave", { d }); } else { er = d.error; } }, 1)
     fns.push(["auth", "set_cookie", 0]); S.bind$(fns.i(-1), ([d]) => { 
       document.cookie = `music=${d}; path=/`; getCookie = true; }, 1)
 
     user.focus()
   })
-  onDestroy(() => { if(process.browser) S.unbind_(fns) });
+  onDestroy(() => { if(process.browser && S) S.unbind_(fns) });
 
   const save = async() => {isSaving = true; S.trigger([[ ["auth","login",0], form ]]); }
   const clearError = () => { er = ""; }

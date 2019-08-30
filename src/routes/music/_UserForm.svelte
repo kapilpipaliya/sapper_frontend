@@ -5,13 +5,13 @@
   // import flatpickr from 'flatpickr';
   import SubmitButton from './_SubmitButton.svelte'
   import CancelButton from './_CancelButton.svelte';
+  import { Server as S } from "../_modules/ws_music.js";
   const dp = createEventDispatcher();
 
   export let rowIdx = 0;
   export let item = [];
   export let hs = [];
   export let event = "ins"
-  export let S
 
   let isSaving = false;
   let er = "";  
@@ -40,16 +40,18 @@
     form = makeObject(hs, item)
   }
 
-  fns.push(["user", event, rowIdx]); S.bind$(fns.i(-1), ([d]) => {isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } }, 1);
-  //fns.push(del("product", rowIdx)); S.bind$(fns.i(-1), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("deleteRow", { rowIdx, d }); } else { er = d.error; } }, 1);
-  onDestroy(() => { if(process.browser) S.unbind_(fns) });
-  
-  const batch1 = []
-  batch1.push([
-    ["user", "user_types_form_data", rowIdx], ([d]) => { user_types = d; form.type = item.length ? form["type"] : (user_types[0] ? user_types[0][1] : 0)},
-    [[]]
-  ]);
-  S.batchBind_T(batch1)
+  onMount(async ()=>{
+    fns.push(["user", event, rowIdx]); S.bind$(fns.i(-1), ([d]) => {isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d }); } else { er = d.error; } }, 1);
+    //fns.push(del("product", rowIdx)); S.bind$(fns.i(-1), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("deleteRow", { rowIdx, d }); } else { er = d.error; } }, 1);
+    onDestroy(() => { if(process.browser && S) S.unbind_(fns) });
+    
+    const batch1 = []
+    batch1.push([
+      ["user", "user_types_form_data", rowIdx], ([d]) => { user_types = d; form.type = item.length ? form["type"] : (user_types[0] ? user_types[0][1] : 0)},
+      [[]]
+    ]);
+    S.batchBind_T(batch1)
+  })
   
   async function save() { isSaving = true; S.trigger([[ ["user", event, rowIdx], [form, [form.id]] ]]); }
   function clearError() { er = ""; }

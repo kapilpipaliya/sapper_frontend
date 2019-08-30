@@ -63,8 +63,6 @@ export async function preload({query}, session) {
   export let user_title = ""
   export let user_account_type = ""
 
-  let S
-  if (typeof S2_ == "function") { S = new S_(ws_madmin, {headers: {}}); } else { S = S2_; }
 </script>
 
 <style src="./_index.scss"></style>
@@ -77,7 +75,6 @@ export async function preload({query}, session) {
                 <div class="pure-u">
                       <h1>{"Catalogs"}</h1>
                         <TablePage
-                          {S}
                           {events}
                           {h}
                           {count}
