@@ -304,7 +304,7 @@
             </th>
           {/if}
         {/each}
-        <th width="100px">Actions</th>
+        <!-- <th width="100px">Actions</th> -->
       </tr>
       <tr>
         {#each headers as h, index}
@@ -333,14 +333,14 @@
             {/if}
           {/if}
         {/each}
-        <th width="100px"></th>
+        <!-- <th width="100px"></th> -->
       </tr>
     </thead>
     <tbody>
       {#each items as l, cindex}
         {#if l}
         {#if !quickview[cindex]}
-          <tr class="hidden_attrs" on:mouseenter={(e)=> {e.target.classList.remove('hidden_attrs')}} on:mouseleave={(e)=>{e.target.classList.add('hidden_attrs')}} >
+          <tr class_="hidden_attrs" on:mouseenter={(e)=> {/*e.target.classList.remove('hidden_attrs')*/}} on:mouseleave={(e)=>{/*e.target.classList.add('hidden_attrs')*/}} >
             {#each l as c, index}
                 {#if visible_columns[index]}
                   <td title={l[index + (tooltip_offset_columns[index] || 0)]}>
@@ -357,7 +357,7 @@
                   </td>
                 {/if}
             {/each}
-            <td>
+            <!-- <td> -->
             {#if false}
               <a href="javascript:;" on:click={() => onItemClick(l)}>
                 <span class="icon is-small">
@@ -373,7 +373,7 @@
                 </span>
               </a>
             {/if}
-            </td>
+            <!-- </td> -->
           </tr>
         {/if}
         
