@@ -3,7 +3,7 @@ export { makeObject, sfx, nullFirstarrayFix } from './utils.js';
 
 import StorageDB from "./indexdb/storage.js";
 
-const port = process.env.NODE_ENV === 'development' ? '8300' : '8300'
+const port = process.env.NODE_ENV === 'development' ? '8400' : '8400'
 const domain = process.env.NODE_ENV === 'development' ? 'localhost' : 'marvelartjewellery.com'
 const server = process.env.NODE_ENV === 'development' ? `http://${domain}:${port}` : `http://${domain}:${port}`;
 export const product_img_url = `${server}/demo/v1/user/download_id`

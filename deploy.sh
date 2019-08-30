@@ -15,3 +15,12 @@ rsync -avz --progress dump.sql kapil@95.216.152.135:/home/kapil/jsusant
 yarn
 yarn start
 PORT=3055 yarn start
+
+#sudo pg_dump -U postgres -f dump.sql -d susant
+rsync -avz --progress --exclude=__sapper__/dev ./__sapper__ kapil@95.216.152.135:/home/kapil/musicf
+rsync -avz --progress ./static kapil@95.216.152.135:/home/kapil/musicf
+rsync -avz --progress package.json kapil@95.216.152.135:/home/kapil/musicf
+rsync -avz --progress dump.sql kapil@95.216.152.135:/home/kapil/musicf
+yarn
+yarn start
+PORT=3055 yarn start
