@@ -16,12 +16,6 @@ h1, h2, h3, h4, h5, h6 {
 	line-height: 1.2;
 }
 
-select {
-	vertical-align: top;
-}
-
-
-
 form.admin {
   background: lightseagreen;
 	
@@ -44,6 +38,9 @@ form.admin {
 	} */
 	input:invalid {
 		color: red;
+	}
+	select {
+		vertical-align: top;
 	}
 	.w100{ width: 100px; }
 	.w150{ width: 150px; }

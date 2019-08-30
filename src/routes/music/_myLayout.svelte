@@ -10,6 +10,8 @@
   export let footerData = {};
   export let headerData = {};
   let active = false;
+  export let user_account_type = ""
+  // on #main dont add this: on:click={()=>{ if(active) {active = !active}}}
 </script>
 
 <svelte:head>
@@ -31,10 +33,10 @@
     </a>
 
 
-    <LeftMenu bind:active {menu} />
+    <LeftMenu bind:active {menu} {user_account_type} />
 
 
-    <div id="main" on:click|preventDefault={()=>{ if(active) {active = !active}}} >
+    <div id="main">
       <slot/>
     </div>
 </div>

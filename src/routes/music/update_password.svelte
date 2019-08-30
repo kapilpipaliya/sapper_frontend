@@ -14,36 +14,29 @@ export async function preload(page, session) {
 </script>
 <script>
     import MyLayout from "./_myLayout.svelte"
+    import PasswordChangeForm from "./_PasswordChangeForm.svelte"
+    import { Server as S2_ } from "../_modules/ws_music.js";
+    import { fade, fly } from 'svelte/transition';
     export let menu = {}
+    let S
+    let saved = false;
+    const handleSave = () => { saved = true}
+    if (typeof S2_ == "function") { S = new S_(ws_madmin, {headers: {}}); } else { S = S2_; }
 </script>
 <style src="./_index.scss"></style>
 
 <MyLayout {menu} >
         <div class="header">
-            <h1>For Mind Peace Music</h1>
-            <h2>Visit Proper Page from the left menu.</h2>
+            <h1>Update Password</h1>
         </div>
 
         <div class="content">
-            <h2 class="content-subhead">Music</h2>
-            <p>
-               developed to increase mind development.
-            </p>
-
-            <div class="pure-g">
-                <div class="pure-u-1-4">
-                    <img class="pure-img-responsive" src="http://farm3.staticflickr.com/2875/9069037713_1752f5daeb.jpg" alt="Peyto Lake">
-                </div>
-                <div class="pure-u-1-4">
-                    <img class="pure-img-responsive" src="http://farm3.staticflickr.com/2813/9069585985_80da8db54f.jpg" alt="Train">
-                </div>
-                <div class="pure-u-1-4">
-                    <img class="pure-img-responsive" src="http://farm6.staticflickr.com/5456/9121446012_c1640e42d0.jpg" alt="T-Shirt Store">
-                </div>
-                <div class="pure-u-1-4">
-                    <img class="pure-img-responsive" src="http://farm8.staticflickr.com/7357/9086701425_fda3024927.jpg" alt="Mountain">
-                </div>
-            </div>
-
+            {#if !saved}
+                <PasswordChangeForm {S} on:successSave={handleSave}/>
+            {:else}
+                <p class="fly" in:fly="{{ y: 100, duration: 2000 }}" out:fade>
+                    Password is Updated
+                </p>
+            {/if}
         </div>
 </MyLayout>

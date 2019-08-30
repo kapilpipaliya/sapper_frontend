@@ -78,9 +78,9 @@ export class ServerEventsDispatcher {
     this.trigger([[event, data]]);
     return this;// chainable
   };
-  bind_F (event, callback, data, handleMultiple) {
+  bind_F (event, callback, data, handleMultiple, beforeEvent) {
     this.bind$(event, callback, handleMultiple);
-    this.triggerFile(event, data);
+    this.triggerFile(event, data, beforeEvent);
     return this;// chainable
   };
   unbind (event) {
@@ -112,7 +112,7 @@ export class ServerEventsDispatcher {
       // code block
     }
   };
-  triggerFile (event, data) {
+  triggerFile (event, data, beforeEvent=["legacy", "auth", "image_meta_data", 0]) {
     const f = this.triggerFile
     const f2 = this.trigger
     switch (this.conn.readyState) {
@@ -135,10 +135,9 @@ export class ServerEventsDispatcher {
         reader.onload = function(e) {
             rawData = e.target.result;
             // conn.binaryType = "arraybuffer"
-            const evt = ["legacy", "auth", "save_image_meta_data", 0]
-            f2([[ evt, [event, file.name, file.size, file.type] ]])
+            f2([[ beforeEvent, [event, file.name, file.size, file.type] ]])
             
-            bind$(evt, () => {
+            bind$(beforeEvent, () => {
               conn.send(rawData);
             })
 

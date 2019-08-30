@@ -69,11 +69,11 @@ export async function preload({query}, session) {
               <tbody>
                 <tr>
                   <td >User Name</td>
-                  <td ><input bind:value={form.user} bind:this={user}></td>
+                  <td ><input bind:value={form.user} bind:this={user} required ></td>
                 </tr>
                 <tr>
                   <td >Password</td>
-                  <td ><input type="password" bind:value={form.pass} ></td>
+                  <td ><input type="password" bind:value={form.pass} required></td>
                 </tr>
                 <tr>
                   <td colspan="2" style="text-align: center;"> <button type="submit" disabled={!form.user || !form.pass} class="registerbtn"> Submit </button> </td>

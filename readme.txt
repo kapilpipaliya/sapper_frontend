@@ -6,3 +6,5 @@ qswz> caub 12:18 <kapilp> `const product_h = await new Promise((resolve, reject)
 6:05 PM didn't think of using race like that
 
 n> delay=util.promisify(setTimeout); let x=Promise.race([delay(80).then(()=>1), delay(100).then(()=>{throw new Error('timeout')})]); x
+
+rollup-plugin-scss is added to compile scss files in static/scss folder.
