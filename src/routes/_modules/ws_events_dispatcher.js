@@ -78,9 +78,9 @@ export class ServerEventsDispatcher {
     this.trigger([[event, data]]);
     return this;// chainable
   };
-  bind_F (event, callback, data, handleMultiple, beforeEvent) {
+  bind_F (event, callback, data, handleMultiple, beforeEvent, changeNotice) {
     this.bind$(event, callback, handleMultiple);
-    this.triggerFile(event, data, beforeEvent);
+    this.triggerFile(event, data, beforeEvent, changeNotice);
     return this;// chainable
   };
   unbind (event) {
@@ -112,7 +112,7 @@ export class ServerEventsDispatcher {
       // code block
     }
   };
-  triggerFile (event, data, beforeEvent=["legacy", "auth", "image_meta_data", 0]) {
+  triggerFile (event, data, beforeEvent=["legacy", "auth", "image_meta_data", 0], callback) {
     const f = this.triggerFile
     const f2 = this.trigger
     switch (this.conn.readyState) {
@@ -139,6 +139,17 @@ export class ServerEventsDispatcher {
             
             bind$(beforeEvent, () => {
               conn.send(rawData);
+
+              if (callback) {
+                var interval = setInterval(() => {
+                    if (conn.bufferedAmount > 0) {
+                        callback(conn.bufferedAmount)
+                    } else {
+                        callback(0)
+                        clearInterval(interval);
+                    }
+                }, 100);
+              }
             })
 
             // conn.binaryType = "blob"

@@ -40,13 +40,27 @@
   async function save() { isSaving = true; S.trigger([[ ["song", event, rowIdx], [form, [form.id]] ]]); }
   function clearError() { er = ""; }
 
+  let parcentage = 0;
   // ------------
+
   const handleFileChange = (event) => {
-    console.log(event)
     const selectedFile = event.target.files[0];
     if (!selectedFile.type.startsWith('audio/')){ 
       alert("Please Select Audio File Only")
       return
+    }
+    const per_change = (n) =>  parcentage = n
+
+    const percentage_change = (bytesNotSent) => {
+      if(bytesNotSent==0){
+        parcentage = 100
+        console.log('file sent');
+      }else{
+        const loaded = selectedFile.size - bytesNotSent;
+        const percentage_ = Math.round((loaded * 100) / selectedFile.size );
+        console.log(percentage_);
+        per_change(percentage_)
+      }
     }
     
     S.bind_F(["song", 'song', rowIdx], ([temp_id]) => {
@@ -59,7 +73,7 @@
       reader.onload = function(e) { thumbnails[row] = e.target.result };
       reader.readAsDataURL(selectedFile);
       */
-    }, selectedFile, 0, ["auth", "file_meta_data", 0]);
+    }, selectedFile, 0, ["auth", "file_meta_data", 0], percentage_change);
   }
 </script>
 
@@ -74,6 +88,9 @@
   </label>
   {#if !item.length}
     <input type="file" on:change={handleFileChange} accept="audio/*" /> 
+    {#if parcentage > 0}
+       Uploading...{parcentage}%
+    {/if}
   {/if}
 
   <div> {er} </div>
