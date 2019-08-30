@@ -9,7 +9,24 @@ export async function preload(page, session) {
   const isAuth = await new Promise((resolve, reject) => { S.bind_( ["user", `is_logged_in`, 0], ([d]) => { resolve(d); }, [[]] ); });
   if(!isAuth){ this.redirect(302, 'music/login') }
   const menu = await new Promise((resolve, reject) => { S.bind_( ["ui","menu_data",1000], ([d]) => { resolve(d); }, [[]] ); });
-  return { isAuth, menu };
+
+  const getTableData = async(filterSettings=[]) => {
+    let user_account_type = ""
+    await new Promise((resolve, reject) => {
+        const batch1 = []
+        let r1 = true
+        const myResolve = () => {
+          if(r1) resolve(1)
+        }
+        batch1.push([ ["ui", "user_account_type", 0], ([d]) => {user_account_type = d; r1 = true; myResolve()}, [] ])
+        S.batchBind_T(batch1)
+      })
+    return {user_account_type};
+  }
+
+  const {user_account_type} = await getTableData([]);
+  
+  return { isAuth, menu, user_account_type };
 }
 </script>
 <script>
@@ -18,6 +35,7 @@ export async function preload(page, session) {
     import { Server as S2_ } from "../_modules/ws_music.js";
     import { fade, fly } from 'svelte/transition';
     export let menu = {}
+    export let user_account_type = ""
     let S
     let saved = false;
     const handleSave = () => { saved = true}
@@ -25,7 +43,7 @@ export async function preload(page, session) {
 </script>
 <style src="./_index.scss"></style>
 
-<MyLayout {menu} >
+<MyLayout {menu} {user_account_type} >
         <div class="header">
             <h1>Update Password</h1>
         </div>

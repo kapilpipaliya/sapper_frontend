@@ -23,7 +23,12 @@
   S.bind$(["user", "update_password", 0], ([d]) => { 
     isSaving = false; if (d.ok) { isSubmited = true;  er = ""; dp("successSave", {d});  } else { er = d.error; } }, 1); 
 
-  async function save() { isSaving = true; S.trigger([[ ["user", "update_password", 0], [form] ]]); }
+  async function save() { 
+    if(form.new_password != form.confirm_password) {
+      er = "new password and confirm password mismatch"
+      return
+    }
+    isSaving = true; S.trigger([[ ["user", "update_password", 0], [form] ]]); }
   function clearError() { er = ""; }
 
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
