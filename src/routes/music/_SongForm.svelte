@@ -20,6 +20,7 @@
     catalog_id: 0,
     temp_id: 0
   };
+  let message = ""
   const fns = [];
   let local_catalogs = []
   if (item.length) {
@@ -63,11 +64,11 @@
       }
     }
     
-    S.bind_F(["song", 'song', rowIdx], ([temp_id]) => {
+    S.bind_F(["song", 'song', 0], ([temp_id]) => {
       form.temp_id = temp_id
-      
+      message = "File Saved Successfully"
       // Show Thumbnail when successfully uploaded:
-      thumbnails[row] = URL.createObjectURL(selectedFile)
+      //thumbnails[row] = URL.createObjectURL(selectedFile)
       /*Method 2
       const reader = new FileReader();
       reader.onload = function(e) { thumbnails[row] = e.target.result };
@@ -91,6 +92,9 @@
     {#if parcentage > 0}
        Uploading...{parcentage}%
     {/if}
+  {/if}
+  {#if message}
+    <span style="color: green;">{message}</span>
   {/if}
 
   <div> {er} </div>
