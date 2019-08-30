@@ -7,12 +7,16 @@
   import Table from "./_Table.svelte";
   import Modal from "./_Model.svelte";
 
+  export let S;
+  export let events = []
   export let formcomponent;
   export let quickcomponent=false;
   export let requiredFilter = {}
   export let items= []
   export let h = []
-  export let url = "";
+  export let count = 0
+  export let query = {}
+  export let customFilter = {}
   let myTable;
   let item = [];
 
@@ -58,11 +62,15 @@
     bind:this={myTable}
     on:onItemClick={event => onItemClick(event.detail.item)}
     on:onDeleteClick={event => onDeleteClick(event.detail.item)}
-    {url} 
+    {S}
+    {events}
     {quickcomponent}
     {requiredFilter}
     {h}
     {items}
+    {count}
+    {query}
+    {customFilter}
     />
 
 
@@ -78,7 +86,6 @@
       {item}
       on:close={closeModal}
       on:successSave={refresh}
-      {url} 
       {h}
       {items}
       />

@@ -2,18 +2,44 @@
   // import { getFirstElementOr, tailOrEmpty } from "../jreason/src/list.bs.js";
   // import * as _ from "lamb";
   import { onMount, onDestroy, beforeUpdate } from "svelte";
-  import { Server as S } from "../_modules/ws_music.js";
-  import { all, all_h, del } from "../_modules/functions.js";
   import { createEventDispatcher } from "svelte";
   const dp = createEventDispatcher();
 
-  export let url = ""; //table
+  export let S;
+  export let events = []
   export let quickcomponent=false;
   export let requiredFilter = {}
 
   export let h = []
 
   export let items = [];
+  export let count = 0;
+  export let query = {}
+  export let customFilter = {}
+  let limit = query.limit || 0;
+  let pages = [1]
+  let current_page = query.page || 1
+  $: {
+    // if current_page is not exist set it 1
+    if(pages.indexOf(current_page) == -1){
+      current_page = 1
+    }
+  }
+
+  $: {
+    // update on limit or count change.
+    if(limit > 0) {
+      const total = Math.ceil(count/limit)
+      const arr = []
+        for (let i = 1; i <= total; i++) {
+          arr.push(i)
+        }
+        pages = arr
+      } else {
+        pages = [1]
+      }
+
+  }
   
   let headers = [];
   let visible_columns = [];
@@ -32,14 +58,13 @@
   let first_visibile_column = 0;
   let addnewform = false;
 
-  let limit = 0;
-
   const fns = [];
   
   export const refresh = () => {
-    // items = await getItems(baseUrl + url); // This not working..
-    //items = getItems(baseUrl + url);
-    S.trigger([[ all(url), [filterSettings, sortSettings, [limit]] ]]);
+    const args = [filterSettings, sortSettings, [limit, 0, current_page]]
+    const e1 = [ events[1], args ]
+    const e2 = [ events[2], args ]
+    S.trigger([e1, e2]);
     return true;
   }
   const successSave = (e) => {
@@ -87,13 +112,16 @@
 
   onMount(() => {
     // [...Array(20)].map(_=>0)
-    fns.push(all(url)); S.bind$(fns[0], ([data]) => { 
+    fns.push(events[1]); S.bind$(fns[0], ([data]) => { 
       quickview = Array.from({length: data.length}, ()=>0); items = data || []; 
+      }, 1);
+    fns.push(events[2]); S.bind$(fns[1], ([c]) => { 
+      count = c;
       }, 1);
     if(h.length > 0){
       fillHeadersArray(h)
     } else{
-      fns.push(all_h(url)); S.bind_(fns[1], ([data]) => {
+      fns.push(events[0]); S.bind_(fns[2], ([data]) => {
         fillHeadersArray(data)
       }, {}, 1);
     }
@@ -120,15 +148,10 @@
       item: litem
     });
     return true;
-    //item = litem;
-    //if (confirm(`Delete "${item.name}"?`)){
-    // await http.delete(`/items/${item.id}`)
-    //items = getItems(url);
-    //}
   }
 
   const reFetchRow = async(rowIdx) => {
-      const e = all(url,rowIdx)
+      const e = [...events[1], rowIdx]
       const d = await new Promise((resolve, reject) => { S.bind_(e, ([data]) => { resolve(data) }, [[`=${items[rowIdx][0]}`]]); });
       if(d) {
         for (let i = 0; i < d[0].length; i++) {
@@ -228,9 +251,14 @@
   const deleteRow2 = (i) => async() => {
     const r = confirm("Are You Sure!");
     if (r == true) {
-    	const [d] = await new Promise((resolve, reject) => { S.bind_(del(url, i), (d) => { resolve(d) }, [ [items[i][0]] ] ); }, 1); // result is not array
+    	const [d] = await new Promise((resolve, reject) => { S.bind_(events[3], (d) => { resolve(d) }, [ [items[i][0]] ] ); }, 1); // result is not array
       if (d.ok) { deleteRow({detail: {rowIdx: i}}) } else { alert(d.error) }
       }
+    }
+  const limitChange = () => {
+    current_page = 1
+    if (limit < 0) limit = 0;
+    refresh();
     }
 </script>
 <style src="./_Table.scss"></style>
@@ -239,10 +267,11 @@
   <span>{items.length}{items.length <= 1 ? " item" : " items"}</span>
   <button on:click={toogleAddForm} class={addnewform ? "pressed" : ""}>Add New</button>
   <button on:click={resetFilter}>Reset Filters</button>
-  Limit: <input class="w60" type="number" bind:value={limit} />
+  Page Size: <input class="w60" type="number" bind:value={limit} on:change={limitChange} min="0"/>
     {#if addnewform}
       <svelte:component
         this={quickcomponent}
+        {S}
         rowIdx={null}
         hs={headersSelectors}
         event={"ins"}
@@ -250,7 +279,13 @@
         on:successSave={successSave }
           />
     {/if}
-  <button on:click={refresh}>Refresh</button>
+  {#if false}<button on:click={refresh}>Refresh</button>{/if}
+  Page No:
+  <select bind:value={current_page}  on:change={refresh}>
+    {#each pages as p}
+      <option value={p}>{p}</option>
+    {/each}
+  </select>
 
   <table class="table is-striped is-hoverable">
     <thead>
@@ -274,8 +309,25 @@
       <tr>
         {#each headers as h, index}
           {#if visible_columns[index]}
-            {#if !hiddenColumns.includes(headerColTypes[index])}
-              <th><input type="numer" bind:value={filterSettings[index]} on:input={handleFilter(index)} on:contextmenu|preventDefault={onTextInputContext} /></th>
+
+            {#if customFilter[index]}
+              <select bind:value={filterSettings[index]} on:change={handleFilter(index)} >
+                {#each customFilter[index] as f}
+                  <option value={f[1]}>{f[0]}</option>
+                {/each}
+              </select>
+            {:else if !hiddenColumns.includes(headerColTypes[index])}
+                {#if headerColTypes[index] === 20 || headerColTypes[index] === 23}
+                  <th><input type="numer" bind:value={filterSettings[index]} on:input={handleFilter(index)} on:contextmenu|preventDefault={onTextInputContext} /></th>
+                {:else if  headerColTypes[index] === 25}
+                  <th><input type="text" bind:value={filterSettings[index]} on:input={handleFilter(index)} on:contextmenu|preventDefault={onTextInputContext} /></th>
+                {:else if  headerColTypes[index] === 701}
+                  <th><input type="numer" bind:value={filterSettings[index]} on:input={handleFilter(index)} on:contextmenu|preventDefault={onTextInputContext} step="any"/></th>
+                {:else if  headerColTypes[index] === 1114}
+                  <th>Date</th>
+                {:else }
+                  <th>Unknown Type</th>
+                {/if}
             {:else}
                <th></th>
             {/if}
@@ -331,6 +383,7 @@
             {#if quickcomponent}
                 <svelte:component
                   this={quickcomponent}
+                  {S}
                   rowIdx={cindex} 
                   item={l} 
                   hs={headersSelectors}
