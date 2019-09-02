@@ -73,7 +73,7 @@ export async function preload({query}, session) {
                   <td ><input type="password" bind:value={form.pass} required></td>
                 </tr>
                 <tr>
-                  <td colspan="2" style="text-align: center;"> <button type="submit" disabled={!form.user || !form.pass} class="registerbtn"> Submit </button> </td>
+                  <td colspan="2" style="text-align: center;"> <button class="pure-button registerbtn" type="submit" disabled={!form.user || !form.pass} > Submit </button> </td>
                 </tr>
               </tbody>
             </table>

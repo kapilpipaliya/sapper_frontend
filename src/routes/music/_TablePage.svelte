@@ -76,7 +76,7 @@
 {#if modalIsVisible}
   <Modal on:close={closeModal}>
     <header slot="header">
-      <button aria-label="close" on:click={closeModal}>X</button>
+      <button class="pure-button" aria-label="close" on:click={closeModal}>X</button>
     </header>
 
     <svelte:component

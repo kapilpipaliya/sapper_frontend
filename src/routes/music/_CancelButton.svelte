@@ -3,7 +3,7 @@
   const dp = createEventDispatcher();
   
   export let isSaving = false;
-  $: buttonSaveClass = isSaving === true ? "loading" : "success";
+  $: buttonSaveClass = isSaving === true ? "pure-button pure-button-disabled loading" : "pure-button success";
   export let rowIdx = 0;
 </script>
 <style src="./_CancelButton.scss"></style>
