@@ -58,7 +58,7 @@
             </tr>
             <tr>
               <td colspan="2" style="text-align: center;">
-                <button>Submit</button>
+                <button class="pure-button-primary">Submit</button>
               </td>
             </tr>
           </tbody>

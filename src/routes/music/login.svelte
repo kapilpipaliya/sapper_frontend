@@ -1,6 +1,7 @@
 <script context="module">
 /*
 1. check is_logged_in then redirect back to dashboard page..
+//https://codepen.io/inzrb/pen/vnpwm
 */
 import { Server as S_ } from "../_modules/ws_music.js";
 import { ws_madmin, isAuthFn } from "../_modules/functions.js";
@@ -56,35 +57,21 @@ export async function preload({query}, session) {
 {/if}
 
 {#if !isAuth}
-<div class="container">
-      <div class="row">
-        <div class="box">
+<h1>Flat Login</h1>
 
-          <h3>Sign In</h3>
-          <form on:submit|preventDefault={save}>
-            <table>
-              <tbody>
-                <tr>
-                  <td >User Name</td>
-                  <td ><input bind:value={form.user} bind:this={user} required ></td>
-                </tr>
-                <tr>
-                  <td >Password</td>
-                  <td ><input type="password" bind:value={form.pass} required></td>
-                </tr>
-                <tr>
-                  <td colspan="2" style="text-align: center;"> <button class="pure-button registerbtn" type="submit" disabled={!form.user || !form.pass} > Submit </button> </td>
-                </tr>
-              </tbody>
-            </table>
-          </form>
-        </div>
-        
-      </div>
-  
-    </div>
+<div class="stand">
+  <div class="outer-screen">
+    <div class="inner-screen">
+      <form class="form" on:submit|preventDefault={save}>
+        <input type="text" class="zocial-dribbble" placeholder="Enter your user name" bind:value={form.user} bind:this={user} required >
+        <input type="password" bind:value={form.pass} required placeholder="Password">
+         <input type="submit" value="Login" disabled={!form.user || !form.pass}/>
+          <div class="error"> {er} </div>
+      </form> 
+    </div> 
+  </div> 
+</div>
 
-  <div> {er} </div>
 
 {:else}
   {#if false}
@@ -95,7 +82,6 @@ export async function preload({query}, session) {
     <p>Now you can visit and explore website with aditional features</p>
   </div>
   <div class="content">
-    
 
   </div>
 {/if}

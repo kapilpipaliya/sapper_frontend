@@ -35,7 +35,9 @@ export async function preload(page, session) {
     export let user_account_type = ""
 </script>
 <style src="./_index.scss"></style>
-
+<svelte:head>
+  <title>{"DashBoard"}</title>
+</svelte:head>
 <MyLayout {menu} {user_account_type} >
         <div class="header">
             <h1>Dashboard</h1>
