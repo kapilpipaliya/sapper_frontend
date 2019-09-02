@@ -71,13 +71,13 @@ export async function preload({query}, session) {
 
 <style src="./_index.scss"></style>
 <svelte:head>
-  <title>{"Songs"}</title>
+  <title>{"Music"}</title>
 </svelte:head>
 <MyLayout {menu} {user_account_type}>
         <div class="content">
             <div class="pure-g">
                 <div class="pure-u">
-                      <h1>{"Songs"}</h1>
+                      <h1>{"Music"}</h1>
                         <TablePage
                           {events}
                           {h}

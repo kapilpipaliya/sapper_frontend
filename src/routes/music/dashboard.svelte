@@ -43,9 +43,9 @@ export async function preload(page, session) {
         </div>
 
         <div class="content">
-            <h2 class="content-subhead">Enjoy Music</h2>
+            <h2 class="content-subhead">Welcome {user_account_type}</h2>
             <p>
-                ...
+                
             </p>
 
         </div>
