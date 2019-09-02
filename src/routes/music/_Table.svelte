@@ -267,8 +267,8 @@
 {er}
 <div>
   <span>{items.length}{items.length <= 1 ? " item" : " items"}</span>
-  <button on:click={toogleAddForm} class={addnewform ? "pressed" : ""}>Add New</button>
-  <button on:click={resetFilter}>Reset Filters</button>
+  <button on:click={toogleAddForm} class={addnewform ? "pure-button pressed" : "pure-button"}>Add New</button>
+  <button class="pure-button" on:click={resetFilter}>Reset Filters</button>
   Page Size: <input class="w60" type="number" bind:value={limit} on:change={limitChange} min="0"/>
     {#if addnewform}
       <svelte:component
@@ -280,7 +280,7 @@
         on:successSave={successSave }
           />
     {/if}
-  {#if false}<button on:click={refresh}>Refresh</button>{/if}
+  {#if false}<button class="pure-button" on:click={refresh}>Refresh</button>{/if}
   Page No:
   <select bind:value={current_page}  on:change={refresh}>
     {#each pages as p}
@@ -291,6 +291,7 @@
   <table class="table is-striped is-hoverable">
     <thead>
       <tr>
+        <th>Actions</th>
         {#each headers as h, index}
           {#if visible_columns[index]}
             <th on:click={(e) => handleSort(e, index)} on:contextmenu|preventDefault={onHeaderContext} >
@@ -308,15 +309,17 @@
         <!-- <th width="100px">Actions</th> -->
       </tr>
       <tr>
+        <th></th>
         {#each headers as h, index}
           {#if visible_columns[index]}
-
             {#if customFilter[index]}
-              <select bind:value={filterSettings[index]} on:change={handleFilter(index)} >
-                {#each customFilter[index] as f}
-                  <option value={f[1]}>{f[0]}</option>
-                {/each}
-              </select>
+              <th>
+                <select bind:value={filterSettings[index]} on:change={handleFilter(index)} >
+                  {#each customFilter[index] as f}
+                    <option value={f[1]}>{f[0]}</option>
+                  {/each}
+                </select>
+              </th>
             {:else if !hiddenColumns.includes(headerColTypes[index])}
                 {#if headerColTypes[index] === 20 || headerColTypes[index] === 23}
                   <th><input type="numer" bind:value={filterSettings[index]} on:input={handleFilter(index)} on:contextmenu|preventDefault={onTextInputContext} /></th>
@@ -342,18 +345,26 @@
         {#if l}
         {#if !quickview[cindex]}
           <tr class_="hidden_attrs" on:mouseenter={(e)=> {/*e.target.classList.remove('hidden_attrs')*/}} on:mouseleave={(e)=>{/*e.target.classList.add('hidden_attrs')*/}} >
+            <td>
+              <div class="row-actions">
+                {#if false}<span>ID: {l[0]}</span>{/if}
+                <button class="pure-button" type="button" on:click={()=>{ quickview[cindex] = true } }>Edit</button>
+                <button class="pure-button" type="button" on:click={deleteRow2(cindex)} > D </button>
+              </div>
+            </td>
             {#each l as c, index}
                 {#if visible_columns[index]}
                   <td title={l[index + (tooltip_offset_columns[index] || 0)]}>
                     {#if l[index + (offset_columns[index] || 0)] != null}
-                      {l[index + (offset_columns[index] || 0)]}
+                      {#if headerColTypes[index] === 1114}
+                         {new Date(l[index + (offset_columns[index] || null)]).toLocaleString()}
+                      {:else}
+                         {l[index + (offset_columns[index] || 0)]}
+                      {/if}
+                      
                     {/if}
                     {#if index === first_visibile_column}
-                      <div class="row-actions">
-                        {#if false}<span>ID: {l[0]}</span>{/if}
-                        <button type="button" on:click={()=>{ quickview[cindex] = true } }>Edit</button>
-                        <button type="button" on:click={deleteRow2(cindex)} > D </button>
-                      </div>
+                        <div></div>
                     {/if}
                   </td>
                 {/if}
