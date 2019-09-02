@@ -35,7 +35,7 @@
   onDestroy(() => { if(process.browser && S) S.unbind_(fns) });
 </script>
 
-<form class="admin" on:submit|preventDefault={save} >
+<form class="admin pure-form pure-form-aligned" on:submit|preventDefault={save} >
     <label><span>Old Password</span><input type="password" bind:value={form.old_password} required on:focus={clearError} /></label>
     <label><span>Password</span><input type="password" bind:value={form.new_password} required on:focus={clearError}/> </label>
     <label><span>Confirm Password</span><input type="password" bind:value={form.confirm_password} required on:focus={clearError} /></label>

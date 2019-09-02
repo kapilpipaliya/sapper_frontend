@@ -59,9 +59,7 @@
   // ------------
 </script>
 
-<form class="admin" on:submit|preventDefault={save} >
-	<label><span>User Name</span><input type="text" bind:value={form.username} required /></label>
-	<label><span>Full Name</span><input type="text" bind:value={form.fullname} required/></label>
+<form class="admin pure-form pure-form-aligned" on:submit|preventDefault={save} >
   <label><span>User Type</span>
     <select bind:value={form.type} required>
       {#each user_types as u}
@@ -69,12 +67,11 @@
       {/each}
     </select>
   </label>
-  <label><span>Email</span><input type="email" bind:value={form.email} required/></label>
+	<label><span>User Name</span><input type="text" bind:value={form.username} required /></label>
 	<label><span>Password</span><input type="password" bind:value={form.password} required/></label>
+	<label><span>Full Name</span><input type="text" bind:value={form.fullname} required/></label>
 
 	<label><span>Disabled</span><input type="checkbox" bind:checked={form.disabled} /></label>
-  <label><span>State</span><input type="text" bind:value={form.state} required/></label>
-	<label><span>City</span><input type="text" bind:value={form.city} required/></label>
 
   <div> {er} </div>
 

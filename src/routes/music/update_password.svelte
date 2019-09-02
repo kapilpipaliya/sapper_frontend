@@ -40,19 +40,22 @@ export async function preload(page, session) {
     const handleSave = () => { saved = true}
 </script>
 <style src="./_index.scss"></style>
-
+<svelte:head>
+  <title>{"Update Password"}</title>
+</svelte:head>
 <MyLayout {menu} {user_account_type} >
-        <div class="header">
-            <h1>Update Password</h1>
-        </div>
-
         <div class="content">
-            {#if !saved}
-                <PasswordChangeForm on:successSave={handleSave}/>
-            {:else}
-                <p class="fly" in:fly="{{ y: 100, duration: 2000 }}" out:fade>
-                    Password is Updated
-                </p>
-            {/if}
+          <div class="pure-g">
+            <div class="pure-u">
+              <h1>{"Update Password"}</h1>
+              {#if !saved}
+                  <PasswordChangeForm on:successSave={handleSave}/>
+              {:else}
+                  <p class="fly" in:fly="{{ y: 100, duration: 2000 }}" out:fade>
+                      Password is Updated
+                  </p>
+              {/if}
+              </div>
+            </div>            
         </div>
 </MyLayout>

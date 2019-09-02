@@ -80,8 +80,7 @@
   }
 </script>
 
-<form class="admin" on:submit|preventDefault={save} >
-	<label><span>Title</span><input type="text" bind:value={form.title} required /></label>
+<form class="admin pure-form pure-form-aligned" on:submit|preventDefault={save} >
   <label><span>Catalog</span>
     <select bind:value={form.catalog_id} required>
       {#each local_catalogs as c}
@@ -89,6 +88,7 @@
       {/each}
     </select>
   </label>
+	<label><span>Title</span><input type="text" bind:value={form.title} required /></label>
   {#if !item.length}
     <input type="file" on:change={handleFileChange} accept="audio/*" /> 
     {#if parcentage > 0}

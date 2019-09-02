@@ -36,7 +36,7 @@
   // ------------
 </script>
 
-<form class="admin" on:submit|preventDefault={save} >
+<form class="admin pure-form pure-form-aligned" on:submit|preventDefault={save} >
 	<label><span>Catalog Name</span><input type="text" bind:value={form.name} required /></label>
 	<label><span>Enabled</span><input type="checkbox" bind:checked={form.enabled} /></label>
 
