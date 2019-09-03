@@ -8,23 +8,24 @@ export async function preload(page, session) {
   let S; if (typeof S_ == "function") { S = new S_(ws_madmin, this.req, this.res); } else { S = S_; }
   const isAuth = await new Promise((resolve, reject) => { S.bind_( ["user", `is_logged_in`, 0], ([d]) => { resolve(d); }, [[]] ); });
   if(!isAuth){ this.redirect(302, 'music/login') }
-  const menu = await new Promise((resolve, reject) => { S.bind_( ["ui","menu_data",1000], ([d]) => { resolve(d); }, [[]] ); });
 
   const getTableData = async(filterSettings=[]) => {
+    let menu = []
     let user_account_type = ""
     await new Promise((resolve, reject) => {
         const batch1 = []
-        let r1 = true
+        let r0 = false, r1 = false
         const myResolve = () => {
-          if(r1) resolve(1)
+          if(r0 && r1) resolve(1)
         }
+        batch1.push([ ["ui","menu_data",1000], ([d]) => {menu = d; r0 = true; myResolve()}, [[]] ])
         batch1.push([ ["ui", "user_account_type", 0], ([d]) => {user_account_type = d; r1 = true; myResolve()}, [] ])
         S.batchBind_T(batch1)
       })
-    return {user_account_type};
+    return {menu, user_account_type};
   }
 
-  const {user_account_type} = await getTableData([]);
+  const {menu, user_account_type} = await getTableData([]);
   
   return { isAuth, menu, user_account_type };
 }

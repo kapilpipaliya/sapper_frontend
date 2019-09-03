@@ -4,6 +4,7 @@
   import { onMount, onDestroy, beforeUpdate } from "svelte";
   import { createEventDispatcher } from "svelte";
   const dp = createEventDispatcher();
+  import { Server as S } from "../_modules/ws_music.js"; // can only be used on onMount
 
   export let events = []
   export let quickcomponent=false;
@@ -18,6 +19,7 @@
   let limit = query.limit || 0;
   let pages = [1]
   let current_page = query.page || 1
+  let total = 1;
   $: {
     // if current_page is not exist set it 1
     if(pages.indexOf(current_page) == -1){
@@ -28,7 +30,7 @@
   $: {
     // update on limit or count change.
     if(limit > 0) {
-      const total = Math.ceil(count/limit)
+      total = Math.ceil(count/limit)
       const arr = []
         for (let i = 1; i <= total; i++) {
           arr.push(i)
@@ -108,11 +110,7 @@
       resetFilter_();
   }
 
-  let S; 
   onMount(async () => {
-    const { Server: S_ } = await import("../_modules/ws_music.js");
-    if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
-    
     // [...Array(20)].map(_=>0)
     fns.push(events[1]); S.bind$(fns[0], ([data]) => { 
       quickview = Array.from({length: data.length}, ()=>0); items = data || []; 
@@ -268,25 +266,26 @@
 <div>
   <span>{items.length}{items.length <= 1 ? " item" : " items"}</span>
   <button on:click={toogleAddForm} class={addnewform ? "pure-button pressed" : "pure-button"}>Add New</button>
+  {#if addnewform}
+    <svelte:component
+      this={quickcomponent}
+      rowIdx={null}
+      hs={headersSelectors}
+      event={"ins"}
+      on:close={toogleAddForm}
+      on:successSave={successSave }
+        />
+      <hr/>
+  {/if}
   <button class="pure-button" on:click={resetFilter}>Reset Filters</button>
   Page Size: <input class="w60" type="number" bind:value={limit} on:change={limitChange} min="0"/>
-    {#if addnewform}
-      <svelte:component
-        this={quickcomponent}
-        rowIdx={null}
-        hs={headersSelectors}
-        event={"ins"}
-        on:close={toogleAddForm}
-        on:successSave={successSave }
-          />
-    {/if}
   {#if false}<button class="pure-button" on:click={refresh}>Refresh</button>{/if}
-  Page No:
+  Page:
   <select bind:value={current_page}  on:change={refresh}>
     {#each pages as p}
       <option value={p}>{p}</option>
     {/each}
-  </select>
+  </select>&nbsp;/&nbsp;{total}
 
   <table class="table is-striped is-hoverable">
     <thead>

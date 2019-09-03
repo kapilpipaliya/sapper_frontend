@@ -1,11 +1,12 @@
 <script>
+  import { stores } from "@sapper/app";
+	const { page, preloading } = stores();
 	export let segment;
 </script>
 
-<svelte:head>
-	<link rel='icon' type='image/png' href='images/ampche/favicon.ico'>
-	<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css">
-	<link rel='stylesheet' href='scss/madmin/bundle.css'>
-</svelte:head>
+<style src="./_layout.scss"></style>
+{#if $preloading}
+  <!-- <div class="loader"></div> -->
+{/if}
 <slot>
 </slot>

@@ -9,7 +9,6 @@ export async function preload({query}, session) {
   let S; if (typeof S_ == "function") { S = new S_(ws_madmin, this.req, this.res); } else { S = S_; }
   const isAuth = await new Promise((resolve, reject) => { S.bind_( ["user", `is_logged_in`, 0], ([d]) => { resolve(d); }, [[]] ); });
   if(!isAuth){ this.redirect(302, login_url) }
-  const menu = await new Promise((resolve, reject) => { S.bind_( ["ui","menu_data",1000], ([d]) => { resolve(d); }, [[]] ); });
 
   const url = "song"
   const events = [
@@ -20,6 +19,7 @@ export async function preload({query}, session) {
   ]
 
   const getTableData = async(filterSettings=[]) => {
+    let menu = []
     let h = []
     let data = []
     let count = 0;
@@ -28,10 +28,11 @@ export async function preload({query}, session) {
     let user_account_type = ""
     await new Promise((resolve, reject) => {
         const batch1 = []
-        let r1 = false, r2 = false, r3 = false, r4 = false, r5 = false, r6 = false
+        let r0 = false, r1 = false, r2 = false, r3 = false, r4 = false, r5 = false, r6 = false
         const myResolve = () => {
-          if(r1 && r2 && r3 && r4 && r5 && r6) resolve(1)
+          if(r0 && r1 && r2 && r3 && r4 && r5 && r6) resolve(1)
         }
+        batch1.push([ ["ui","menu_data",1000], ([d]) => {menu = d; r0 = true; myResolve()}, [[]] ])
         batch1.push([ events[0], ([d]) => {h = d; r1 = true; myResolve()}, [[]] ])
         batch1.push([ events[1], ([d]) => {data = d; r2 = true; myResolve()}, [filterSettings] ])
         batch1.push([ events[2], ([d]) => {count = d; r3 = true; myResolve()}, [filterSettings] ])
@@ -40,10 +41,10 @@ export async function preload({query}, session) {
         batch1.push([ ["ui", "user_account_type", 0], ([d]) => {user_account_type = d; r6 = true; myResolve()}, [] ])
         S.batchBind_T(batch1)
       })
-    return {h, data, count, accountFilter, user_title, user_account_type};
+    return {menu, h, data, count, accountFilter, user_title, user_account_type};
   }
 
-  const {h, data, count, accountFilter, user_title, user_account_type} = await getTableData([]);
+  const {menu, h, data, count, accountFilter, user_title, user_account_type} = await getTableData([]);
   
   return { isAuth, menu, events, h, data, count, accountFilter, user_title, user_account_type, query };
 }
