@@ -3065,18 +3065,18 @@ supports-color@^6.1.0:
   dependencies:
     has-flag "^3.0.0"
 
-svelte-preprocess@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/svelte-preprocess/-/svelte-preprocess-3.0.0.tgz#449337c7dfcb8027bc1b9df9d7b7f6ad5bedd5c2"
-  integrity sha512-mbTCfbCJIhfgcXt210rrNrBo3y+WyBrZbFPB90cX3BGlwmBCzPB696tRvgpBIidEDrnhw6E3Zwje1R7OQP5QmA==
+svelte-preprocess@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/svelte-preprocess/-/svelte-preprocess-3.1.0.tgz#770ca72d423d79a8452b019b47625e2e93a93c04"
+  integrity sha512-hhJoUC+8cKQs5WirOQB2yauFLcHPdTUuMGGJthEuE8G+btruKaQk1tmyRonbcbBseQPI84HN7a9ZKIROG+HJ7Q==
   dependencies:
     detect-indent "^6.0.0"
     strip-indent "^2.0.0"
 
-svelte@^3.9.1:
-  version "3.9.1"
-  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.9.1.tgz#f0dc0993d80e69da46f7b21d858895c37c2fd419"
-  integrity sha512-oy6FjffuCzPueBnzs8SxkV5VaOS+VX/eUywgE9LCA+skKdXt7wFlpKH3DNi1Uy+K23sb9bzlWxn0AaDQOnEUEw==
+svelte@^3.9.2:
+  version "3.9.2"
+  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.9.2.tgz#9761edf188b5b0a246d4455e2512e341962f36d1"
+  integrity sha512-Y52Fss50W9PnCmv+R6H3/24ogmWy5Mm+aoPCwiM8j7kuiZqEKcv/cEcB7RmMsE+W0J3fPF9/DXB7yfbl/6O4zA==
 
 tar@^2.0.0:
   version "2.2.2"

@@ -1,5 +1,5 @@
 <script context="module">
-  import { Server as S_ } from "../../_modules/ws_normal.js";
+  import { Server as S_ } from "../../_modules/ws_user.js";
   import { ws_admin, all, menuCategories, isAuthFn, getFooterData, getHeaderData } from "../../_modules/functions.js";
 
 	export async function preload({ params, query }, session) {

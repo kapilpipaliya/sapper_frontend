@@ -1,5 +1,5 @@
 <script context="module">
-  import { Server as S_ } from "../../../_modules/ws_normal.js";
+  import { Server as S_ } from "../../../_modules/ws_user.js";
   import { ws_admin, menuCategories, getPurityName, getToneName, getClarityName, isAuthFn, getFooterData, getHeaderData } from "../../../_modules/functions.js";
 	export async function preload(page, session){
 		let S; if (typeof S_ == "function") { S = new S_(ws_admin, this.req, this.res); } else { S = S_; }
@@ -14,7 +14,7 @@
 </script>
 <script>
   import { onMount } from "svelte";
-  import { Server as S } from "../../../_modules/ws_normal.js";
+  import { Server as S } from "../../../_modules/ws_user.js";
   import { all_h, ins_, upd_, all, makeObject, first, productImage, product_purity_price, product_clarity_price, getTotalArray } from "../../../_modules/functions.js";
   import MyLayout from '../../_myLayout.svelte'
 	import StorageDB from "../../../_modules/indexdb/storage.js";

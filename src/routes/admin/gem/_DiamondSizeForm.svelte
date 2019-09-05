@@ -34,7 +34,7 @@
   if (item.length) { form = makeObject(hs, item)};
   const evt_type = event == "ins" && item.length == 0 && !form.id ? 1 : 2
   const save_ = evt_type == 1 ? ins_ : upd_
-  S.bind$(save_('diamond_size', rowIdx), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }, 1); 
+  S.bind$(save_('d_size', rowIdx), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", {rowIdx, d});  } else { er = d.error; } }, 1); 
 
   fns.push(all("clarity", rowIdx));S.bind_(fns.i(-1), ([d]) => { clarity_id = d; form.clarity_id = item.length ? form["clarity_id"] : (clarity_id[0] ? clarity_id[0][0] : 0) }, [[]]);
   fns.push(all("shape", rowIdx));S.bind_(fns.i(-1), ([d]) => { shape_id = d; form.shape_id = item.length ? form["shape_id"] : (shape_id[0] ? shape_id[0][0] : 0) }, [[]]);
@@ -43,7 +43,7 @@
   fns.push(all("size", rowIdx)); S.bind_(fns.i(-1), ([d]) => { sizes = d; form.size_name = item.length ? form["size_name"] : (sizes[0] ? sizes[0][1] : ""); if(!sizes[0]) {new_name = true}}, [[]]);
   onDestroy(() => { if(process.browser) S.unbind_(fns) });
 
-  async function save() { isSaving = true; S.trigger([[ save_('diamond_size', rowIdx), [form, [form.id]] ]]); }
+  async function save() { isSaving = true; S.trigger([[ save_('d_size', rowIdx), [form, [form.id]] ]]); }
   function clearError() { er = ""; }
 
   const clearSizeName = () => {

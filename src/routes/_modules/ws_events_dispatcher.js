@@ -33,7 +33,7 @@ export class ServerEventsDispatcher {
       process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     }
     const c = process.browser ? undefined : { 'headers': { 'Cookie': this.req.headers.cookie || null } };
-    
+    console.log(this.path)
     this.conn = new IsomorphicWs(this.path, [], c);
     // dispatch to the right handlers
     this.conn.onmessage = this.onmessage;
@@ -112,7 +112,7 @@ export class ServerEventsDispatcher {
       // code block
     }
   };
-  triggerFile (event, data, beforeEvent=["legacy", "auth", "image_meta_data", 0], callback) {
+  triggerFile (event, data, beforeEvent=["auth", "image_meta_data", 0], callback) {
     const f = this.triggerFile
     const f2 = this.trigger
     switch (this.conn.readyState) {

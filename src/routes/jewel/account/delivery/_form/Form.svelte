@@ -2,7 +2,7 @@
 <script>
   import { onMount } from "svelte";
   import * as sapper from '@sapper/app';
-  import { Server as S } from "../../../../_modules/ws_normal.js";
+  import { Server as S } from "../../../../_modules/ws_user.js";
   import { all_h, getUser } from "../../../../_modules/functions.js";
   import { fade, fly } from 'svelte/transition';
   import EntityForm from "./_EntityForm.svelte";
@@ -13,7 +13,7 @@
 	let id = 0
   onMount(async () => {
 		S.bind_(all_h("entity_entity"), ([d]) => { headersSelectors = d[1] || []; S.unbind(all_h("entity_entity"))}, []);
-		id = await new Promise((resolve, reject) => { S.bind_( "legacy", "auth", "user_id",0, ([d]) => { if (d) { S.unbind("auth", "user_id", 0); resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
+		id = await new Promise((resolve, reject) => { S.bind_( "user", "user_id",0, ([d]) => { if (d) { S.unbind("user", "user_id", 0); resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
     user = (await getUser(S, id))[0]
     if (!user){sapper.goto('jewel/auth/Login')}
   });

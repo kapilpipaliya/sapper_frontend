@@ -35,7 +35,7 @@
   /*
   // request thumnails with websocket:
   if(item.length){
-    fns.push(["legacy", "image", "thumb_data", `${sfx(rowIdx)}`]); S.bind_(fns.i(-1), ([data]) => {
+    fns.push(["image", "thumb_data", `${sfx(rowIdx)}`]); S.bind_(fns.i(-1), ([data]) => {
       if(data instanceof Blob){
         const url = URL.createObjectURL(data)
         thumbnail = url
@@ -50,7 +50,7 @@
     const selectedFile = event.target.files[0];
     if (!selectedFile.type.startsWith('image/')){ return }
     
-    S.bind_F(["legacy", "image", 'save_attachment_data', sfx(rowIdx)], ([d]) => {
+    S.bind_F(["image", 'save_attachment_data', sfx(rowIdx)], ([d]) => {
       form.temp_id = d // d will be temp_id
       // Show Thumbnail when successfully uploaded:
       thumbnail = URL.createObjectURL(selectedFile)

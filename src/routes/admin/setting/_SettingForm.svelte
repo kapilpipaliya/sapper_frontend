@@ -17,11 +17,11 @@
   let metals = [];
 
   if (item.length) { form = makeObject(hs, item)};
-  const evt_type = event == "ins" && item.length == 0 && !form.id ? 1 : 2
-  const save_ = evt_type == 1 ? ins_ : upd_
-  S.bind$(save_("setting", rowIdx), ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d });  } else { er = d.error; } }, 1);
+  //const evt_type = event == "ins" && item.length == 0 && !form.id ? 1 : 2
+  //const save_ = evt_type == 1 ? ins_ : upd_
+  S.bind$(["setting", "save", rowIdx], ([d]) => { isSaving = false; if (d.ok) {  er = ""; dp("successSave", { rowIdx, d });  } else { er = d.error; } }, 1);
     
-  async function save() { isSaving = true; S.trigger([[ save_("setting", rowIdx), [form, [form.id]] ]]); }
+  async function save() { isSaving = true; S.trigger([[ ["setting", "save", rowIdx], [form, [form.id]] ]]); }
   function clearError() { er = ""; }
 </script>
 

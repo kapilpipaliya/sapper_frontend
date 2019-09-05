@@ -40,7 +40,7 @@ form.admin {
     width: 150px; }
   form.admin .row {
     display: flex; }
-  form.admin .row div {
+  form.admin .row .column {
     border: 1px solid green;
     margin: 5px; }
   form.admin .column {

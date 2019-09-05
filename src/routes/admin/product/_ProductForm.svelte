@@ -115,7 +115,7 @@
     [[]]
   ]);
   batch1.push([
-    ["legacy", "product", "categorytreedata", sfx(rowIdx)], ([d]) => { pc_category_id = d; form.pc_category_id = item.length ? nullFirstarrayFix(form["pc_category_id"]) : [] },
+    ["product", "categorytreedata", sfx(rowIdx)], ([d]) => { pc_category_id = d; form.pc_category_id = item.length ? nullFirstarrayFix(form["pc_category_id"]) : [] },
     [[]]
   ]);
 
@@ -208,7 +208,7 @@
     const e = form.p_attachments_attachement_id[i];
     if(!e[1]) continue;
     
-    S.bind_(["legacy", "product", "attachment_data", sfx(rowIdx + i + e[0])], (data) => {
+    S.bind_(["product", "attachment_data", sfx(rowIdx + i + e[0])], (data) => {
       // thumbnails[i] = new Blob([data])
     if(data instanceof Blob){
       const url = URL.createObjectURL(data)
@@ -261,12 +261,28 @@
   function setPasswordDisabled() { if (form.visibility != "password protected") { form.password = ""; } }
   function setManageStock() { if (!form.p_manage_stock) { form.p_stock_quantity = 0; /*form.p_backorders = "do not allow"*/ } }
 
+  let parcentage = 0;
   const handleFileChange = (row) => (event) => {
     const selectedFile = event.target.files[0];
-    if (!selectedFile.type.startsWith('image/')){ return }
+    if (!selectedFile.type.startsWith('image/')){ 
+      alert("Please Select Image File Only")
+      return
+    }
+    //const per_change = (n) =>  parcentage = n
+    const percentage_change = (bytesNotSent) => {
+      if(bytesNotSent==0){
+        //parcentage = 100
+        console.log('file sent');
+      }else{
+        const loaded = selectedFile.size - bytesNotSent;
+        const percentage_ = Math.round((loaded * 100) / selectedFile.size );
+        console.log(percentage_);
+        //per_change(percentage_)
+      }
+    }
     
-    S.bind_F(["legacy", "image", 'save_attachment_data', sfx(rowIdx + row)], ([d]) => {
-      const r = form.p_attachments_attachement_id[row]; form.p_attachments_attachement_id[row] = [r[0], r[1], d] // d will be temp_id
+    S.bind_F(["image", 'save_attachment_data', sfx(rowIdx + row)], ([temp_id]) => {
+      const r = form.p_attachments_attachement_id[row]; form.p_attachments_attachement_id[row] = [r[0], r[1], temp_id] // d will be temp_id
       
       // Show Thumbnail when successfully uploaded:
       thumbnails[row] = URL.createObjectURL(selectedFile)
@@ -275,7 +291,7 @@
       reader.onload = function(e) { thumbnails[row] = e.target.result };
       reader.readAsDataURL(selectedFile);
       */
-    }, selectedFile);
+    }, selectedFile, 0, ["auth", "image_meta_data", 0], percentage_change);
   }
   function handleFileAdd() {
     // Not need This: if(!form.p_tones_tone_id[0]) { alert("Please Select a tone first."); return }
@@ -534,7 +550,7 @@
 
   const diamondChange = (d) => async() => {
     if(d[4] > 0) {
-      const prices = await new Promise((resolve, reject) => { S.bind_(["legacy", "product", "diamond_price_data", 111], ([data]) => { resolve(data) }, d); });
+      const prices = await new Promise((resolve, reject) => { S.bind_(["product", "diamond_price_data", 111], ([data]) => { resolve(data) }, d); });
       
       prices.forEach(ele => {
         const v = d[6].find(v => v[0] == ele[0])
@@ -551,7 +567,7 @@
   }
   const csChange = (d) => async() => {
     if(d[5] > 0) {
-      const prices = await new Promise((resolve, reject) => { S.bind_(["legacy", "product", "cs_price_data", 111], ([data]) => { resolve(data) }, d); });
+      const prices = await new Promise((resolve, reject) => { S.bind_(["product", "cs_price_data", 111], ([data]) => { resolve(data) }, d); });
       
       prices.forEach(ele => {
         // const v = d[5].find(v => v[0] == ele[0])
@@ -754,7 +770,7 @@
  
 
   <div class="row">
-    <div class="checks"><b>Categories:</b>
+    <div class="column checks"><b>Categories:</b>
       <table>
       <tbody>
         {#each pc_category_id as c}
@@ -767,7 +783,7 @@
       </table>
     </div>
     {#if false}
-    <div class="checks"><b>Tones:</b>
+    <div class="column checks"><b>Tones:</b>
       <table>
       <tbody>
         {#each p_tones_tone_id as c}
@@ -788,7 +804,7 @@
     </div>
     {/if}
     
-    <div><b on:click={selectAllPurities}>Purities:</b>
+    <div class="column"><b on:click={selectAllPurities}>Purities:</b>
       <table>
         <tbody>
           <tr>
@@ -826,7 +842,7 @@
         </tbody>
       </table>
     </div>
-    <div><b>Clarities:</b>
+    <div class="column"><b>Clarities:</b>
       <table>
         <tbody>
           <tr>

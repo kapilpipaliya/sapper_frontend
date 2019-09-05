@@ -3,20 +3,23 @@ export { makeObject, sfx, nullFirstarrayFix } from './utils.js';
 
 import StorageDB from "./indexdb/storage.js";
 
-const port = process.env.NODE_ENV === 'development' ? '8400' : '8400'
-const domain = process.env.NODE_ENV === 'development' ? 'localhost' : 'scesoftwares.com'
-const server = process.env.NODE_ENV === 'development' ? `http://${domain}:${port}` : `http://${domain}:${port}`;
+//const port = process.env.NODE_ENV === 'development' ? '8400' : '8400' //jimmy
+const port = process.env.NODE_ENV === 'development' ? '8300' : '8301' // susant
+// const port = process.env.NODE_ENV === 'development' ? '5000' : '5001' // sce
+const domain = process.env.NODE_ENV === 'development' ? 'localhost' : 'marvelartjewellery.com'
+const server = process.env.NODE_ENV === 'development' ? `http://${domain}:${port}` : `https://${domain}:${port}`;
 export const product_img_url = `${server}/demo/v1/user/download_id`
 export const thumb_url = `${server}/demo/v1/user/thumb_id`
-export const ws_admin = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/jadmin` : `ws://${domain}:${port}/jadmin`;
-export const ws_madmin = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/madmin` : `ws://${domain}:${port}/madmin`;
+export const ws_admin = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/jadmin` : `wss://${domain}:${port}/jadmin`;
+export const ws_user = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/juser` : `wss://${domain}:${port}/juser`;
+export const ws_madmin = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/madmin` : `wss://${domain}:${port}/madmin`;
 
-export function all_h(t, p) {  return ["legacy", t, "header", sfx(p)]; }
+export function all_h(t, p) {  return [t, "header", sfx(p)]; }
 
-export function all(t, p) {  return ["legacy", t, "data", sfx(p)]; }
-export function ins_(t, p, event="ins") {return ["legacy", t, event, sfx(p)]}
-export function upd_(t, p, event="upd") {return ["legacy", t, event, sfx(p)]}
-export function del(t, p) {return ["legacy", t, "del", sfx(p)]}
+export function all(t, p) {  return [t, "data", sfx(p)]; }
+export function ins_(t, p, event="ins") {return [t, event, sfx(p)]}
+export function upd_(t, p, event="upd") {return [t, event, sfx(p)]}
+export function del(t, p) {return [t, "del", sfx(p)]}
 
 const e_category = all("category", 111);
 export const menuCategories = (S) => new Promise((resolve, reject) => { S.bind_(e_category, ([d]) => { resolve(d); }, [[null, "=NULL"],[null, null, null, null, 0]]); });
@@ -26,7 +29,7 @@ export const getUser = (S, id) => new Promise((resolve, reject) => { S.bind_(e_e
 export const productImageBase = async (S, id, version=0) => {
     if (false && process.browser) { 
         const url = await new Promise((resolve, reject) => {
-        S.bind_(["legacy", "product", "attachment_data", 0], (data) => {
+        S.bind_(["product", "attachment_data", 0], (data) => {
             if(data instanceof Blob){
                 const url = URL.createObjectURL(data)
                 resolve(url)
@@ -62,7 +65,7 @@ export const authCeck = async(S) => {
     //const { Server: S_ } = await import("../_modules/ws_normal.js");
     //let S; if (typeof S_ == "function") { S = new S_(); } else { S = S_; }
 
-    const isAuth = await new Promise((resolve, reject) => { S.bind_( ["legacy", "auth", "is_admin_auth", 0], ([d]) => { 
+    const isAuth = await new Promise((resolve, reject) => { S.bind_( ["user", "is_logged_in", 0], ([d]) => { 
       resolve(d); }, [[]] );
 		});
 		if(!isAuth){
@@ -179,7 +182,7 @@ export const getTotalArray = (p) => {
 }
 // check it already logged in
 export const isAuthFn = async (S, type="user") => {
-    const auth = await new Promise((resolve, reject) => { S.bind_( ["legacy", "auth", `is_${type}_auth`, 0], ([d]) => { resolve(d); }, [[]] ); });
+    const auth = await new Promise((resolve, reject) => { S.bind_( ["user", `is_logged_in`, 0], ([d]) => { resolve(d); }, [[]] ); });
     return auth;
 }
 export const getPost = async (S, slug="home") => {
@@ -226,7 +229,7 @@ export async function getTableData (S_, path, url, filterSettings=[]) {
           if(r1 && r2 && r3) resolve(1)
         }
         batch1.push([
-          ["legacy", "auth", "is_admin_auth", 0], ([d]) => {r1 = true; isAuth = d; myResolve()}, [[]]
+          ["user", "is_logged_in", 0], ([d]) => {r1 = true; isAuth = d; myResolve()}, [[]]
         ])
         batch1.push([
           all_h(url), ([d]) => {h = d; r2 = true; myResolve()}, [[]]

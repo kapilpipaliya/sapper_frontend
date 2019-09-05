@@ -1,5 +1,5 @@
 <script context="module">
-  import { Server as S_ } from "../../../_modules/ws_normal.js";
+  import { Server as S_ } from "../../../_modules/ws_user.js";
   import { ws_admin, all, productImage,  product_purity_price, product_clarity_price, menuCategories, isAuthFn, getFooterData, getHeaderData} from "../../../_modules/functions.js";
 
   // Here We will Show some Top Images for each tag

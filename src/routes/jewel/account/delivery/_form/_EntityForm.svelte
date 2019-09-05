@@ -1,5 +1,5 @@
 <script>
-  import { Server as S } from "../../../../_modules/ws_normal.js";
+  import { Server as S } from "../../../../_modules/ws_user.js";
   import { all, ins_, upd_, makeObject } from "../../../../_modules/functions.js";
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import flatpickr from 'flatpickr';

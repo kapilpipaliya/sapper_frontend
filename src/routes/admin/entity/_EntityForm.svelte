@@ -153,7 +153,7 @@
 {#if !addressHidden}
   <div>
     {#if !nameHidden}<b>Addresses:</b>{/if}
-    {#if false && form.ea_entity_address.length}
+    {#if form.ea_entity_address.length}
       <table>
         <tbody>
           <tr>
@@ -165,6 +165,8 @@
             <th>State</th>
             <th>Country</th>
             <th>Zip Code</th>
+            <th>Phone</th>
+            <th>Selected</th>
             <th>Actions</th>
           </tr>
           {#each form.ea_entity_address as a, index}
@@ -184,6 +186,8 @@
                 <td> <input bind:value={form.ea_entity_address[index][6]} required/> </td>              
                 <td> <input bind:value={form.ea_entity_address[index][7]} required/> </td>              
                 <td> <input bind:value={form.ea_entity_address[index][8]} required/> </td>              
+                <td><input bind:value={form.ea_entity_address[index][9]} required/></td>
+                <td><input type="checkbox" bind:checked={form.ea_entity_address[index][10]} on:click={(e)=>addressIsMainChange(e, index)}/></td>
 
                 <td><button type="button" on:click={handleAddressDelete(index)} >delete</button></td>
             {/if}
