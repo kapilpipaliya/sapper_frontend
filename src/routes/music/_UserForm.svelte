@@ -27,6 +27,7 @@
   disabled: false,
   // last_seen: ,
   // create_date: 0,
+  expiry: null,
   // validation: 0,
   state: "",
   city: "",
@@ -51,6 +52,22 @@
       [[]]
     ]);
     S.batchBind_T(batch1)
+
+    // setup date:
+    const elem = date
+    const defaultDate = form.expirty || (new Date()).toISOString();
+    form.expiry = defaultDate;
+    flatpickr(elem, {
+          altInput: true,
+          altFormat: "F j, Y G:i K",
+          //dateFormat: "Y-m-d",
+          //allowInput: true,
+          enableTime: true,
+          defaultDate,
+          onChange: (selectedDates, dateStr, instance) => {
+            form.expiry = selectedDates[0].toISOString()
+          }
+    })
   })
   
   async function save() { isSaving = true; S.trigger([[ ["user", event, rowIdx], [form, [form.id]] ]]); }
@@ -71,6 +88,7 @@
 	<label><span>Password</span><input type="password" bind:value={form.password} required/></label>
 	<label><span>Full Name</span><input type="text" bind:value={form.fullname} required/></label>
 
+	<label><span>Expiry Date</span><input bind:this={date} /></label>
 	<label><span>Disabled</span><input type="checkbox" bind:checked={form.disabled} /></label>
 
   <div> {er} </div>

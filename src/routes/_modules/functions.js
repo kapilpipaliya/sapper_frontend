@@ -3,16 +3,25 @@ export { makeObject, sfx, nullFirstarrayFix } from './utils.js';
 
 import StorageDB from "./indexdb/storage.js";
 
-//const port = process.env.NODE_ENV === 'development' ? '8400' : '8400' //jimmy
-const port = process.env.NODE_ENV === 'development' ? '8300' : '8301' // susant
-// const port = process.env.NODE_ENV === 'development' ? '5000' : '5001' // sce
-const domain = process.env.NODE_ENV === 'development' ? 'localhost' : 'marvelartjewellery.com'
-const server = process.env.NODE_ENV === 'development' ? `http://${domain}:${port}` : `https://${domain}:${port}`;
-export const product_img_url = `${server}/demo/v1/user/download_id`
-export const thumb_url = `${server}/demo/v1/user/thumb_id`
-export const ws_admin = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/jadmin` : `wss://${domain}:${port}/jadmin`;
-export const ws_user = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/juser` : `wss://${domain}:${port}/juser`;
-export const ws_madmin = process.env.NODE_ENV === 'development' ? `ws://${domain}:${port}/madmin` : `wss://${domain}:${port}/madmin`;
+const dev_conf = { 
+    domain: 'localhost',
+    port: 8080, //'8400' : '8400' //jimmy // '5000' : '5001' // sce
+    http_proto: 'http',
+    ws_proto: 'ws'
+}
+const prod_conf = {
+    domain: 'marvelartjewellery.com',
+    port: 8080,
+    http_proto: 'http',
+    ws_proto: 'ws'
+}
+const server = process.env.NODE_ENV === 'development' ? dev_conf : prod_conf;
+
+export const product_img_url = `${server.http_proto}://${server.domain}:${server.port}/demo/v1/user/download_id`
+export const thumb_url = `${server.http_proto}://${server.domain}:${server.port}/demo/v1/user/thumb_id`
+export const ws_admin = `${server.ws_proto}://${server.domain}:${server.port}/jadmin`
+export const ws_user = `${server.ws_proto}://${server.domain}:${server.port}/juser`
+export const ws_madmin = `${server.ws_proto}://${server.domain}:${server.port}/madmin`
 
 export function all_h(t, p) {  return [t, "header", sfx(p)]; }
 
