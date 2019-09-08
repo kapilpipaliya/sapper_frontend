@@ -8,6 +8,12 @@ https://askubuntu.com/questions/377438/how-can-i-recursively-delete-all-files-of
 find . -name "*.map" -type f -delete
 
 # prefered:
+rsync -avz --progress --exclude=__sapper__/dev ./__sapper__ kapil@95.216.152.135:/home/kapil/jsusant
+rsync -avz --progress ./static kapil@95.216.152.135:/home/kapil/jsusant
+rsync -avz --progress package.json kapil@95.216.152.135:/home/kapil/jsusant
+rsync -avz --progress dump.sql kapil@95.216.152.135:/home/kapil/jsusant
+
+# prefered:
 ^+T[X59uBKn1
 rsync -avz --progress --exclude=__sapper__/dev ./__sapper__ root@162.241.29.170:susantfront
 rsync -avz --progress ./static root@162.241.29.170:susantfront

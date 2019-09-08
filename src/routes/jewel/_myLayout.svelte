@@ -30,8 +30,8 @@
     <main class="content">
       <slot />
     </main>
-    <nav class="sidenav" />
-    <aside class="ads" />
+    <!-- <nav class="sidenav" /> -->
+    <!-- <aside class="ads" /> -->
   </div>
   <footer class="footer">
     <Footer {footerData} {headerData}/>

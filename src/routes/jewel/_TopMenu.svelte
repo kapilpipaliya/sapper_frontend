@@ -20,7 +20,7 @@
 
     <div class="line1">
       <a href="jewel/page/contact_us"> Customer care </a> |
-      <span> <a href="jewel/page/store"> Visit Our Stores </a> </span> |
+      <span> <a href="jewel/page/store"> Stores </a> </span> |
       {#if isAuth}
         <a href="jewel/auth/LogOut">Logout</a>
       {:else}
@@ -31,11 +31,8 @@
     </div>
 
     <div class="item3">
-      <a href="#!"><img class="small" alt="Recently Viewed" src="../../images/flaticon/clock-history.svg" /> <span>Recently Viewed |</span></a>
-      {#if false}
-        <a href="#!"><img class="small" alt="Free Try at Home" src="../../images/feather/home.svg" /> <span>Free Try at Home |</span></a>
-      {/if}
-      <a href="#!"><img class="small" alt="Recently Viewed" src="../../images/feather/heart.svg" /><span>Wishlist |</span></a>
+      <a href="#!"><img class="small" alt="Recently Viewed" src="../../images/flaticon/clock-history.svg" /> <span></span></a>
+      <a href="#!"><img class="small" alt="Recently Viewed" src="../../images/feather/heart.svg" /><span></span></a>
       <a href="jewel/cart"> <img class="small" alt="Recently Viewed" src="../../images/feather/shopping-cart.svg" /> </a>
     </div>
 
