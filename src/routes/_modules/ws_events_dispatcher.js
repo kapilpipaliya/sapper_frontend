@@ -183,6 +183,7 @@ export class ServerEventsDispatcher {
           this.dispatch(event, message)
         }
       } catch (error) {
+        console.warn("error: ", error)
         console.warn(data)
       }
     }

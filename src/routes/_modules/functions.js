@@ -5,13 +5,13 @@ import StorageDB from "./indexdb/storage.js";
 
 const dev_conf = { 
     domain: 'localhost',
-    port: 8080, //'8400' : '8400' //jimmy // '5000' : '5001' // sce
+    port: 8400, //'8400' : '8400' //jimmy // '5000' : '5001' // sce, 8400 music
     http_proto: 'http',
     ws_proto: 'ws'
 }
 const prod_conf = {
-    domain: 'marvelartjewellery.com',
-    port: 8080,
+    domain: 'scesoftwares.com',
+    port: 8400,
     http_proto: 'http',
     ws_proto: 'ws'
 }

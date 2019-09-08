@@ -6,6 +6,7 @@
   export async function preload(page, session) {
     let S; if (typeof(S_) == "function") { S = new S_(ws_admin, this.req, this.res); } else { S = S_; }
     const { category } = page.params;
+    const browser = process.browser
 
     let categories = []
     let footerData = {}
@@ -109,7 +110,7 @@
 		}*/
     const isAuth = await isAuthFn(S)
 
-    return { categories, sub_categories, sub_category_products, products, isAuth, footerData, headerData  };
+    return { categories, sub_categories, sub_category_products, products, isAuth, footerData, headerData, browser   };
   }
 </script>
 
@@ -129,6 +130,8 @@
   export let sub_category_products = [];
   export let products = [];
   export let isAuth = false;
+  export let browser = false;
+  console.log(browser)
 
   if (process.browser) {
     window.onscroll = function(ev) {
@@ -164,11 +167,21 @@
         <Cards>
           {#each sub_category_products[index] as p}
             <CardItem>
+            {#if false}
+              <button on:click={()=> history.pushState({
+                id: 'product_page'
+                }, 'Home | My App', `jewel/jewellery/product/${p[0]}`)}>
+                <img src={p[p.length - 3]} alt="product image"/>
+                <span>{p[7]}</span>
+                <TextButton><span>₹ {getTotalArray(p).toFixed(0)}</span></TextButton>
+                </button>
+            {:else}
               <a href={`jewel/jewellery/product/${p[0]}`}>
                 <img src={p[p.length - 3]} alt="product image"/>
                 <span>{p[7]}</span>
                 <TextButton><span>₹ {getTotalArray(p).toFixed(0)}</span></TextButton>
               </a>
+            {/if}
             </CardItem>
           {/each}
         </Cards>
@@ -180,11 +193,21 @@
     <Cards>
       {#each products as p}
         <CardItem>
+          {#if false}
+              <button on:click={()=> history.pushState({
+                id: 'product_page'
+                }, 'Home | My App', `jewel/jewellery/product/${p[0]}`)}>
+                <img src={p[p.length - 3]} alt="product image"/>
+                <span>{p[7]}</span>
+                <TextButton><span>₹ {getTotalArray(p).toFixed(0)}</span></TextButton>
+                </button>
+            {:else}
           <a href={`jewel/jewellery/product/${p[0]}`}>
             <img src={p[p.length - 3]} alt="product image"/>
             <span>{p[7]}</span>
             <TextButton><span>₹ {getTotalArray(p).toFixed(0)}</span></TextButton>
           </a>
+          {/if}
         </CardItem>
       {/each}
     </Cards>

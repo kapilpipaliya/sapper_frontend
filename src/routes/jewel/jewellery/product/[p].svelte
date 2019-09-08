@@ -7,45 +7,64 @@
 
     let table = "product";
 
+    let purity_idx = 0;
+    let d_clarity_idx = 0;
+
+
+    
+  const filter = [[p]]
+  filter[14] = 'product'
+
+  const getTableData = async(filterSettings=[]) => {
+    let isAuth = false;
+    let footerData = ""
+    let headerData = ""
     let clarities = [];
     let tones = [];
     let purities = [];
     let policies = [];
     let certificates = [];
+    let categories = [];
+    let product_h = [];
+    let product1 = [];
+    await new Promise((resolve, reject) => {
+        const batch1 = []
+        let r00 = false, r0 = false, r = false, r1 = false, r2 = false, r3 = false, r4 = false, r5 = false, r6 = false, r7 = false, r8 = false
+        const myResolve = () => {
+          if(r00 && r0 && r && r1 && r2 && r3 && r4 && r5 && r6 && r7, r8) resolve(1)
+        }
+        batch1.push([ ["user", `is_logged_in`, 0], ([d]) => {isAuth = d; r00 = true; myResolve()}, [[]] ])
+        batch1.push([ all("setting", 112), ([d]) => {footerData = {mobile: d}; r0 = true; myResolve()}, [[`=mobile`]] ])
+        batch1.push([ all("setting", 113), ([d]) => {headerData = {company: d}; r = true; myResolve()}, [[`=company_name`]] ])
+        batch1.push([ all("clarity"), ([d]) => {clarities = d; r1 = true; myResolve()}, [[]] ])
+        batch1.push([ all("tone"), ([d]) => {tones = d; r2 = true; myResolve()}, [filterSettings] ])
+        batch1.push([ all("purity"), ([d]) => {purities = d; r3 = true; myResolve()}, [filterSettings] ])
+        batch1.push([ all("policy"), ([d]) => {policies = d; r4 = true; myResolve()}, [] ])
+        batch1.push([ all("certified_by"), ([d]) => {certificates = d; r5 = true; myResolve()}, [] ])
 
-    let purity_idx = 0;
-    let d_clarity_idx = 0;
+        batch1.push([ all("category", 111), ([d]) => {categories = d; r6 = true; myResolve()}, [[null, "=NULL"],[null, null, null, null, 0]] ])
+        batch1.push([ all_h(table), ([d]) => {product_h = d[1]; r7 = true; myResolve()}, filter ])
+        batch1.push([ all(table), ([d]) => {product1 = d; r8 = true; myResolve()}, filter ])
+        S.batchBind_T(batch1)
+      })
+    return {isAuth, footerData, headerData, clarities, tones, purities, policies, certificates, categories, product_h, product1};
+  }
+  const {isAuth, footerData, headerData, clarities, tones, purities, policies, certificates, categories, product_h, product1} = await getTableData([]);
 
-    const categories = await menuCategories(S);
-    const product_h = await new Promise((resolve, reject) => { S.bind_( all_h(table), ([d]) => { if (d[1]) { resolve(d[1]); } else { reject(new Error("No Product Header Exist")); } }, [[]] ); });
-    const filter = [[p]]
-    filter[14] = 'product'
-
-    let product = await new Promise((resolve, reject) => { S.bind_( all(table), ([d]) => { if (d) { resolve(d); } else { reject(new Error("No Product Exist")); } }, filter ); });
-    await productImage(S, product)
-    // product_purity_price(product)
-    // product_clarity_price(product)
-    purity_idx = get_p_purity_idx(product[0])
-    d_clarity_idx = get_p_clarity_idx(product[0])
-    let tone_id = 0;
-    const tone_array = product[0][46][purity_idx][1]
-    if(tone_array){
-      const idx = get_p_purity_tone_idx(tone_array)
-      if(idx > -1) {tone_id = tone_array[idx][0]}
-    }
-    
-    product = makeObject([...product_h, "main_image" ], product[0], [])
-    product.p_purities_purity_id.forEach(x=> {if(x[3] == null) {x[3] = []; }  } ) // if its null tones cant loop
-
-    clarities = await new Promise((resolve, reject) => { S.bind_( all("clarity"), ([d]) => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
-    tones = await new Promise((resolve, reject) => { S.bind_( all("tone"), ([d]) => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
-    purities = await new Promise((resolve, reject) => { S.bind_( all("purity"), ([d]) => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
-    policies = await new Promise((resolve, reject) => { S.bind_( all("policy"), ([d]) => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
-    certificates = await new Promise((resolve, reject) => { S.bind_( all("certified_by"), ([d]) => { if (d) { resolve(d); } else { reject(new Error("No Clarity Returned")); } }, [[]] ); });
-    const isAuth = await isAuthFn(S)
-    const footerData = await getFooterData(S)
-    const headerData = await getHeaderData(S)
-    return { categories, product, clarities, tones, purities, purity_idx, d_clarity_idx, tone_id, policies, certificates, isAuth, footerData, headerData };
+  await productImage(S, product1)
+  // product_purity_price(product1)
+  // product_clarity_price(product1)
+  purity_idx = get_p_purity_idx(product1[0])
+  d_clarity_idx = get_p_clarity_idx(product1[0])
+  let tone_id = 0;
+  const tone_array = product1[0][46][purity_idx][1]
+  if(tone_array){
+    const idx = get_p_purity_tone_idx(tone_array)
+    if(idx > -1) {tone_id = tone_array[idx][0]}
+  }
+  const product = makeObject([...product_h, "main_image" ], product1[0], [])
+  product.p_purities_purity_id.forEach(x=> {if(x[3] == null) {x[3] = []; }  } ) // if its null tones cant loop
+  return { categories, product, clarities, tones, purities, purity_idx, d_clarity_idx, tone_id, policies, certificates, isAuth, footerData, headerData };
   }
 </script>
 
