@@ -7,15 +7,17 @@ const dev_conf = {
     domain: 'localhost',
     port: 8400, //'8400' : '8400' //jimmy // '5000' : '5001' // sce, 8400 music
     http_proto: 'http',
-    ws_proto: 'ws'
+    ws_proto: 'ws',
+    redirect: 'music'
 }
 const prod_conf = {
     domain: 'scesoftwares.com',
     port: 8400,
     http_proto: 'http',
-    ws_proto: 'ws'
+    ws_proto: 'ws',
+    redirect: 'music'
 }
-const server = process.env.NODE_ENV === 'development' ? dev_conf : prod_conf;
+export const server = process.env.NODE_ENV === 'development' ? dev_conf : prod_conf;
 
 export const product_img_url = `${server.http_proto}://${server.domain}:${server.port}/demo/v1/user/download_id`
 export const thumb_url = `${server.http_proto}://${server.domain}:${server.port}/demo/v1/user/thumb_id`

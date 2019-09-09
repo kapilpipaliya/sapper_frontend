@@ -6,7 +6,7 @@
 import { Server as S_ } from "../_modules/ws_music.js";
 import { ws_madmin, isAuthFn } from "../_modules/functions.js";
 export async function preload(page, session) {
-  const redirect_url = "music/login?message=Logout successfully...&type=info"
+  const redirect_url = "music/login?message=Logged out successfully.&type=info"
   let S; if (typeof S_ == "function") { S = new S_(ws_madmin, this.req, this.res); } else { S = S_; }
   
   const getTableData = async(filterSettings=[]) => {

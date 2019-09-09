@@ -6,6 +6,7 @@
   import SubmitButton from './_SubmitButton.svelte'
   import CancelButton from './_CancelButton.svelte';
   import { Server as S } from "../_modules/ws_music.js";
+  import flatpickr from 'flatpickr';
   const dp = createEventDispatcher();
 
   export let rowIdx = 0;
@@ -18,8 +19,8 @@
   let date = null;
   let form = {
   username: "",
-  fullname: "",
-  email: "",
+  // fullname: "",
+  // email: "",
   //website: "",
   //apikey: "",
   password: "",
@@ -29,8 +30,8 @@
   // create_date: 0,
   expiry: null,
   // validation: 0,
-  state: "",
-  city: "",
+  // state: "",
+  // city: "",
   // fullname_public: 0,
   type: "",
   // parent_id: 0
@@ -55,7 +56,7 @@
 
     // setup date:
     const elem = date
-    const defaultDate = form.expirty || (new Date()).toISOString();
+    const defaultDate = form.expiry;
     form.expiry = defaultDate;
     flatpickr(elem, {
           altInput: true,
@@ -65,7 +66,7 @@
           enableTime: true,
           defaultDate,
           onChange: (selectedDates, dateStr, instance) => {
-            form.expiry = selectedDates[0].toISOString()
+            form.expiry = selectedDates[0] ? selectedDates[0].toISOString() : null
           }
     })
   })
@@ -73,6 +74,8 @@
   async function save() { isSaving = true; S.trigger([[ ["user", event, rowIdx], [form, [form.id]] ]]); }
   function clearError() { er = ""; }
 
+  import 'flatpickr/dist/flatpickr.css'
+	import 'flatpickr/dist/themes/light.css'
   // ------------
 </script>
 
@@ -86,7 +89,6 @@
   </label>
 	<label><span>User Name</span><input type="text" bind:value={form.username} required /></label>
 	<label><span>Password</span><input type="password" bind:value={form.password} required/></label>
-	<label><span>Full Name</span><input type="text" bind:value={form.fullname} required/></label>
 
 	<label><span>Expiry Date</span><input bind:this={date} /></label>
 	<label><span>Disabled</span><input type="checkbox" bind:checked={form.disabled} /></label>

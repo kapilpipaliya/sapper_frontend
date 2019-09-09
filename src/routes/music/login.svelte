@@ -51,7 +51,7 @@ export async function preload({query}, session) {
 <svelte:head>
 	<title>Log In</title>
 </svelte:head>
-
+ 
 {#if query.message}
   <span class="{query.type}">{query.message}</span>
 {/if}
