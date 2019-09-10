@@ -8,14 +8,14 @@ const dev_conf = {
     port: 8400, //'8400' : '8400' //jimmy // '5000' : '5001' // sce, 8400 music
     http_proto: 'http',
     ws_proto: 'ws',
-    redirect: 'music'
+    redirect: 'todo'
 }
 const prod_conf = {
     domain: 'scesoftwares.com',
     port: 8400,
     http_proto: 'http',
     ws_proto: 'ws',
-    redirect: 'music'
+    redirect: 'todo'
 }
 export const server = process.env.NODE_ENV === 'development' ? dev_conf : prod_conf;
 
@@ -24,6 +24,7 @@ export const thumb_url = `${server.http_proto}://${server.domain}:${server.port}
 export const ws_admin = `${server.ws_proto}://${server.domain}:${server.port}/jadmin`
 export const ws_user = `${server.ws_proto}://${server.domain}:${server.port}/juser`
 export const ws_madmin = `${server.ws_proto}://${server.domain}:${server.port}/madmin`
+export const ws_todo = `${server.ws_proto}://${server.domain}:${server.port}/todo`
 
 export function all_h(t, p) {  return [t, "header", sfx(p)]; }
 
