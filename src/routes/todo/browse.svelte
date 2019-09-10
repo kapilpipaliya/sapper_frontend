@@ -2,11 +2,11 @@
 /*
 1. check is_logged_in then redirect back to dashboard page..
 */
-import { Server as S_ } from "../_modules/ws_music.js";
-import { ws_madmin, isAuthFn, getTableData } from "../_modules/functions.js";
+import { Server as S_ } from "../_modules/ws_todo.js";
+import { ws_todo, isAuthFn, getTableData } from "../_modules/functions.js";
 export async function preload({query}, session) {
-  const login_url = 'music/login';
-  let S; if (typeof S_ == "function") { S = new S_(ws_madmin, this.req, this.res); } else { S = S_; }
+  const login_url = `${server.redirect}/login`;
+  let S; if (typeof S_ == "function") { S = new S_(ws_todo, this.req, this.res); } else { S = S_; }
 
   const url = "song"
   const events = [
@@ -55,7 +55,7 @@ export async function preload({query}, session) {
   import MyLayout from "./_myLayout.svelte"
   import TablePage from "./_TablePage.svelte";
   import SongForm from "./_SongForm.svelte";
-  import { Server as S2_ } from "../_modules/ws_music.js";
+  import { Server as S2_ } from "../_modules/ws_todo.js";
 
   export let menu = {}
   export let isAuth = false

@@ -2,10 +2,10 @@
 /*
 1. check is_logged_in then redirect back to dashboard page..
 */
-import { Server as S_ } from "../_modules/ws_music.js";
-import { ws_madmin, isAuthFn } from "../_modules/functions.js";
+import { Server as S_ } from "../_modules/ws_todo.js";
+import { server, ws_todo, isAuthFn } from "../_modules/functions.js";
 export async function preload(page, session) {
-  let S; if (typeof S_ == "function") { S = new S_(ws_madmin, this.req, this.res); } else { S = S_; }
+  let S; if (typeof S_ == "function") { S = new S_(ws_todo, this.req, this.res); } else { S = S_; }
 
   const getTableData = async(filterSettings=[]) => {
     let isAuth = false;
@@ -26,7 +26,7 @@ export async function preload(page, session) {
   }
 
   const {isAuth, menu, user_account_type} = await getTableData([]);
-  if(!isAuth){ this.redirect(302, 'music/login') }
+  if(!isAuth){ this.redirect(302, `${server.redirect}/login`) }
   
   return { isAuth, menu, user_account_type };
 }
@@ -34,7 +34,7 @@ export async function preload(page, session) {
 <script>
     import MyLayout from "./_myLayout.svelte"
     import PasswordChangeForm from "./_PasswordChangeForm.svelte"
-    import { Server as S2_ } from "../_modules/ws_music.js";
+    import { Server as S2_ } from "../_modules/ws_todo.js";
     import { fade, fly } from 'svelte/transition';
     export let menu = {}
     export let user_account_type = ""

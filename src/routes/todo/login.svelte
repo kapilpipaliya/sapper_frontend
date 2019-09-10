@@ -3,11 +3,11 @@
 1. check is_logged_in then redirect back to dashboard page..
 //https://codepen.io/inzrb/pen/vnpwm
 */
-import { Server as S_ } from "../_modules/ws_music.js";
-import { ws_madmin, isAuthFn } from "../_modules/functions.js";
+import { Server as S_ } from "../_modules/ws_todo.js";
+import { server, ws_todo, isAuthFn } from "../_modules/functions.js";
 export async function preload({query}, session) {
-  const redirect_url = "music/dashboard"
-  let S; if (typeof S_ == "function") { S = new S_(ws_madmin, this.req, this.res); } else { S = S_; }
+  const redirect_url = `/${server.redirect}/dashboard`
+  let S; if (typeof S_ == "function") { S = new S_(ws_todo, this.req, this.res); } else { S = S_; }
   const isAuth = await new Promise((resolve, reject) => { S.bind_( ["user", `is_logged_in`, 0], ([d]) => { resolve(d); }, [[]] ); });
   if(isAuth){ this.redirect(302, redirect_url) }
   return { isAuth, redirect_url, query };
@@ -17,7 +17,7 @@ export async function preload({query}, session) {
   import { onMount, onDestroy, createEventDispatcher } from "svelte";
   import { goto } from "@sapper/app";
   const dp = createEventDispatcher();
-  import { Server as S } from "../_modules/ws_music.js";
+  import { Server as S } from "../_modules/ws_todo.js";
   export let isAuth = false;
   export let redirect_url = ""
   export let query = {}

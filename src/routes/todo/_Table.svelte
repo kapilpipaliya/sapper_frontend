@@ -4,7 +4,7 @@
   import { onMount, onDestroy, beforeUpdate } from "svelte";
   import { createEventDispatcher } from "svelte";
   const dp = createEventDispatcher();
-  import { Server as S } from "../_modules/ws_music.js"; // can only be used on onMount
+  import { Server as S } from "../_modules/ws_todo.js"; // can only be used on onMount
 
   export let events = []
   export let quickcomponent=false;

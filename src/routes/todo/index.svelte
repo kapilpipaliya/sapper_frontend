@@ -2,13 +2,13 @@
 /*
 1. check is_logged_in then redirect back to dashboard page..
 */
-import { Server as S_ } from "../_modules/ws_music.js";
-import { ws_madmin, isAuthFn } from "../_modules/functions.js";
+import { Server as S_ } from "../_modules/ws_todo.js";
+import { server, ws_todo, isAuthFn } from "../_modules/functions.js";
 export async function preload(page, session) {
-  this.redirect(302, '/music/dashboard')
-  let S; if (typeof S_ == "function") { S = new S_(ws_madmin, this.req, this.res); } else { S = S_; }
+  this.redirect(302, `/${server.redirect}/dashboard`)
+  let S; if (typeof S_ == "function") { S = new S_(ws_todo, this.req, this.res); } else { S = S_; }
   const isAuth = await new Promise((resolve, reject) => { S.bind_( ["user", `is_logged_in`, 0], ([d]) => { resolve(d); }, [[]] ); });
-  if(!isAuth){ this.redirect(302, 'music/login') }
+  if(!isAuth){ this.redirect(302, `${server.redirect}/login`) }
   const menu = await new Promise((resolve, reject) => { S.bind_( ["ui","menu_data",1000], ([d]) => { resolve(d); }, [[]] ); });
   return { isAuth, menu };
 }
@@ -21,12 +21,12 @@ export async function preload(page, session) {
 
 <MyLayout {menu} >
         <div class="header">
-            <h1>For Mind Peace Music</h1>
+            <h1>For Mind Peace Todo</h1>
             <h2>Visit Proper Page from the left menu.</h2>
         </div>
 
         <div class="content">
-            <h2 class="content-subhead">Music</h2>
+            <h2 class="content-subhead">Todo</h2>
             <p>
                developed to increase mind development.
             </p>

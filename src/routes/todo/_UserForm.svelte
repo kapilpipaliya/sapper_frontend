@@ -5,7 +5,7 @@
   // import flatpickr from 'flatpickr';
   import SubmitButton from './_SubmitButton.svelte'
   import CancelButton from './_CancelButton.svelte';
-  import { Server as S } from "../_modules/ws_music.js";
+  import { Server as S } from "../_modules/ws_todo.js";
   import flatpickr from 'flatpickr';
   const dp = createEventDispatcher();
 

@@ -3,11 +3,11 @@
 /*
 1. check is not logged_in then redirect back to dashboard page..
 */
-import { Server as S_ } from "../_modules/ws_music.js";
-import { ws_madmin, isAuthFn } from "../_modules/functions.js";
+import { Server as S_ } from "../_modules/ws_todo.js";
+import { server, ws_todo, isAuthFn } from "../_modules/functions.js";
 export async function preload(page, session) {
-  const redirect_url = "music/login?message=Logged out successfully.&type=info"
-  let S; if (typeof S_ == "function") { S = new S_(ws_madmin, this.req, this.res); } else { S = S_; }
+  const redirect_url = `${server.redirect}/login?message=Logged out successfully.&type=info`
+  let S; if (typeof S_ == "function") { S = new S_(ws_todo, this.req, this.res); } else { S = S_; }
   
   const getTableData = async(filterSettings=[]) => {
     let isAuth = false;
