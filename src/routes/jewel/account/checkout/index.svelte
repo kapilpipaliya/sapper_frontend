@@ -6,9 +6,43 @@
 		// if(!user) return {};
 		// if(!!user && user.isActive){ this.redirect(302, '/rdv') }
     let S; if (typeof S_ == "function") { S = new S_(ws_admin, this.req, this.res); } else { S = S_; }
-    const categories = await menuCategories(S);
-    const footerData = await getFooterData(S)
-    const headerData = await getHeaderData(S)
+		
+		const getTableData = async(filterSettings=[]) => {
+			let isAuth = false;
+			let footerData = ""
+			let headerData = ""
+			// let clarities = [];
+			// let tones = [];
+			// let purities = [];
+			// let policies = [];
+			// let certificates = [];
+			let categories = [];
+			// let product_h = [];
+			// let product1 = [];
+			await new Promise((resolve, reject) => {
+					const batch1 = []
+					let r00 = false, r0 = false, r = false, r1 = true, r2 = true, r3 = true, r4 = true, r5 = true, r6 = false, r7 = true, r8 = true
+					const myResolve = () => {
+						if(r00 && r0 && r && r1 && r2 && r3 && r4 && r5 && r6 && r7, r8) resolve(1)
+					}
+					batch1.push([ ["user", `is_logged_in`, 0], ([d]) => {isAuth = d; r00 = true; myResolve()}, [[]] ])
+					batch1.push([ all("setting", 112), ([d]) => {footerData = {mobile: d}; r0 = true; myResolve()}, [[`=mobile`]] ])
+					batch1.push([ all("setting", 113), ([d]) => {headerData = {company: d}; r = true; myResolve()}, [[`=company_name`]] ])
+					// batch1.push([ all("clarity"), ([d]) => {clarities = d; r1 = true; myResolve()}, [[]] ])
+					// batch1.push([ all("tone"), ([d]) => {tones = d; r2 = true; myResolve()}, [filterSettings] ])
+					// batch1.push([ all("purity"), ([d]) => {purities = d; r3 = true; myResolve()}, [filterSettings] ])
+					// batch1.push([ all("policy"), ([d]) => {policies = d; r4 = true; myResolve()}, [] ])
+					// batch1.push([ all("certified_by"), ([d]) => {certificates = d; r5 = true; myResolve()}, [] ])
+
+					batch1.push([ all("category", 111), ([d]) => {categories = d; r6 = true; myResolve()}, [[null, "=NULL"],[null, null, null, null, 0]] ])
+					// batch1.push([ all_h(table), ([d]) => {product_h = d[1]; r7 = true; myResolve()}, filter ])
+					// batch1.push([ all(table), ([d]) => {product1 = d; r8 = true; myResolve()}, filter ])
+					S.batchBind_T(batch1)
+				})
+			return {categories, footerData, headerData};
+		}
+		const {categories, footerData, headerData} = await getTableData([]);
+
 
 		return { categories, footerData, headerData }
 	}
@@ -251,7 +285,7 @@ const getSum = () => {
 					</form>
 				{/if}
 
-				<div class="contact-details"> Any Questions?<br>Please call us at <strong>1800-419-0066</strong> or <span class="live-chat">Chat with us</span> </div>
+				<div class="contact-details"> Any Questions?<br>Please call us at <strong>{footerData.mobile[0][4]}</strong> or <span class="live-chat">Chat with us</span> </div>
 			</div>
 		</div>
 	{/if}

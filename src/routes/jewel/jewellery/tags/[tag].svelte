@@ -43,7 +43,7 @@
 				}, 16);
 			});
 		} else {
-			// http://localhost:8300/demo/v1/user/download?path=
+			// http://localhost:8300/http/v1/user/download?path=
 			// TODO fix this : This should return server path.
 			product = ""
 		}*/

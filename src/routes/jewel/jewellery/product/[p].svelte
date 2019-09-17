@@ -255,7 +255,7 @@
       {/each}
       <a href="jewel/page/certifications">Certified Jewellery</a>
 
-      <p>Any Questions? Please feel free to reach us at: 1800-419-0066</p>
+      <p>Any Questions? Please feel free to reach us at: {footerData.mobile[0][4]}</p>
 
     </div>
 
@@ -265,7 +265,7 @@
     </div>
 
     <div class="card">
-      <HaveAQue {headerData}/>
+      <HaveAQue {headerData} {footerData}/>
     </div>
 
   </div>

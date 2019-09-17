@@ -7,7 +7,7 @@
 <style src="./_LeftMenu.scss"></style>
     <div id="menu"  class={active ? "active" : ""}>
         <div class="pure-menu">
-            <a class="pure-menu-heading" href={`/${server.redirect}/dashboard`}>MBA Music</a>
+            <a class="pure-menu-heading" href={`/${server.redirect}/dashboard`}>TODO</a>
             <span class="pure-menu-heading">{user_account_type}</span>
 
             <ul class="pure-menu-list">

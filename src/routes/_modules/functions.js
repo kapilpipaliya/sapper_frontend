@@ -5,22 +5,22 @@ import StorageDB from "./indexdb/storage.js";
 
 const dev_conf = { 
     domain: 'localhost',
-    port: 8400, //'8400' : '8400' //jimmy // '5000' : '5001' // sce, 8400 music
+    port: 8400, //'8300' //susant : '8400' //jimmy-music // '5000' : '5001' // sce
     http_proto: 'http',
     ws_proto: 'ws',
-    redirect: 'todo'
+    redirect: 'jewel'
 }
 const prod_conf = {
-    domain: 'scesoftwares.com',
+    domain: 'marvelartjewellery.com',
     port: 8400,
     http_proto: 'http',
     ws_proto: 'ws',
-    redirect: 'todo'
+    redirect: 'jewel'
 }
 export const server = process.env.NODE_ENV === 'development' ? dev_conf : prod_conf;
 
-export const product_img_url = `${server.http_proto}://${server.domain}:${server.port}/demo/v1/user/download_id`
-export const thumb_url = `${server.http_proto}://${server.domain}:${server.port}/demo/v1/user/thumb_id`
+export const product_img_url = `${server.http_proto}://${server.domain}:${server.port}/http/v1/user/download_id`
+export const thumb_url = `${server.http_proto}://${server.domain}:${server.port}/http/v1/user/thumb_id`
 export const ws_admin = `${server.ws_proto}://${server.domain}:${server.port}/jadmin`
 export const ws_user = `${server.ws_proto}://${server.domain}:${server.port}/juser`
 export const ws_madmin = `${server.ws_proto}://${server.domain}:${server.port}/madmin`

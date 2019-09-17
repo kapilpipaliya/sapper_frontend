@@ -4,6 +4,7 @@
   import SupportForm from "./_SupportForm.svelte";
   let isSubmited = false
   export let headerData = {};
+  export let footerData = {};
 </script>
 <style src="./_HaveAQue.scss"></style>
 <div class="card">
@@ -28,7 +29,7 @@
   </div>
 
   <h3>HAVE A QUESTION?</h3>
-  CALL US AT 1800-419-0066
+  CALL US AT {footerData.mobile[0][4]}
   {#if !isSubmited}
     <SupportForm bind:isSubmited />
   {:else}

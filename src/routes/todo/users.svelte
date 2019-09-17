@@ -3,7 +3,7 @@
 1. check is_logged_in then redirect back to dashboard page..
 */
 import { Server as S_ } from "../_modules/ws_todo.js";
-import { ws_todo, isAuthFn, getTableData } from "../_modules/functions.js";
+import { server, ws_todo, isAuthFn, getTableData } from "../_modules/functions.js";
 export async function preload({query}, session) {
   const login_url = `${server.redirect}/login`;
   let S; if (typeof S_ == "function") { S = new S_(ws_todo, this.req, this.res); } else { S = S_; }

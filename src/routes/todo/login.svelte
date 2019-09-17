@@ -36,7 +36,7 @@ export async function preload({query}, session) {
   onMount(async ()=>{
     fns.push(["auth","login",0]); S.bind$(fns.i(-1), ([d]) => {isSaving = false; if (d.ok) {  er = ""; formSave = true; dp("successSave", { d }); } else { er = d.error; } }, 1)
     fns.push(["auth", "set_cookie", 0]); S.bind$(fns.i(-1), ([d]) => { 
-      document.cookie = `music=${d}; path=/`; getCookie = true; }, 1)
+      document.cookie = `todo=${d}; path=/`; getCookie = true; }, 1)
 
     user.focus()
   })
@@ -52,36 +52,40 @@ export async function preload({query}, session) {
 	<title>Log In</title>
 </svelte:head>
  
-{#if query.message}
-  <span class="{query.type}">{query.message}</span>
-{/if}
+<template lang="pug">
++if('query.message')
+  span(class="{query.type}") {query.message}
 
-{#if !isAuth}
-<h1>Flat Login</h1>
++if('!isAuth')
+  h1 Flat Login
 
-<div class="stand">
-  <div class="outer-screen">
-    <div class="inner-screen">
-      <form class="form" on:submit|preventDefault={save}>
-        <input type="text" class="zocial-dribbble" placeholder="Enter your user name" bind:value={form.user} bind:this={user} required >
-        <input type="password" bind:value={form.pass} required placeholder="Password">
-         <input type="submit" value="Login" disabled={!form.user || !form.pass}/>
-          <div class="error"> {er} </div>
-      </form> 
-    </div> 
-  </div> 
-</div>
+  div.stand
+    div.outer-screen
+      div.inner-screen
+        form.form( on:submit|preventDefault="{save}")
+          input.zocial-dribbble(
+            type="text"
+            placeholder="Enter your user name"
+            bind:value="{form.user}" bind:this="{user}"
+            required=true
+          )
+          input(
+            type="password"
+            placeholder="Password"
+            bind:value="{form.pass}"
+            required=true
+          )
+          input(
+            type="submit"
+            value="Login"
+            disabled="{!form.user || !form.pass}"
+          )
+          div.error {er}
+  +else()
+    div.header
+      a(href="./")
+        h1 Logged in successfully
+      p Now you can visit and explore website with aditional features
+    div.content
 
-
-{:else}
-  {#if false}
-    <a href="./auth/LogOut">Logout</a>
-  {/if}
-  <div class="header">
-    <a href="./"><h1>Logged in successfully</h1></a>
-    <p>Now you can visit and explore website with aditional features</p>
-  </div>
-  <div class="content">
-
-  </div>
-{/if}
+</template>
