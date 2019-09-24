@@ -1,0 +1,3 @@
+database create script:
+CREATE DATABASE "openproject4" ENCODING = 'unicode'
+sudo pg_dump -U postgres -f openprojectinitial.sql -d openproject4

@@ -8,14 +8,14 @@ const dev_conf = {
     port: 8400, //'8300' //susant : '8400' //jimmy-music // '5000' : '5001' // sce
     http_proto: 'http',
     ws_proto: 'ws',
-    redirect: 'jewel'
+    redirect: 'music'
 }
 const prod_conf = {
-    domain: 'marvelartjewellery.com',
-    port: 8400,
-    http_proto: 'http',
-    ws_proto: 'ws',
-    redirect: 'jewel'
+    domain: '116.203.177.233',
+    port: 8401,
+    http_proto: 'https',
+    ws_proto: 'wss',
+    redirect: 'music'
 }
 export const server = process.env.NODE_ENV === 'development' ? dev_conf : prod_conf;
 
