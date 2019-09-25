@@ -1,0 +1,15 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+
+<!-- 
+
+{ t(:mail_body_lost_password) %>
+{ @reset_password_url %>
+
+{ User.human_attribute_name(:login) %>: { @token.user.login %>
+ -->

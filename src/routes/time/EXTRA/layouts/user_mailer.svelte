@@ -1,0 +1,17 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+
+
+<!-- 
+{ Setting.localized_emails_header %>
+{ call_hook(:view_layouts_mailer_plain_before_content, self.assigns) %>
+{ yield %>
+{ call_hook(:view_layouts_mailer_plain_after_content, self.assigns) %>
+--
+{ Setting.localized_emails_footer %>
+ -->

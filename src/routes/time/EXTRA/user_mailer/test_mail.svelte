@@ -1,0 +1,12 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+
+<!-- 
+<p>This is a test email sent by OpenProject.<br />
+  OpenProject URL: { link_to @welcome_url, @welcome_url %></p>
+ -->

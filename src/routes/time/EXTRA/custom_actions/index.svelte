@@ -1,0 +1,25 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+<!-- 
+<% html_title l(:label_administration), t('custom_actions.plural') -%>
+{ toolbar title: t('custom_actions.plural') do %>
+  <li class="toolbar-item">
+    { link_to new_custom_action_path,
+                { class: 'button -alt-highlight',
+                  aria: { label: t('custom_actions.new') },
+                  title: t('custom_actions.new') } do %>
+      { op_icon('button--icon icon-add') %>
+      <span class="button--text">{ CustomAction.model_name.human %></span>
+    {/each}
+  </li>
+{/each}
+
+<section class="admin--edit-section">
+  { cell ::CustomActions::TableCell, @custom_actions %>
+</section>
+ -->

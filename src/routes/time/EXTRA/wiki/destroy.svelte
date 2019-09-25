@@ -1,0 +1,32 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+<!-- 
+
+{ toolbar title: @page.title %>
+<% html_title t(:button_delete), @page.title %>
+{ form_tag({}, method: :delete) do %>
+  <div class="box">
+    <p><strong>{ t(:text_wiki_page_destroy_question, descendants: @descendants_count) %></strong></p>
+    <p><label>{ radio_button_tag 'todo', 'nullify', true %> { t(:text_wiki_page_nullify_children) %></label><br />
+      <label>{ radio_button_tag 'todo', 'destroy', false %> { t(:text_wiki_page_destroy_children) %></label>
+      {#if @reassignable_to.any? }
+        <br />
+        <label>{ radio_button_tag 'todo', 'reassign', false %> { t(:text_wiki_page_reassign_children) %></label>
+        { label_tag "reassign_to_id", t(:description_wiki_subpages_reassign), class: "hidden-for-sighted" %>
+        { select_tag 'reassign_to_id',
+                       options_for_select(wiki_page_options_for_select(@reassignable_to)) %>
+        <% csp_onclick("jQuery('#todo_reassign').attr('checked', true)", '#reassign_to_id') %>
+      {/each}
+    </p>
+  </div>
+  { submit_tag t(:button_apply), class: 'button -highlight' %>
+  { link_to t(:button_cancel),
+      { controller: '/wiki', action: 'show', project_id: @project, id: @page },
+      class: 'button' %>
+{/each}
+ -->

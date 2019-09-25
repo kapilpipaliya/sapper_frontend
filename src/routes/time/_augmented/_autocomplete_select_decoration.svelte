@@ -1,0 +1,21 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+<!-- 
+<div class="autocomplete-select-decoration--wrapper" hidden>
+  { content_tag :'autocomplete-select-decoration',
+                  {},
+                  data: {
+                      "multiselect": multiple,
+                      "input-name": input_name,
+                      "input-id": input_id,
+                      options: JSON.dump(select_options)
+                  } %>
+
+  <!-- Mapped values are being input as hidden fields here -->
+</div>
+ -->

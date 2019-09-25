@@ -1,0 +1,19 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+
+
+<!-- 
+{ t(:mail_body_wiki_content_updated,
+          id: @wiki_content.page.title,
+          author: @wiki_content.author) %>
+{ @wiki_content.comments %>
+
+{ project_wiki_url(@wiki_content.page.project, @wiki_content.page) %>
+
+{ t(:label_view_diff) %>: { @wiki_diff_url %>
+ -->

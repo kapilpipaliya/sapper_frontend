@@ -1,0 +1,45 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+<!-- 
+{ render 'homescreen/blocks/header', icon: 'projects', title: t(:label_project_plural) %>
+
+{#if @newest_projects.empty? }
+  <p class="widget-box--additional-info">
+    { t('homescreen.additional.no_visible_projects') %>
+  </p>
+<% else  %>
+  <p class="widget-box--additional-info">{ l('homescreen.additional.projects') %></p>
+  <ul class="widget-box--arrow-links">
+    {#each @newest_projects.each  as project}
+    <li>
+      { link_to project, project_path(project), title: short_project_description(project) %>
+      <small>({ format_date(project.created_on) %>)</small>
+    </li>
+    {/each}
+  </ul>
+{/each}
+
+<div class="widget-box--blocks--buttons">
+  {#if User.current.allowed_to?(:add_project, nil, global: true) }
+    { link_to new_project_path,
+          { class: 'button -alt-highlight',
+            aria: {label: t(:label_project_new)},
+            title: t(:label_project_new)} do %>
+      { op_icon('button--icon icon-add') %>
+      <span class="button--text">{ Project.model_name.human %></span>
+    {/each}
+  {/each}
+
+  <%# If any project exists %>
+  <% unless @newest_projects.empty? %>
+    { link_to l(:label_project_view_all), projects_path,
+                class: 'button -highlight-inverted',
+                title: l(:label_project_view_all) %>
+  {/each}
+</div>
+ -->

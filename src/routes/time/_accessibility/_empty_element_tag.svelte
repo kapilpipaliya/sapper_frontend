@@ -1,0 +1,15 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+<!-- 
+
+
+<span>
+  <span aria-hidden="true" role="presentation" tabindex="-1">-</span>
+  <span class="hidden-for-sighted">{ I18n.t('timelines.empty') %></span>
+</span>
+ -->

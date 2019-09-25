@@ -1,0 +1,19 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+<!-- 
+<% announcement = Announcement.active_and_current %>
+{#if announcement.present? }
+<div id="announcement">
+  <div class="notification-box -info">
+    <div class="notification-box--content">
+      { format_text announcement.text %>
+    </div>
+  </div>
+</div>
+{/each}
+ -->

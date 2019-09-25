@@ -1,0 +1,17 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+
+
+<!-- 
+{ @news.title %>
+{ news_url(@news) %>
+
+{ t(:text_user_wrote, value: @comment.author) %>
+
+{ @comment.text %>
+ -->

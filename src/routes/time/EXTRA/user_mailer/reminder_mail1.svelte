@@ -1,0 +1,15 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+
+<!-- 
+{ t(:mail_body_reminder, count: @issues.size, days: @days) %>
+<% @issues.each do |issue| -%>
+  * { "#{issue.project} - #{issue.type} ##{issue.id}: #{issue.subject}" %>
+<% end -%>
+{ @assigned_issues_url %>
+ -->

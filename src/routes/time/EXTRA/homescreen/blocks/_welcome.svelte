@@ -1,0 +1,14 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+<!-- 
+{ render 'homescreen/blocks/header', icon: 'projects', title: Setting.welcome_title.presence || organization_name %>
+
+<div class="wiki">
+  { format_text(Setting.welcome_text, headings: false) %>
+</div>
+ -->

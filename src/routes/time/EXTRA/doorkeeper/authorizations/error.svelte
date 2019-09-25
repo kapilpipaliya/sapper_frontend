@@ -1,0 +1,18 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+<!-- 
+<div class="notification-box -error">
+  <div class="notification-box--content">
+    <p>
+      <strong>{ t('oauth.authorization_error') %></strong>
+      <br/>
+      { @pre_auth.error_response.body[:error_description] %></pre>
+    </p>
+  </div>
+</div>
+ -->

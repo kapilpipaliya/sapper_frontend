@@ -276,7 +276,6 @@
       }else{
         const loaded = selectedFile.size - bytesNotSent;
         const percentage_ = Math.round((loaded * 100) / selectedFile.size );
-        console.log(percentage_);
         //per_change(percentage_)
       }
     }

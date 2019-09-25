@@ -1,0 +1,10 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+<!-- 
+<wp-query-select data-project-identifier="{ @project ? @project.identifier : '' %>"></wp-query-select>
+ -->

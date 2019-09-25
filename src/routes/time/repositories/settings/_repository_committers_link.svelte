@@ -1,0 +1,11 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+<!-- 
+{ link_to l(:label_user_plural), committers_project_repository_path(repository.project),
+            class: 'icon icon-user' %>
+ -->

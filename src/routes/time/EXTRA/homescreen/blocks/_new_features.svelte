@@ -1,0 +1,12 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+<!-- 
+{ render 'homescreen/blocks/header', icon: 'star', title: t(:label_new_features) %>
+
+<homescreen-new-features-block></homescreen-new-features-block>
+ -->

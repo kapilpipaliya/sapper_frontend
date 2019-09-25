@@ -1,0 +1,45 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+<!-- 
+
+{ call_hook(:view_repositories_show_contextual, { repository: @repository, project: @project }) %>
+<% html_title(l(:button_annotate)) %>
+{ render partial: 'repository_header', locals: { empty: false } %>
+
+<div class="repository-breadcrumbs">
+  { render partial: 'breadcrumbs',
+             locals: { path: @path, revision: @rev }.merge(kind: 'file') %>
+</div>
+<p>{ render partial: 'link_to_functions' %></p>
+
+{#if @annotate.nil? || @annotate.empty? }
+  { no_results_box %>
+{:else}
+  <% colors = Hash.new {|k,v| k[v] = (k.size % 12) } %>
+  <div class="autoscroll">
+    <table class="filecontent annotate highlight">
+      <tbody>
+        <% line_num = 1 %>
+        {#each syntax_highlight(@path, to_utf8_for_repositories(@annotate.content))  as line}
+          <% revision = @annotate.revisions[line_num-1] %>
+          <tr class="bloc-{ revision.nil? ? 0 : colors[revision.identifier || revision.revision] %>">
+            <th class="line-num" id="L{ line_num %>"><a href="#L{ line_num %>">{ line_num %></a></th>
+            <td class="revision">
+              { (revision.identifier ? link_to_revision(revision, @project) : format_revision(revision)) if revision %></td>
+            <td class="author">{ h(revision.author.to_s.split('<').first) if revision %></td>
+            <td class="line-code">
+              <pre>{ line %></pre>
+            </td>
+          </tr>
+          <% line_num += 1 %>
+        {/each}
+      </tbody>
+    </table>
+  </div>
+{/each}
+ -->

@@ -1,0 +1,13 @@
+<script>
+
+</script>
+
+<style>
+  
+</style>
+<!-- 
+<span class="icon-locked">
+  { t('admin.enterprise.required_for_feature') %>
+  { link_to t('admin.enterprise.enterprise_link'), enterprise_path %>
+</span>
+ -->
