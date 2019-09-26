@@ -8,14 +8,14 @@ const dev_conf = {
     port: 8400, //'8300' //susant : '8400' //jimmy-music // '5000' : '5001' // sce
     http_proto: 'http',
     ws_proto: 'ws',
-    redirect: 'music'
+    redirect: 'time'
 }
 const prod_conf = {
-    domain: '116.203.177.233',
+    domain: 'midbrain.mbamusiclogin.com',
     port: 8401,
     http_proto: 'https',
     ws_proto: 'wss',
-    redirect: 'music'
+    redirect: 'time'
 }
 export const server = process.env.NODE_ENV === 'development' ? dev_conf : prod_conf;
 

@@ -1,12 +1,16 @@
 <script>
-
+import {Form} from '../_components/index.js'
 </script>
 
 <style>
   
 </style>
-<!-- 
 
+<template lang="pug">
+Form.-wide-labels.user-login--form.form(autocomplete='off') hi
+</template>
+
+<!-- 
 
 { styled_form_tag({action: "login"}, autocomplete: 'off', class: '-wide-labels user-login--form') do %>
   { back_url_hidden_field_tag %>
@@ -59,5 +63,4 @@
          data-modal-class-name="registration-modal modal-wrapper -highlight">
   <% @user ||= User.new %>
   { render partial: '/account/register' %>
-</section>
- -->
+</section> -->
