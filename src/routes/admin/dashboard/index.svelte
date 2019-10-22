@@ -1,6 +1,0 @@
-<svelte:options immutable/>
-TOTAL EMPLOYEES
-ORDER
-SALES
-CUSTOMERS
-VENDORS
