@@ -1,0 +1,14 @@
+<html>
+<head>
+  <head><meta charset="utf-8">
+</head>
+<body>
+  <div id="pug">Sorry, this didn't work.</div>
+  <!-- https://github.com/pugjs/pug/issues/2876 -->
+  <script src="https://pugjs.org/js/pug.js" charset="UTF-8"></script>
+  <script src="generic.js" charset="UTF-8"></script>
+  <script>
+    document.getElementById('pug').innerHTML = pug.render('p Yay! It worked!');
+  </script>
+</body>
+</html>

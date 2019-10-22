@@ -65,7 +65,7 @@ export async function preload({query}, session) {
       <form class="form" on:submit|preventDefault={save}>
         <input type="text" class="zocial-dribbble" placeholder="Enter your user name" bind:value={form.user} bind:this={user} required >
         <input type="password" bind:value={form.pass} required placeholder="Password">
-         <input type="submit" value="Login" disabled={!form.user || !form.pass}/>
+         <input type="submit" value="Login" disabled={!form.user || !form.pass || isSaving}/>
           <div class="error"> {er} </div>
       </form> 
     </div> 

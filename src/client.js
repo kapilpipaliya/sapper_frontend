@@ -6,5 +6,5 @@ Array.prototype.i = function(val){
 }
 
 sapper.start({
-	target: document.querySelector('#sapper')
+	target: document.querySelector('#s')
 });

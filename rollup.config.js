@@ -52,7 +52,7 @@ export default {
 				browser: true,
 				dedupe
 			}),
-			commonjs(),
+			commonjs({include: ['node_modules/**', 'src/routes/_protos/**']}),
 
 			legacy && babel({
 				extensions: ['.js', '.mjs', '.html', '.svelte'],
@@ -95,7 +95,7 @@ export default {
 			resolve({
 				dedupe
 			}),
-			commonjs( {sourceMap: false})
+			commonjs( {sourceMap: false, include: ['node_modules/**', 'src/routes/_protos/**']})
 		],
 		external: Object.keys(pkg.dependencies).concat(
 			require('module').builtinModules || Object.keys(process.binding('natives'))

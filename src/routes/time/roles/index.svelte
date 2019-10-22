@@ -1,11 +1,13 @@
 <script>
-
+import { Server as S_ } from "../../_modules/ws_todo.js";
+const TestMessage = require('../../_protos/time/auth/user/login/auth_user_Login_pb.js')
+console.log(TestMessage)
 </script>
 
 <style>
   
 </style>
-
+hiir
 <!-- 
 <% html_title l(:label_administration), l("label_role_plural") %>
 { toolbar title: Role.model_name.human(count: 2) do %>

@@ -5,17 +5,17 @@ import StorageDB from "./indexdb/storage.js";
 
 const dev_conf = { 
     domain: 'localhost',
-    port: 8400, //'8300' //susant : '8400' //jimmy-music // '5000' : '5001' // sce
+    port: 8300, //'8300' //susant : '8400' //jimmy-music // '5000' : '5001' // sce
     http_proto: 'http',
     ws_proto: 'ws',
-    redirect: 'time'
+    redirect: 'jewel'
 }
 const prod_conf = {
-    domain: 'midbrain.mbamusiclogin.com',
-    port: 8401,
+    domain: 'marvelartjewellery.com',
+    port: 8301,
     http_proto: 'https',
     ws_proto: 'wss',
-    redirect: 'time'
+    redirect: 'jewel'
 }
 export const server = process.env.NODE_ENV === 'development' ? dev_conf : prod_conf;
 

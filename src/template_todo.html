@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+	 <!-- Required meta tags -->
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+	<meta name='theme-color' content='#333333'>
+	%sapper.base%
+	<link rel='manifest' href='manifest.json'>
+
+	<!-- <link rel='icon' type='image/png' href='images/ampche/favicon.ico'> -->
+	<!-- <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css"> -->
+	<link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
+	
+	<link rel='stylesheet' href='scss/time/rollup.build.css'>
+
+	%sapper.styles%
+	%sapper.head%
+</head>
+<body>
+	<div id='s' class="h-vh-100">%sapper.html%</div>
+	<!-- jQuery first, then Metro UI JS -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="vendors/chartjs/Chart.bundle.min.js"></script>
+	<script src="vendors/qrcode/qrcode.min.js"></script>
+	<script src="vendors/jsbarcode/JsBarcode.all.min.js"></script>
+	%sapper.scripts%
+	<!-- <script src="vendors/ckeditor/ckeditor.js"></script> -->
+	<script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
+	<script>
+		var J = $
+	</script>
+	<!-- <script src="js/index.js"></script> -->
+</body>
+</html>
