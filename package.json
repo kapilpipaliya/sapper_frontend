@@ -46,7 +46,7 @@
     "less": "^3.10.3",
     "node-sass": "^4.12.0",
     "npm-run-all": "^4.1.5",
-    "postcss": "^7.0.18",
+    "postcss": "^7.0.36",
     "pug": "^2.0.4",
     "rollup": "^1.21.4",
     "rollup-plugin-babel": "^4.3.3",
